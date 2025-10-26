@@ -158,9 +158,38 @@
     display: none !important;
   }
 }
-@layer utilities;
+@layer utilities {
+  .flex {
+    display: flex;
+  }
+  .justify-between {
+    justify-content: space-between;
+  }
+}
 body {
-  background-image: url("../assets/images/flower-background.jpg");
-  height: 100vh;
   margin: 0;
+  height: 100vh;
+  background-image: url("../assets/images/flower-background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+h1 {
+  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  border: 2px solid rgb(255, 160, 176);
+  position: absolute;
+  padding: 10px 15px;
+  margin-top: 2vw;
+  background-color: hsla(351, 100%, 92%, 0.9);
+  font-size: 300%;
+  font-weight: bold;
+}
+.login_signup_container {
+  height: 100vh;
+  background-color: hsla(351, 100%, 92%, 0.9);
+  width: 300px;
 }
