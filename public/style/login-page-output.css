@@ -1,4 +1,5 @@
 /*! tailwindcss v4.1.16 | MIT License | https://tailwindcss.com */
+@layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
   :root, :host {
@@ -6,6 +7,10 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --spacing: 0.25rem;
+    --font-weight-bold: 700;
+    --default-transition-duration: 150ms;
+    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
   }
@@ -159,37 +164,290 @@
   }
 }
 @layer utilities {
+  .absolute {
+    position: absolute;
+  }
+  .left-\[50\%\] {
+    left: 50%;
+  }
+  .m-0 {
+    margin: calc(var(--spacing) * 0);
+  }
+  .my-\[3vw\] {
+    margin-block: 3vw;
+  }
+  .mt-\[2vw\] {
+    margin-top: 2vw;
+  }
+  .mb-\[2vw\] {
+    margin-bottom: 2vw;
+  }
   .flex {
     display: flex;
+  }
+  .table {
+    display: table;
+  }
+  .h-screen {
+    height: 100vh;
+  }
+  .border-collapse {
+    border-collapse: collapse;
+  }
+  .-translate-x-1 {
+    --tw-translate-x: calc(var(--spacing) * -1);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+  .-translate-x-1\/2 {
+    --tw-translate-x: calc(calc(1/2 * 100%) * -1);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+  .transform {
+    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
+  }
+  .cursor-pointer {
+    cursor: pointer;
+  }
+  .resize {
+    resize: both;
+  }
+  .flex-col {
+    flex-direction: column;
   }
   .justify-between {
     justify-content: space-between;
   }
+  .overflow-hidden {
+    overflow: hidden;
+  }
+  .rounded-\[10px\] {
+    border-radius: 10px;
+  }
+  .border {
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+  }
+  .border-2 {
+    border-style: var(--tw-border-style);
+    border-width: 2px;
+  }
+  .border-r-2 {
+    border-right-style: var(--tw-border-style);
+    border-right-width: 2px;
+  }
+  .border-l-2 {
+    border-left-style: var(--tw-border-style);
+    border-left-width: 2px;
+  }
+  .border-\[rgb\(255\,160\,176\)\] {
+    border-color: rgb(255,160,176);
+  }
+  .bg-\[hsla\(351\,100\%\,92\%\,0\.9\)\] {
+    background-color: hsla(351,100%,92%,0.9);
+  }
+  .bg-\[url\(\'\.\.\/assets\/images\/flower-background\.jpg\'\)\] {
+    background-image: url('../assets/images/flower-background.jpg');
+  }
+  .bg-cover {
+    background-size: cover;
+  }
+  .bg-center {
+    background-position: center;
+  }
+  .bg-no-repeat {
+    background-repeat: no-repeat;
+  }
+  .px-\[15px\] {
+    padding-inline: 15px;
+  }
+  .py-2 {
+    padding-block: calc(var(--spacing) * 2);
+  }
+  .py-2\.5 {
+    padding-block: calc(var(--spacing) * 2.5);
+  }
+  .text-center {
+    text-align: center;
+  }
+  .text-left {
+    text-align: left;
+  }
+  .text-right {
+    text-align: right;
+  }
+  .font-\[\'Trebuchet_MS\'\,\'Lucida_Sans_Unicode\'\,\'Lucida_Grande\'\,\'Lucida_Sans\'\,Arial\,sans-serif\] {
+    font-family: 'Trebuchet MS','Lucida Sans Unicode','Lucida Grande','Lucida Sans',Arial,sans-serif;
+  }
+  .text-\[200\%\] {
+    font-size: 200%;
+  }
+  .text-\[300\%\] {
+    font-size: 300%;
+  }
+  .font-bold {
+    --tw-font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-bold);
+  }
+  .text-\[blue\] {
+    color: blue;
+  }
+  .underline {
+    text-decoration-line: underline;
+  }
+  .outline {
+    outline-style: var(--tw-outline-style);
+    outline-width: 1px;
+  }
+  .transition {
+    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .\[animation-duration\:1000ms\] {
+    animation-duration: 1000ms;
+  }
+  .\[animation-duration\:1500ms\] {
+    animation-duration: 1500ms;
+  }
+  .\[animation-duration\:2000ms\] {
+    animation-duration: 2000ms;
+  }
+  .\[animation-name\:right-form\] {
+    animation-name: right-form;
+  }
+  .\[animation-name\:title-fall\] {
+    animation-name: title-fall;
+  }
+  .hover\:text-\[rgb\(98\,0\,255\)\] {
+    &:hover {
+      @media (hover: hover) {
+        color: rgb(98,0,255);
+      }
+    }
+  }
+  .active\:text-\[rgb\(128\,0\,255\)\] {
+    &:active {
+      color: rgb(128,0,255);
+    }
+  }
 }
-body {
-  margin: 0;
-  height: 100vh;
-  background-image: url("../assets/images/flower-background.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+@keyframes title-fall {
+  from {
+    margin-top: -300px;
+  }
+  to {
+    margin-top: 2vw;
+  }
 }
-h1 {
-  text-align: center;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 10px;
+@keyframes right-form {
+  from {
+    margin-right: -1000px;
+  }
+  to {
+    margin-right: 0;
+  }
+}
+.text-input {
+  background-color: white;
+  cursor: pointer;
+  margin-bottom: 0.5vw;
+  padding: 3px 10px;
   border: 2px solid rgb(255, 160, 176);
-  position: absolute;
-  padding: 10px 15px;
-  margin-top: 2vw;
-  background-color: hsla(351, 100%, 92%, 0.9);
-  font-size: 300%;
-  font-weight: bold;
+  border-radius: 5px;
+  transition: 200ms;
+  &:hover {
+    background-color: rgb(253, 239, 239);
+  }
+  &:focus {
+    outline: none;
+    border: 2px solid rgb(228, 140, 155);
+  }
 }
 .login_signup_container {
   height: 100vh;
+  padding: 0 1.5vw;
   background-color: hsla(351, 100%, 92%, 0.9);
   width: 300px;
+  border-color: rgb(255,160,176);
+  border-style: solid;
+  & .form-btn {
+    background-color: white;
+    cursor: pointer;
+    width: 40%;
+    padding: 3px 0;
+    border-radius: 5px;
+    border: 2px solid rgb(255, 160, 176);
+    transition: 200ms;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    &:hover {
+      background-color: hsla(351, 100%, 92%);
+    }
+  }
+}
+@property --tw-translate-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-translate-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-translate-z {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-rotate-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-rotate-y {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-rotate-z {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-skew-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-skew-y {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-outline-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-translate-x: 0;
+      --tw-translate-y: 0;
+      --tw-translate-z: 0;
+      --tw-rotate-x: initial;
+      --tw-rotate-y: initial;
+      --tw-rotate-z: initial;
+      --tw-skew-x: initial;
+      --tw-skew-y: initial;
+      --tw-border-style: solid;
+      --tw-font-weight: initial;
+      --tw-outline-style: solid;
+    }
+  }
 }
