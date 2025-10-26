@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+body{
+    background-image: url("../assets/images/flower-background.jpg");
+    height: 100vh;
+    margin: 0;
+}
