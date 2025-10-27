@@ -12,13 +12,13 @@ function changeForm(currentFormId, nextFormId, currentFormAppearClass, currentFo
 }
 document.getElementById("change-form-trigger-signin").onclick = () => changeForm("signin_container", "registration_container", "right-form-appear-animation", "right-form-disappear-animation", "left-form-appear-animation");
 document.getElementById("change-form-trigger-register").onclick = () => changeForm("registration_container", "signin_container", "left-form-appear-animation", "left-form-disappear-animation", "right-form-appear-animation");
-function visiblePasswordInput(trigger_id, triggered_input_id) {
+function togglePasswordVisibility(trigger_id, triggered_input_id) {
     const trigger = document.getElementById(trigger_id);
     const triggeredInput = document.getElementById(triggered_input_id);
     trigger.textContent = trigger.textContent === "visibility_off" ? "visibility" : "visibility_off";
     triggeredInput.type = triggeredInput.type === "text" ? "password" : "text";
 }
-document.getElementById("signin-password-visibility").onclick = () => visiblePasswordInput("signin-password-visibility", "sign-in-password");
-document.getElementById("register-password-visibility").onclick = () => visiblePasswordInput("register-password-visibility", "register-password");
+document.getElementById("signin-password-visibility").onclick = () => togglePasswordVisibility("signin-password-visibility", "sign-in-password");
+document.getElementById("register-password-visibility").onclick = () => togglePasswordVisibility("register-password-visibility", "register-password");
 export {};
 //# sourceMappingURL=sign_in.js.map

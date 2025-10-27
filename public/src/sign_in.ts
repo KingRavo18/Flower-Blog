@@ -33,7 +33,7 @@ function changeForm(
     "right-form-appear-animation"
 );
 
-function visiblePasswordInput(
+function togglePasswordVisibility(
     trigger_id: string, 
     triggered_input_id: string
 ): void{
@@ -42,11 +42,11 @@ function visiblePasswordInput(
     trigger.textContent = trigger.textContent === "visibility_off" ? "visibility" : "visibility_off";
     triggeredInput.type = triggeredInput.type === "text" ? "password" : "text";
 }
-(document.getElementById("signin-password-visibility") as HTMLElement).onclick = () => visiblePasswordInput(
+(document.getElementById("signin-password-visibility") as HTMLElement).onclick = () => togglePasswordVisibility(
     "signin-password-visibility", 
     "sign-in-password"
 );
-(document.getElementById("register-password-visibility") as HTMLElement).onclick = () => visiblePasswordInput(
+(document.getElementById("register-password-visibility") as HTMLElement).onclick = () => togglePasswordVisibility(
     "register-password-visibility", 
     "register-password"
 );
