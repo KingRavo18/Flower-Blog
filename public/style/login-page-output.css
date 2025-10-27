@@ -9,8 +9,6 @@
       "Courier New", monospace;
     --spacing: 0.25rem;
     --font-weight-bold: 700;
-    --default-transition-duration: 150ms;
-    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
   }
@@ -170,6 +168,12 @@
   .left-\[50\%\] {
     left: 50%;
   }
+  .float-left {
+    float: left;
+  }
+  .float-right {
+    float: right;
+  }
   .m-0 {
     margin: calc(var(--spacing) * 0);
   }
@@ -182,50 +186,33 @@
   .mb-\[2vw\] {
     margin-bottom: 2vw;
   }
+  .block {
+    display: block;
+  }
   .flex {
     display: flex;
   }
-  .table {
-    display: table;
+  .hidden {
+    display: none;
   }
   .h-screen {
     height: 100vh;
-  }
-  .border-collapse {
-    border-collapse: collapse;
-  }
-  .-translate-x-1 {
-    --tw-translate-x: calc(var(--spacing) * -1);
-    translate: var(--tw-translate-x) var(--tw-translate-y);
   }
   .-translate-x-1\/2 {
     --tw-translate-x: calc(calc(1/2 * 100%) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
-  .transform {
-    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
-  }
   .cursor-pointer {
     cursor: pointer;
   }
-  .resize {
-    resize: both;
-  }
   .flex-col {
     flex-direction: column;
-  }
-  .justify-between {
-    justify-content: space-between;
   }
   .overflow-hidden {
     overflow: hidden;
   }
   .rounded-\[10px\] {
     border-radius: 10px;
-  }
-  .border {
-    border-style: var(--tw-border-style);
-    border-width: 1px;
   }
   .border-2 {
     border-style: var(--tw-border-style);
@@ -260,9 +247,6 @@
   .px-\[15px\] {
     padding-inline: 15px;
   }
-  .py-2 {
-    padding-block: calc(var(--spacing) * 2);
-  }
   .py-2\.5 {
     padding-block: calc(var(--spacing) * 2.5);
   }
@@ -294,26 +278,11 @@
   .underline {
     text-decoration-line: underline;
   }
-  .outline {
-    outline-style: var(--tw-outline-style);
-    outline-width: 1px;
-  }
-  .transition {
-    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
-    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-    transition-duration: var(--tw-duration, var(--default-transition-duration));
-  }
   .\[animation-duration\:1000ms\] {
     animation-duration: 1000ms;
   }
-  .\[animation-duration\:1500ms\] {
-    animation-duration: 1500ms;
-  }
   .\[animation-duration\:2000ms\] {
     animation-duration: 2000ms;
-  }
-  .\[animation-name\:right-form\] {
-    animation-name: right-form;
   }
   .\[animation-name\:title-fall\] {
     animation-name: title-fall;
@@ -339,12 +308,48 @@
     margin-top: 2vw;
   }
 }
-@keyframes right-form {
+.right-form-appear-animation {
+  animation-name: right-form-appear;
+}
+@keyframes right-form-appear {
   from {
     margin-right: -1000px;
   }
   to {
     margin-right: 0;
+  }
+}
+.right-form-disappear-animation {
+  animation-name: right-form-disappear;
+}
+@keyframes right-form-disappear {
+  from {
+    margin-right: 0;
+  }
+  to {
+    margin-right: -1000px;
+  }
+}
+.left-form-appear-animation {
+  animation-name: left-form-appear;
+}
+@keyframes left-form-appear {
+  from {
+    margin-left: -1000px;
+  }
+  to {
+    margin-left: 0;
+  }
+}
+.left-form-disappear-animation {
+  animation-name: left-form-disappear;
+}
+@keyframes left-form-disappear {
+  from {
+    margin-left: 0;
+  }
+  to {
+    margin-left: -1000px;
   }
 }
 .text-input {
@@ -366,7 +371,7 @@
 .login_signup_container {
   height: 100vh;
   padding: 0 1.5vw;
-  background-color: hsla(351, 100%, 92%, 0.9);
+  background-color: hsla(351, 100%, 92%, 0.85);
   width: 300px;
   border-color: rgb(255,160,176);
   border-style: solid;
@@ -400,26 +405,6 @@
   inherits: false;
   initial-value: 0;
 }
-@property --tw-rotate-x {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-rotate-y {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-rotate-z {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-skew-x {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-skew-y {
-  syntax: "*";
-  inherits: false;
-}
 @property --tw-border-style {
   syntax: "*";
   inherits: false;
@@ -429,25 +414,14 @@
   syntax: "*";
   inherits: false;
 }
-@property --tw-outline-style {
-  syntax: "*";
-  inherits: false;
-  initial-value: solid;
-}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
       --tw-translate-x: 0;
       --tw-translate-y: 0;
       --tw-translate-z: 0;
-      --tw-rotate-x: initial;
-      --tw-rotate-y: initial;
-      --tw-rotate-z: initial;
-      --tw-skew-x: initial;
-      --tw-skew-y: initial;
       --tw-border-style: solid;
       --tw-font-weight: initial;
-      --tw-outline-style: solid;
     }
   }
 }

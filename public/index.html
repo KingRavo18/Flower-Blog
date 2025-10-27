@@ -8,11 +8,12 @@
     <title>Flower-Blog Sign-in</title>
 </head>
 <body class="m-0 h-screen bg-[url('../assets/images/flower-background.jpg')] bg-cover bg-center bg-no-repeat font-['Trebuchet_MS','Lucida_Sans_Unicode','Lucida_Grande','Lucida_Sans',Arial,sans-serif] overflow-hidden">
-    <main class="flex justify-between">
+    <main>
         <h1 class="left-[50%] -translate-x-1/2 rounded-[10px] border-2 border-[rgb(255,160,176)] absolute px-[15px] py-2.5 mt-[2vw] text-[300%] font-bold [animation-duration:1000ms] [animation-name:title-fall] bg-[hsla(351,100%,92%,0.9)]">
             Flower Blog
         </h1>
-        <div id="registration_container" class="login_signup_container border-r-2">
+        <p class="absolute left-[50%] -translate-x-1/2 bg-[hsla(351,100%,92%,0.9)]">TEXT</p>
+        <div id="registration_container" class="login_signup_container border-r-2 float-left hidden [animation-duration:2000ms]">
             <h2 class="text-center font-bold text-[200%] my-[3vw]">
                 Register
             </h2>
@@ -25,13 +26,13 @@
                     Enter password:
                 </label>
                 <input type="password" id="register-password" class="text-input">
-                <span id="change-form-text" class="text-left cursor-pointer underline mb-[2vw] text-[blue] hover:text-[rgb(98,0,255)] active:text-[rgb(128,0,255)]">
+                <span id="change-form-trigger-register" class="text-left cursor-pointer underline mb-[2vw] text-[blue] hover:text-[rgb(98,0,255)] active:text-[rgb(128,0,255)]">
                     I already have an account.
                 </span>
                 <input type="submit" value="Register" class="form-btn">
             </form>
         </div>
-        <div id="signin_container" class="login_signup_container border-l-2 [animation-duration:2000ms] [animation-name:right-form]">
+        <div id="signin_container" class="login_signup_container border-l-2 [animation-duration:2000ms] right-form-appear-animation float-right">
             <h2 class="text-center font-bold text-[200%] my-[3vw]">
                 Sign In
             </h2>
@@ -44,7 +45,7 @@
                     Enter password:
                 </label>
                 <input type="password" id="sign-in-password" class="text-input">
-                <span id="change-form-text" class="text-right cursor-pointer underline mb-[2vw] text-[blue] hover:text-[rgb(98,0,255)] active:text-[rgb(128,0,255)]">
+                <span id="change-form-trigger-signin" class="text-right cursor-pointer underline mb-[2vw] text-[blue] hover:text-[rgb(98,0,255)] active:text-[rgb(128,0,255)]">
                     I don't have an account.
                 </span>
                 <input type="submit" value="Sign In" class="form-btn">

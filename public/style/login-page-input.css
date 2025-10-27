@@ -4,9 +4,35 @@
     from{ margin-top: -300px; }
     to{ margin-top: 2vw; }
 }
-@keyframes right-form{
+
+.right-form-appear-animation{
+    animation-name: right-form-appear;
+}
+@keyframes right-form-appear{
     from{ margin-right: -1000px; }
     to{ margin-right: 0; }
+}
+.right-form-disappear-animation{
+    animation-name: right-form-disappear;
+}
+@keyframes right-form-disappear{
+    from{ margin-right: 0; }
+    to{ margin-right: -1000px; }
+}
+
+.left-form-appear-animation{
+    animation-name: left-form-appear;
+}
+@keyframes left-form-appear{
+    from{ margin-left: -1000px; }
+    to{ margin-left: 0; }
+}
+.left-form-disappear-animation{
+    animation-name: left-form-disappear;
+}
+@keyframes left-form-disappear{
+    from{ margin-left: 0; }
+    to{ margin-left: -1000px; }
 }
 
 .text-input{
@@ -30,7 +56,7 @@
 .login_signup_container{
     height: 100vh;
     padding: 0 1.5vw;
-    background-color: hsla(351, 100%, 92%, 0.9);
+    background-color: hsla(351, 100%, 92%, 0.85);
     width: 300px;
     border-color: rgb(255,160,176);
     border-style: solid;
