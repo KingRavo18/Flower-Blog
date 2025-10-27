@@ -1,38 +1,34 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const {openLeftForm, openRightForm} = changeForm();
-    (document.getElementById("change-form-trigger-signin") as HTMLElement).onclick = () => openLeftForm();
-    (document.getElementById("change-form-trigger-register") as HTMLElement).onclick = () => openRightForm();
-});
+function changeForm(
+    currentFormId: string, 
+    nextFormId: string, 
+    currentFormAppearClass: string, 
+    currentFormDisappearClass: string, 
+    nextFormAppearClass: string
+): void{
+    const currentForm = document.getElementById(currentFormId) as HTMLElement;
+    const nextForm = document.getElementById(nextFormId) as HTMLElement;
 
-interface changeFormReturnTypes{
-    openLeftForm: () => void;
-    openRightForm: () => void;
+    currentForm.classList.remove(currentFormAppearClass);
+    currentForm.classList.add(currentFormDisappearClass);
+    nextForm.classList.add(nextFormAppearClass);
+    nextForm.style.display = "block";
+    currentForm.addEventListener("animationend", () => {
+        currentForm.classList.remove(currentFormDisappearClass);
+        currentForm.style.display = "none";
+    }, {once: true});
+    
 }
-function changeForm(): changeFormReturnTypes{
-    const leftForm = document.getElementById("registration_container") as HTMLElement;
-    const rightForm = document.getElementById("signin_container") as HTMLElement;
-
-    function openLeftForm(): void{
-        rightForm.classList.remove("right-form-appear-animation");
-        rightForm.classList.add("right-form-disappear-animation");
-        leftForm.classList.add("left-form-appear-animation");
-        leftForm.style.display = "block";
-        setTimeout(() => {
-            rightForm.style.display = "none";
-            rightForm.classList.remove("right-form-disappear-animation");
-        }, 1900);
-    }
-
-    function openRightForm(): void{
-        leftForm.classList.remove("left-form-appear-animation");
-        leftForm.classList.add("left-form-disappear-animation");
-        rightForm.classList.add("right-form-appear-animation");
-        rightForm.style.display = "block";
-        setTimeout(() => {
-            leftForm.style.display = "none";
-            leftForm.classList.remove("left-form-disappear-animation");
-        }, 1900);
-    }
-
-    return {openLeftForm, openRightForm}
-}
+(document.getElementById("change-form-trigger-signin") as HTMLElement).onclick = () => changeForm(
+    "signin_container", 
+    "registration_container", 
+    "right-form-appear-animation", 
+    "right-form-disappear-animation", 
+    "left-form-appear-animation"
+);
+(document.getElementById("change-form-trigger-register") as HTMLElement).onclick = () => changeForm(
+    "registration_container", 
+    "signin_container", 
+    "left-form-appear-animation", 
+    "left-form-disappear-animation", 
+    "right-form-appear-animation"
+);
