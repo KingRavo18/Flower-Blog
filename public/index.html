@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=visibility,visibility_off" />
     <link rel="stylesheet" href="./style/login-page-output.css">
     <link rel="icon" href="data:," />
     <title>Flower-Blog Sign-in</title>
@@ -21,11 +22,16 @@
                 <label for="register-username">
                     Enter username:
                 </label>
-                <input type="text" id="register-username" class="text-input">
+                <input type="text" id="register-username" class="text-input mb-[0.5vw]">
                 <label for="register-password">
                     Enter password:
                 </label>
-                <input type="password" id="register-password" class="text-input">
+                <div class="relative mb-[0.5vw]">
+                    <input type="password" id="register-password" class="text-input w-full">
+                    <span id="register-password-visibility" class="material-symbols-outlined absolute top-[50%] -translate-y-1/2 right-[0.6vw] text-[rgb(255,160,176)] cursor-pointer select-none">
+                            visibility
+                    </span>
+                </div>
                 <span id="change-form-trigger-register" class="text-left cursor-pointer underline mb-[2vw] text-[blue] hover:text-[rgb(98,0,255)] active:text-[rgb(128,0,255)]">
                     I already have an account.
                 </span>
@@ -40,11 +46,16 @@
                 <label for="sign-in-username">
                     Enter username:
                 </label>
-                <input type="text" id="sign-in-username" class="text-input">
+                <input type="text" id="sign-in-username" class="text-input mb-[0.5vw]">
                 <label for="sign-in-password">
                     Enter password:
                 </label>
-                <input type="password" id="sign-in-password" class="text-input">
+                <div class="relative mb-[0.5vw]">
+                    <input type="password" id="sign-in-password" class="text-input w-full">
+                    <span id="signin-password-visibility" class="material-symbols-outlined absolute top-[50%] -translate-y-1/2 right-[0.6vw] text-[rgb(255,160,176)] cursor-pointer select-none">
+                        visibility
+                    </span>
+                </div>
                 <span id="change-form-trigger-signin" class="text-right cursor-pointer underline mb-[2vw] text-[blue] hover:text-[rgb(98,0,255)] active:text-[rgb(128,0,255)]">
                     I don't have an account.
                 </span>

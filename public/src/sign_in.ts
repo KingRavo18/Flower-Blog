@@ -32,3 +32,21 @@ function changeForm(
     "left-form-disappear-animation", 
     "right-form-appear-animation"
 );
+
+function visiblePasswordInput(
+    trigger_id: string, 
+    triggered_input_id: string
+): void{
+    const trigger = document.getElementById(trigger_id) as HTMLElement;
+    const triggeredInput = document.getElementById(triggered_input_id) as HTMLInputElement;
+    trigger.textContent = trigger.textContent === "visibility_off" ? "visibility" : "visibility_off";
+    triggeredInput.type = triggeredInput.type === "text" ? "password" : "text";
+}
+(document.getElementById("signin-password-visibility") as HTMLElement).onclick = () => visiblePasswordInput(
+    "signin-password-visibility", 
+    "sign-in-password"
+);
+(document.getElementById("register-password-visibility") as HTMLElement).onclick = () => visiblePasswordInput(
+    "register-password-visibility", 
+    "register-password"
+);
