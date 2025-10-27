@@ -1,7 +1,14 @@
 @import "tailwindcss";
 
+.basic-text-size{
+    font-size: 1.15vw;
+}
+.click-disabled{
+    pointer-events: none;
+}
+
 @keyframes title-fall{
-    from{ margin-top: -300px; }
+    from{ margin-top: -30vw; }
     to{ margin-top: 2vw; }
 }
 
@@ -9,7 +16,7 @@
     animation-name: right-form-appear;
 }
 @keyframes right-form-appear{
-    from{ margin-right: -1000px; }
+    from{ margin-right: -50vw; }
     to{ margin-right: 0; }
 }
 .right-form-disappear-animation{
@@ -17,14 +24,14 @@
 }
 @keyframes right-form-disappear{
     from{ margin-right: 0; }
-    to{ margin-right: -1000px; }
+    to{ margin-right: -50vw; }
 }
 
 .left-form-appear-animation{
     animation-name: left-form-appear;
 }
 @keyframes left-form-appear{
-    from{ margin-left: -1000px; }
+    from{ margin-left: -50vw; }
     to{ margin-left: 0; }
 }
 .left-form-disappear-animation{
@@ -32,7 +39,7 @@
 }
 @keyframes left-form-disappear{
     from{ margin-left: 0; }
-    to{ margin-left: -1000px; }
+    to{ margin-left: -50vw; }
 }
 
 .text-input{
@@ -56,7 +63,7 @@
     height: 100vh;
     padding: 0 1.5vw;
     background-color: hsla(351, 100%, 92%, 0.85);
-    width: 300px;
+    width: 25vw;
     border-color: rgb(255,160,176);
     border-style: solid;
 

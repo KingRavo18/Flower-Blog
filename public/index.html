@@ -8,27 +8,27 @@
     <link rel="icon" href="data:," />
     <title>Flower-Blog Sign-in</title>
 </head>
-<body class="m-0 h-screen bg-[url('../assets/images/flower-background.jpg')] bg-cover bg-center bg-no-repeat font-['Trebuchet_MS','Lucida_Sans_Unicode','Lucida_Grande','Lucida_Sans',Arial,sans-serif] overflow-hidden">
+<body class="m-0 h-screen bg-[url('../assets/images/flower-background.jpg')] bg-cover bg-center bg-no-repeat font-['Trebuchet_MS','Lucida_Sans_Unicode','Lucida_Grande','Lucida_Sans',Arial,sans-serif] overflow-hidden basic-text-size">
     <main>
-        <h1 class="left-[50%] -translate-x-1/2 rounded-[10px] border-2 border-[rgb(255,160,176)] absolute px-[15px] py-2.5 mt-[2vw] text-[300%] font-bold [animation-duration:1000ms] [animation-name:title-fall] bg-[hsla(351,100%,92%,0.9)]">
+        <h1 class="left-[50%] -translate-x-1/2 rounded-[10px] border-2 border-[rgb(255,160,176)] absolute px-[15px] py-2.5 mt-[2vw] text-[4vw] font-bold [animation-duration:1000ms] [animation-name:title-fall] bg-[hsla(351,100%,92%,0.9)]">
             Flower Blog
         </h1>
-        <p class="absolute left-[50%] -translate-x-1/2 bg-[hsla(351,100%,92%,0.9)]">TEXT</p>
+        <p class="absolute left-[50%] -translate-x-1/2 top-[50%] p-2.5 -translate-y-1/2 bg-[hsla(351,100%,92%,0.9)] rounded-[10px] border-2 border-[rgb(255,160,176)]">TEXT</p>
         <div id="registration_container" class="login_signup_container border-r-2 float-left hidden [animation-duration:2000ms]">
-            <h2 class="text-center font-bold text-[200%] my-[3vw]">
+            <h2 class="text-center font-bold text-[3vw] my-[3vw]">
                 Register
             </h2>
             <form id="registration-form" class="flex flex-col">
-                <label for="register-username">
+                <label for="register-username" class="cursor-pointer">
                     Enter username:
                 </label>
                 <input type="text" id="register-username" class="text-input mb-[0.5vw]">
-                <label for="register-password">
+                <label for="register-password" class="cursor-pointer">
                     Enter password:
                 </label>
                 <div class="relative mb-[0.5vw]">
-                    <input type="password" id="register-password" class="text-input w-full">
-                    <span id="register-password-visibility" class="material-symbols-outlined absolute top-[50%] -translate-y-1/2 right-[0.6vw] text-[rgb(255,160,176)] cursor-pointer select-none">
+                    <input type="password" id="register-password" class="text-input w-full basic-text-size">
+                    <span id="register-password-visibility" class="material-symbols-outlined absolute top-[50%] -translate-y-1/2 right-[0.6vw] cursor-pointer select-none duration-200 text-[rgb(255,160,176)] hover:text-[rgb(228,140,155)] text-[900%]">
                             visibility
                     </span>
                 </div>
@@ -39,20 +39,20 @@
             </form>
         </div>
         <div id="signin_container" class="login_signup_container border-l-2 [animation-duration:2000ms] right-form-appear-animation float-right">
-            <h2 class="text-center font-bold text-[200%] my-[3vw]">
+            <h2 class="text-center font-bold text-[3vw] my-[3vw]">
                 Sign In
             </h2>
             <form id="sign-in-form" class="flex flex-col">
-                <label for="sign-in-username">
+                <label for="sign-in-username" class="cursor-pointer">
                     Enter username:
                 </label>
                 <input type="text" id="sign-in-username" class="text-input mb-[0.5vw]">
-                <label for="sign-in-password">
+                <label for="sign-in-password" class="cursor-pointer">
                     Enter password:
                 </label>
                 <div class="relative mb-[0.5vw]">
                     <input type="password" id="sign-in-password" class="text-input w-full">
-                    <span id="signin-password-visibility" class="material-symbols-outlined absolute top-[50%] -translate-y-1/2 right-[0.6vw] text-[rgb(255,160,176)] cursor-pointer select-none">
+                    <span id="signin-password-visibility" class="material-symbols-outlined absolute top-[50%] -translate-y-1/2 right-[0.6vw] cursor-pointer select-none duration-200 text-[rgb(255,160,176)] hover:text-[rgb(228,140,155)] text-[900%]">
                         visibility
                     </span>
                 </div>
