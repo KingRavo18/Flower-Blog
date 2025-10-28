@@ -1,3 +1,7 @@
+function registerUser() {
+}
+function signinUser() {
+}
 function changeForm(currentFormId, nextFormId, nextFormTriggerId, currentFormAppearClass, currentFormDisappearClass, nextFormAppearClass) {
     const currentForm = document.getElementById(currentFormId);
     const nextForm = document.getElementById(nextFormId);

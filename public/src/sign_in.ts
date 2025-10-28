@@ -1,3 +1,11 @@
+function registerUser(): void{
+    
+}
+
+function signinUser(): void{
+
+}
+
 function changeForm(
     currentFormId: string, 
     nextFormId: string, 
