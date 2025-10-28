@@ -14,11 +14,12 @@
             Flower Blog
         </h1>
         <p class="absolute left-[50%] -translate-x-1/2 top-[50%] p-2.5 -translate-y-1/2 bg-[hsla(351,100%,92%,0.9)] rounded-[10px] border-2 border-[rgb(255,160,176)]">TEXT</p>
+
         <div id="registration_container" class="login_signup_container border-r-2 float-left hidden [animation-duration:2000ms]">
             <h2 class="text-center font-bold text-[3vw] my-[3vw]">
                 Register
             </h2>
-            <form id="registration-form" class="flex flex-col" method="POST" action="../backend/Account_Access/register_user.php">
+            <form id="registration-form" class="flex flex-col">
                 <label for="register-username" class="cursor-pointer">
                     Enter username:
                 </label>
@@ -29,7 +30,7 @@
                 <div class="relative mb-[0.5vw]">
                     <input type="password" id="register-password" name="password" class="text-input w-full basic-text-size">
                     <span id="register-password-visibility" class="material-symbols-outlined absolute top-[50%] -translate-y-1/2 right-[0.6vw] cursor-pointer select-none duration-200 text-[rgb(255,160,176)] hover:text-[rgb(228,140,155)] text-[900%]">
-                            visibility
+                        visibility
                     </span>
                 </div>
                 <span id="change-form-trigger-register" class="text-left cursor-pointer underline mb-[2vw] text-[blue] hover:text-[rgb(98,0,255)] active:text-[rgb(128,0,255)]">
@@ -37,7 +38,9 @@
                 </span>
                 <input type="submit" value="Register" name="register-btn" class="form-btn">
             </form>
+            <p id="registration-message"></p>
         </div>
+
         <div id="signin_container" class="login_signup_container border-l-2 [animation-duration:2000ms] right-form-appear-animation float-right">
             <h2 class="text-center font-bold text-[3vw] my-[3vw]">
                 Sign In
@@ -61,7 +64,9 @@
                 </span>
                 <input type="submit" value="Sign In" class="form-btn">
             </form>
+            <p id="signin-message"></p>
         </div>
+
     </main>
     <script type="module" src="./dist/account_access.js"></script>
 </body>

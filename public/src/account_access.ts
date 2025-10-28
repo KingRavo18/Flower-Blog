@@ -1,6 +1,31 @@
-function registerUser(): void{
-    
+async function registerUser(event: SubmitEvent): Promise<void>{
+    event.preventDefault();
+    const usernameInput = document.getElementById("register-username") as HTMLInputElement;
+    const passwordInput = document.getElementById("register-password") as HTMLInputElement;
+    const message = document.getElementById("registration-message") as HTMLElement;
+    const username = usernameInput.value;
+    const password = passwordInput.value;
+
+    try{
+        validateInput(username, password);
+        const response = await fetch("../../backend/Account_Access/register_user.php", {
+            method: "POST",
+            //finish this later
+        });
+        if(!response.ok){
+            throw new Error("Could not register. Plese try again later.");
+        }
+    }
+    catch(error){
+        message.classList.add("error-message");
+        message.textContent = (error as Error).message;
+    }
+
+    function validateInput(username: string, password: string): void{
+
+    }
 }
+(document.getElementById("registration-form") as HTMLFormElement).addEventListener("submit", registerUser, {once: true});
 
 function signinUser(): void{
 
@@ -46,6 +71,7 @@ function changeForm(
     "left-form-disappear-animation", 
     "right-form-appear-animation"    
 );
+//replace the onclick
 
 function togglePasswordVisibility(
     trigger_id: string, 
@@ -56,11 +82,11 @@ function togglePasswordVisibility(
     trigger.textContent = trigger.textContent === "visibility_off" ? "visibility" : "visibility_off";
     triggeredInput.type = triggeredInput.type === "text" ? "password" : "text";
 }
-(document.getElementById("signin-password-visibility") as HTMLElement).onclick = () => togglePasswordVisibility(
+(document.getElementById("signin-password-visibility") as HTMLElement).addEventListener("click", () => togglePasswordVisibility(
     "signin-password-visibility", 
     "sign-in-password"
-);
-(document.getElementById("register-password-visibility") as HTMLElement).onclick = () => togglePasswordVisibility(
+), {once: true});
+(document.getElementById("register-password-visibility") as HTMLElement).addEventListener("click", () => togglePasswordVisibility(
     "register-password-visibility", 
     "register-password"
-);
+), {once: true}); 

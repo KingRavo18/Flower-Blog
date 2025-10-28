@@ -83,3 +83,19 @@
         }
     }
 }
+
+.error-message,
+.success-message{
+    text-align: center;
+    width: 100%;
+    padding: 1vw;
+    text-wrap: pretty;
+}
+
+.error-message{
+    color: red;
+}
+
+.success-message{
+    color: green;
+}
