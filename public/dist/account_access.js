@@ -28,4 +28,4 @@ function togglePasswordVisibility(trigger_id, triggered_input_id) {
 document.getElementById("signin-password-visibility").onclick = () => togglePasswordVisibility("signin-password-visibility", "sign-in-password");
 document.getElementById("register-password-visibility").onclick = () => togglePasswordVisibility("register-password-visibility", "register-password");
 export {};
-//# sourceMappingURL=sign_in.js.map
+//# sourceMappingURL=account_access.js.map
