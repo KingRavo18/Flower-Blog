@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=visibility,visibility_off" />
     <link rel="stylesheet" href="./style/login-page-output.css">
     <link rel="icon" href="data:," />
-    <title>Flower-Blog Account Access</title>
+    <title>Flower-Blog - Account Access</title>
 </head>
 <body class="m-0 h-screen bg-[url('../assets/images/flower-background.jpg')] bg-cover bg-center bg-no-repeat font-['Trebuchet_MS','Lucida_Sans_Unicode','Lucida_Grande','Lucida_Sans',Arial,sans-serif] overflow-hidden basic-text-size">
     <main>
@@ -18,16 +18,16 @@
             <h2 class="text-center font-bold text-[3vw] my-[3vw]">
                 Register
             </h2>
-            <form id="registration-form" class="flex flex-col">
+            <form id="registration-form" class="flex flex-col" method="POST" action="../backend/Account_Access/register_user.php">
                 <label for="register-username" class="cursor-pointer">
                     Enter username:
                 </label>
-                <input type="text" id="register-username" class="text-input mb-[0.5vw]">
+                <input type="text" id="register-username" name="username" class="text-input mb-[0.5vw]">
                 <label for="register-password" class="cursor-pointer">
                     Enter password:
                 </label>
                 <div class="relative mb-[0.5vw]">
-                    <input type="password" id="register-password" class="text-input w-full basic-text-size">
+                    <input type="password" id="register-password" name="password" class="text-input w-full basic-text-size">
                     <span id="register-password-visibility" class="material-symbols-outlined absolute top-[50%] -translate-y-1/2 right-[0.6vw] cursor-pointer select-none duration-200 text-[rgb(255,160,176)] hover:text-[rgb(228,140,155)] text-[900%]">
                             visibility
                     </span>
@@ -35,7 +35,7 @@
                 <span id="change-form-trigger-register" class="text-left cursor-pointer underline mb-[2vw] text-[blue] hover:text-[rgb(98,0,255)] active:text-[rgb(128,0,255)]">
                     I already have an account.
                 </span>
-                <input type="submit" value="Register" class="form-btn">
+                <input type="submit" value="Register" name="register-btn" class="form-btn">
             </form>
         </div>
         <div id="signin_container" class="login_signup_container border-l-2 [animation-duration:2000ms] right-form-appear-animation float-right">

@@ -13,7 +13,6 @@ function changeForm(
     currentFormAppearClass: string, 
     currentFormDisappearClass: string, 
     nextFormAppearClass: string
-    
 ): void{
     const currentForm = document.getElementById(currentFormId) as HTMLElement;
     const nextForm = document.getElementById(nextFormId) as HTMLElement;
