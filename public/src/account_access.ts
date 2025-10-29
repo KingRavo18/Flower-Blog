@@ -33,20 +33,31 @@ async function registerUser(event: SubmitEvent): Promise<void>{
     const usernameInput = document.getElementById("register-username") as HTMLInputElement;
     const passwordInput = document.getElementById("register-password") as HTMLInputElement;
     const message = document.getElementById("registration-message") as HTMLElement;
-    const username = usernameInput.value;
-    const password = passwordInput.value;
 
     try{
-        validateInput(username, password);
-        const response = await fetch("../../backend/Account_Access/register_user.php", {
+        validateInput(usernameInput.value, passwordInput.value);
+        const response = await fetch("../backend/Account_Access/register_user.php", {
             method: "POST",
-            //finish this later
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ username: usernameInput.value, password: passwordInput.value}),
         });
         if(!response.ok){
             throw new Error("Could not register. Plese try again later.");
         }
+
+        const data = await response.json();
+        if(data.query_fail){
+            throw new Error(data.query_fail);
+        }
+
+        usernameInput.value = "";
+        passwordInput.value = "";
+        message.classList.remove("error-message");
+        message.classList.add("success-message");
+        message.textContent = data.query_success;
     }
     catch(error){
+        message.classList.remove("success-message");
         message.classList.add("error-message");
         message.textContent = (error as Error).message;
     }
@@ -56,7 +67,11 @@ async function registerUser(event: SubmitEvent): Promise<void>{
     }
 }
 
-function signinUser(): void{
+async function signinUser(): Promise<void>{
+
+}
+
+function displayMessage(): void{
 
 }
 

@@ -59,7 +59,7 @@ class RegisterUser extends DbConnection{
             echo json_encode(["query_success" => "Registration was successful"]);
         }
         catch(PDOException $e){
-            echo json_encode(["query_fail" => "An error has occured. Please try again later"]);
+            echo json_encode(["query_fail" => "A problem has occured. Please try again later"]);
             session_destroy();
         }
         catch(Exception $e){
@@ -69,9 +69,7 @@ class RegisterUser extends DbConnection{
     }
 }
 
-if(isset($_POST["register-btn"])){
-    $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
-    $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
-    $register_user = new RegisterUser($username, $password);
-    $register_user->registerUser();
-}
+$username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
+$password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
+$register_user = new RegisterUser($username, $password);
+$register_user->registerUser();
