@@ -33,7 +33,6 @@ async function registerUser(event: SubmitEvent): Promise<void>{
     const usernameInput = document.getElementById("register-username") as HTMLInputElement;
     const passwordInput = document.getElementById("register-password") as HTMLInputElement;
     const message = document.getElementById("registration-message") as HTMLElement;
-
     try{
         validateInput(usernameInput.value, passwordInput.value);
         const response = await fetch("../backend/Account_Access/register_user.php", {
@@ -44,12 +43,10 @@ async function registerUser(event: SubmitEvent): Promise<void>{
         if(!response.ok){
             throw new Error("Could not register. Plese try again later.");
         }
-
         const data = await response.json();
         if(data.query_fail){
             throw new Error(data.query_fail);
         }
-
         usernameInput.value = "";
         passwordInput.value = "";
         message.classList.remove("error-message");
@@ -61,17 +58,37 @@ async function registerUser(event: SubmitEvent): Promise<void>{
         message.classList.add("error-message");
         message.textContent = (error as Error).message;
     }
-
-    function validateInput(username: string, password: string): void{
-
-    }
 }
 
 async function signinUser(): Promise<void>{
 
 }
 
-function displayMessage(): void{
+function validateInput(username: string, password: string): void{
+    if(username.trim() === ""){
+        throw new Error("Please input a username");
+    }
+    if(password.trim() === ""){
+        throw new Error("Please input a password");
+    }
+    if(password.length < 8){
+        throw new Error("A password must be at least 8 symbols long");
+    }
+    if(!Boolean(password.match(/[a-z]/))){
+        throw new Error("A password must contain a non-capital letter");
+    }
+    if(!Boolean(password.match(/[A-Z]/))){
+        throw new Error("A password must contain a capital letter");
+    }
+    if(!Boolean(password.match(/[0-9]/))){
+        throw new Error("A password must contain a number");
+    }
+    if(!Boolean(password.match(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/))){
+        throw new Error("A password must contain a special character");
+    } 
+}
+
+function displayMessage(status: string, contents: string): void{
 
 }
 
@@ -86,7 +103,6 @@ function changeForm(
     const currentForm = document.getElementById(currentFormId) as HTMLElement;
     const nextForm = document.getElementById(nextFormId) as HTMLElement;
     const nextFormTrigger = document.getElementById(nextFormTriggerId) as HTMLElement;
-
     currentForm.classList.remove(currentFormAppearClass);
     currentForm.classList.add(currentFormDisappearClass);
     nextForm.classList.add(nextFormAppearClass);

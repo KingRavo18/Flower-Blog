@@ -35,12 +35,33 @@ async function registerUser(event) {
         message.classList.add("error-message");
         message.textContent = error.message;
     }
-    function validateInput(username, password) {
-    }
 }
 async function signinUser() {
 }
-function displayMessage() {
+function validateInput(username, password) {
+    if (username.trim() === "") {
+        throw new Error("Please input a username");
+    }
+    if (password.trim() === "") {
+        throw new Error("Please input a password");
+    }
+    if (password.length < 8) {
+        throw new Error("A password must be at least 8 symbols long");
+    }
+    if (!Boolean(password.match(/[a-z]/))) {
+        throw new Error("A password must contain a non-capital letter");
+    }
+    if (!Boolean(password.match(/[A-Z]/))) {
+        throw new Error("A password must contain a capital letter");
+    }
+    if (!Boolean(password.match(/[0-9]/))) {
+        throw new Error("A password must contain a number");
+    }
+    if (!Boolean(password.match(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/))) {
+        throw new Error("A password must contain a special character");
+    }
+}
+function displayMessage(status, contents) {
 }
 function changeForm(currentFormId, nextFormId, nextFormTriggerId, currentFormAppearClass, currentFormDisappearClass, nextFormAppearClass) {
     const currentForm = document.getElementById(currentFormId);
