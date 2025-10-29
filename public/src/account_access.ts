@@ -1,3 +1,33 @@
+document.addEventListener("DOMContentLoaded", () => {
+    (document.getElementById("registration-form") as HTMLFormElement).addEventListener("submit", registerUser);
+
+    (document.getElementById("change-form-trigger-signin") as HTMLElement).addEventListener("click", () => changeForm(
+        "signin_container", 
+        "registration_container", 
+        "change-form-trigger-register",
+        "right-form-appear-animation", 
+        "right-form-disappear-animation", 
+        "left-form-appear-animation"
+    ));
+    (document.getElementById("change-form-trigger-register") as HTMLElement).addEventListener("click", () => changeForm(
+        "registration_container", 
+        "signin_container", 
+        "change-form-trigger-signin",
+        "left-form-appear-animation", 
+        "left-form-disappear-animation", 
+        "right-form-appear-animation"    
+    ));
+
+    (document.getElementById("signin-password-visibility") as HTMLElement).addEventListener("click", () => togglePasswordVisibility(
+        "signin-password-visibility", 
+        "sign-in-password"
+    ));
+    (document.getElementById("register-password-visibility") as HTMLElement).addEventListener("click", () => togglePasswordVisibility(
+        "register-password-visibility", 
+        "register-password"
+    )); 
+}, {once: true});
+
 async function registerUser(event: SubmitEvent): Promise<void>{
     event.preventDefault();
     const usernameInput = document.getElementById("register-username") as HTMLInputElement;
@@ -25,7 +55,6 @@ async function registerUser(event: SubmitEvent): Promise<void>{
 
     }
 }
-(document.getElementById("registration-form") as HTMLFormElement).addEventListener("submit", registerUser, {once: true});
 
 function signinUser(): void{
 
@@ -53,25 +82,7 @@ function changeForm(
         currentForm.style.display = "none";
         nextFormTrigger.classList.remove("click-disabled");
     }, {once: true});
-    
 }
-(document.getElementById("change-form-trigger-signin") as HTMLElement).onclick = () => changeForm(
-    "signin_container", 
-    "registration_container", 
-    "change-form-trigger-register",
-    "right-form-appear-animation", 
-    "right-form-disappear-animation", 
-    "left-form-appear-animation"
-);
-(document.getElementById("change-form-trigger-register") as HTMLElement).onclick = () => changeForm(
-    "registration_container", 
-    "signin_container", 
-    "change-form-trigger-signin",
-    "left-form-appear-animation", 
-    "left-form-disappear-animation", 
-    "right-form-appear-animation"    
-);
-//replace the onclick
 
 function togglePasswordVisibility(
     trigger_id: string, 
@@ -82,11 +93,3 @@ function togglePasswordVisibility(
     trigger.textContent = trigger.textContent === "visibility_off" ? "visibility" : "visibility_off";
     triggeredInput.type = triggeredInput.type === "text" ? "password" : "text";
 }
-(document.getElementById("signin-password-visibility") as HTMLElement).addEventListener("click", () => togglePasswordVisibility(
-    "signin-password-visibility", 
-    "sign-in-password"
-), {once: true});
-(document.getElementById("register-password-visibility") as HTMLElement).addEventListener("click", () => togglePasswordVisibility(
-    "register-password-visibility", 
-    "register-password"
-), {once: true}); 
