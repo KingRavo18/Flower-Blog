@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("registration-form").addEventListener("submit", registerUser);
-    document.getElementById("sign-in-form").addEventListener("submit", signinUser);
+    document.getElementById("sign-in-form").addEventListener("submit", signInUser);
     document.getElementById("change-form-trigger-signin").addEventListener("click", () => changeForm("signin_container", "registration_container", "change-form-trigger-register", "right-form-appear-animation", "right-form-disappear-animation", "left-form-appear-animation"));
     document.getElementById("change-form-trigger-register").addEventListener("click", () => changeForm("registration_container", "signin_container", "change-form-trigger-signin", "left-form-appear-animation", "left-form-disappear-animation", "right-form-appear-animation"));
     document.getElementById("signin-password-visibility").addEventListener("click", () => togglePasswordVisibility("signin-password-visibility", "sign-in-password"));
@@ -10,7 +10,6 @@ async function registerUser(event) {
     event.preventDefault();
     const usernameInput = document.getElementById("register-username");
     const passwordInput = document.getElementById("register-password");
-    const message = document.getElementById("registration-message");
     try {
         validateInput(usernameInput.value, passwordInput.value);
         const response = await fetch("../backend/Account_Access/register_user.php", {
@@ -33,8 +32,14 @@ async function registerUser(event) {
         displayMessage("registration_container", "error-message", error.message);
     }
 }
-async function signinUser(event) {
+async function signInUser(event) {
     event.preventDefault();
+    const usernameInput = document.getElementById("sign-in-username");
+    const passwordInput = document.getElementById("sign-in-password");
+    try {
+    }
+    catch (error) {
+    }
 }
 function validateInput(username, password) {
     if (username.trim() === "") {

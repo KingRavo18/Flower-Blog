@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     (document.getElementById("registration-form") as HTMLFormElement).addEventListener("submit", registerUser);
-    (document.getElementById("sign-in-form") as HTMLFormElement).addEventListener("submit", signinUser);
+    (document.getElementById("sign-in-form") as HTMLFormElement).addEventListener("submit", signInUser);
 
     (document.getElementById("change-form-trigger-signin") as HTMLElement).addEventListener("click", () => changeForm(
         "signin_container", 
@@ -33,7 +33,6 @@ async function registerUser(event: SubmitEvent): Promise<void>{
     event.preventDefault();
     const usernameInput = document.getElementById("register-username") as HTMLInputElement;
     const passwordInput = document.getElementById("register-password") as HTMLInputElement;
-    const message = document.getElementById("registration-message") as HTMLElement;
     try{
         validateInput(usernameInput.value, passwordInput.value);
         const response = await fetch("../backend/Account_Access/register_user.php", {
@@ -57,8 +56,16 @@ async function registerUser(event: SubmitEvent): Promise<void>{
     }
 }
 
-async function signinUser(event: SubmitEvent): Promise<void>{
+async function signInUser(event: SubmitEvent): Promise<void>{
     event.preventDefault();
+    const usernameInput = document.getElementById("sign-in-username") as HTMLInputElement;
+    const passwordInput = document.getElementById("sign-in-password") as HTMLInputElement;
+    try{
+
+    }
+    catch(error){
+
+    }
 }
 
 function validateInput(username: string, password: string): void{
