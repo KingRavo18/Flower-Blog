@@ -94,6 +94,9 @@ function displayMessage(current_container_id, message_class, contents) {
         message.addEventListener("animationend", () => container.removeChild(message), { once: true });
     }, 3000);
 }
+//
+// The functions after this point only affect the UI
+//
 function changeForm(currentFormId, nextFormId, nextFormTriggerId, currentFormAppearClass, currentFormDisappearClass, nextFormAppearClass) {
     const currentForm = document.getElementById(currentFormId);
     const nextForm = document.getElementById(nextFormId);

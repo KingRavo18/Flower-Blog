@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     (document.getElementById("registration-form") as HTMLFormElement).addEventListener("submit", registerUser);
     (document.getElementById("sign-in-form") as HTMLFormElement).addEventListener("submit", signInUser);
-
     (document.getElementById("change-form-trigger-signin") as HTMLElement).addEventListener("click", () => changeForm(
         "signin_container", 
         "registration_container", 
@@ -18,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
         "left-form-disappear-animation", 
         "right-form-appear-animation"    
     ));
-
     (document.getElementById("signin-password-visibility") as HTMLElement).addEventListener("click", () => togglePasswordVisibility(
         "signin-password-visibility", 
         "sign-in-password"
@@ -120,6 +118,10 @@ function displayMessage(current_container_id: string, message_class: string, con
         message.addEventListener("animationend", () => container.removeChild(message), {once: true});
     }, 3000);
 }
+
+//
+// The functions after this point only affect the UI
+//
 
 function changeForm(
     currentFormId: string, 
