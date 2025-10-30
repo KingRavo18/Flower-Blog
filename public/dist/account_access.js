@@ -83,9 +83,7 @@ function validateInput(username, password) {
 function displayMessage(current_container_id, message_class, contents) {
     const container = document.getElementById(current_container_id);
     const message = document.createElement("p");
-    message.classList.add(message_class);
-    message.classList.add(current_container_id === "signin_container" ? "right-message" : "left-message");
-    message.classList.add("message-appear");
+    message.classList.add(message_class, "message-appear", current_container_id === "signin_container" ? "right-message" : "left-message");
     message.textContent = contents;
     container.appendChild(message);
     setTimeout(() => {
@@ -97,17 +95,17 @@ function displayMessage(current_container_id, message_class, contents) {
 //
 // The functions after this point only affect the UI
 //
-function changeForm(currentFormId, nextFormId, nextFormTriggerId, currentFormAppearClass, currentFormDisappearClass, nextFormAppearClass) {
+function changeForm(currentFormId, nextFormId, nextFormTriggerId, currentFormAppearAnimClass, currentFormDisappearAnimClass, nextFormAppearAnimClass) {
     const currentForm = document.getElementById(currentFormId);
     const nextForm = document.getElementById(nextFormId);
     const nextFormTrigger = document.getElementById(nextFormTriggerId);
-    currentForm.classList.remove(currentFormAppearClass);
-    currentForm.classList.add(currentFormDisappearClass);
-    nextForm.classList.add(nextFormAppearClass);
+    currentForm.classList.remove(currentFormAppearAnimClass);
+    currentForm.classList.add(currentFormDisappearAnimClass);
+    nextForm.classList.add(nextFormAppearAnimClass);
     nextForm.style.display = "block";
     nextFormTrigger.classList.add("click-disabled");
     currentForm.addEventListener("animationend", () => {
-        currentForm.classList.remove(currentFormDisappearClass);
+        currentForm.classList.remove(currentFormDisappearAnimClass);
         currentForm.style.display = "none";
         nextFormTrigger.classList.remove("click-disabled");
     }, { once: true });

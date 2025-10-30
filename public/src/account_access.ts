@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     (document.getElementById("registration-form") as HTMLFormElement).addEventListener("submit", registerUser);
     (document.getElementById("sign-in-form") as HTMLFormElement).addEventListener("submit", signInUser);
+    
     (document.getElementById("change-form-trigger-signin") as HTMLElement).addEventListener("click", () => changeForm(
         "signin_container", 
         "registration_container", 
@@ -17,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "left-form-disappear-animation", 
         "right-form-appear-animation"    
     ));
+    
     (document.getElementById("signin-password-visibility") as HTMLElement).addEventListener("click", () => togglePasswordVisibility(
         "signin-password-visibility", 
         "sign-in-password"
@@ -107,9 +109,11 @@ function validateInput(username: string, password: string): void{
 function displayMessage(current_container_id: string, message_class: string, contents: string): void{
     const container = document.getElementById(current_container_id) as HTMLElement;
     const message = document.createElement("p");
-    message.classList.add(message_class);
-    message.classList.add(current_container_id === "signin_container" ? "right-message" : "left-message");
-    message.classList.add("message-appear");
+    message.classList.add(
+        message_class, 
+        "message-appear",
+        current_container_id === "signin_container" ? "right-message" : "left-message"
+    );
     message.textContent = contents;
     container.appendChild(message);
     setTimeout(() => {
@@ -127,20 +131,22 @@ function changeForm(
     currentFormId: string, 
     nextFormId: string, 
     nextFormTriggerId: string,
-    currentFormAppearClass: string, 
-    currentFormDisappearClass: string, 
-    nextFormAppearClass: string
+    currentFormAppearAnimClass: string, 
+    currentFormDisappearAnimClass: string, 
+    nextFormAppearAnimClass: string
 ): void{
     const currentForm = document.getElementById(currentFormId) as HTMLElement;
     const nextForm = document.getElementById(nextFormId) as HTMLElement;
     const nextFormTrigger = document.getElementById(nextFormTriggerId) as HTMLElement;
-    currentForm.classList.remove(currentFormAppearClass);
-    currentForm.classList.add(currentFormDisappearClass);
-    nextForm.classList.add(nextFormAppearClass);
+
+    currentForm.classList.remove(currentFormAppearAnimClass);
+    currentForm.classList.add(currentFormDisappearAnimClass);
+    nextForm.classList.add(nextFormAppearAnimClass);
     nextForm.style.display = "block";
     nextFormTrigger.classList.add("click-disabled"); 
+
     currentForm.addEventListener("animationend", () => {
-        currentForm.classList.remove(currentFormDisappearClass);
+        currentForm.classList.remove(currentFormDisappearAnimClass);
         currentForm.style.display = "none";
         nextFormTrigger.classList.remove("click-disabled");
     }, {once: true});
