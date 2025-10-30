@@ -37,8 +37,24 @@ async function signInUser(event) {
     const usernameInput = document.getElementById("sign-in-username");
     const passwordInput = document.getElementById("sign-in-password");
     try {
+        validateInput(usernameInput.value, passwordInput.value);
+        const response = await fetch("../backend/Account_Access/login_user.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ username: usernameInput.value, password: passwordInput.value }),
+        });
+        if (!response.ok) {
+            throw new Error("Failed to sign in. Please try again later.");
+        }
+        const data = await response.json();
+        if (data.query_fail) {
+            throw new Error(data.query_fail);
+        }
+        displayMessage("signin_container", "success-message", data.query_success);
+        setTimeout(() => window.location.href = "./main_page.html", 1000);
     }
     catch (error) {
+        displayMessage("signin_container", "error-message", error.message);
     }
 }
 function validateInput(username, password) {
@@ -68,6 +84,7 @@ function displayMessage(current_container_id, message_class, contents) {
     const container = document.getElementById(current_container_id);
     const message = document.createElement("p");
     message.classList.add(message_class);
+    message.classList.add(current_container_id === "signin_container" ? "right-message" : "left-message");
     message.classList.add("message-appear");
     message.textContent = contents;
     container.appendChild(message);

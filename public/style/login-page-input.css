@@ -93,7 +93,8 @@
     text-align: center;
     width: 100%;
     padding: 1vw;
-    bottom: 2vw;
+    bottom: 1vw;
+    margin: 1vw;
     text-wrap: pretty;
     padding: 0 1.5vw;
     animation-duration: 500ms;
@@ -110,18 +111,25 @@
     color: green;
 }
 
+.left-message{
+    left: 1vw;
+}
+.right-message{
+    right: 1vw;
+}
+
 .message-appear{
     animation-name: message-appear;
 }
 @keyframes message-appear{
     from{ bottom: -5vw; }
-    to{ bottom: 2vw; }
+    to{ bottom: 1vw; }
 }
 
 .message-disappear{
     animation-name: message-disappear;
 }
 @keyframes message-disappear{
-    from{ bottom: 2vw; }
+    from{ bottom: 1vw; }
     to{ bottom: -5vw; }
 }

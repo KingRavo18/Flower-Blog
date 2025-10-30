@@ -465,7 +465,8 @@
   text-align: center;
   width: 100%;
   padding: 1vw;
-  bottom: 2vw;
+  bottom: 1vw;
+  margin: 1vw;
   text-wrap: pretty;
   padding: 0 1.5vw;
   animation-duration: 500ms;
@@ -481,6 +482,12 @@
   background-color: rgb(183, 245, 183);
   color: green;
 }
+.left-message {
+  left: 1vw;
+}
+.right-message {
+  right: 1vw;
+}
 .message-appear {
   animation-name: message-appear;
 }
@@ -489,7 +496,7 @@
     bottom: -5vw;
   }
   to {
-    bottom: 2vw;
+    bottom: 1vw;
   }
 }
 .message-disappear {
@@ -497,7 +504,7 @@
 }
 @keyframes message-disappear {
   from {
-    bottom: 2vw;
+    bottom: 1vw;
   }
   to {
     bottom: -5vw;
