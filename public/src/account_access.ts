@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     (document.getElementById("registration-form") as HTMLFormElement).addEventListener("submit", registerUser);
+    (document.getElementById("sign-in-form") as HTMLFormElement).addEventListener("submit", signinUser);
 
     (document.getElementById("change-form-trigger-signin") as HTMLElement).addEventListener("click", () => changeForm(
         "signin_container", 
@@ -49,19 +50,15 @@ async function registerUser(event: SubmitEvent): Promise<void>{
         }
         usernameInput.value = "";
         passwordInput.value = "";
-        message.classList.remove("error-message");
-        message.classList.add("success-message");
-        message.textContent = data.query_success;
+        displayMessage("registration_container", "success-message", data.query_success);
     }
     catch(error){
-        message.classList.remove("success-message");
-        message.classList.add("error-message");
-        message.textContent = (error as Error).message;
+        displayMessage("registration_container", "error-message", (error as Error).message);
     }
 }
 
-async function signinUser(): Promise<void>{
-
+async function signinUser(event: SubmitEvent): Promise<void>{
+    event.preventDefault();
 }
 
 function validateInput(username: string, password: string): void{
@@ -88,8 +85,18 @@ function validateInput(username: string, password: string): void{
     } 
 }
 
-function displayMessage(status: string, contents: string): void{
-
+function displayMessage(current_container_id: string, message_class: string, contents: string): void{
+    const container = document.getElementById(current_container_id) as HTMLElement;
+    const message = document.createElement("p");
+    message.classList.add(message_class);
+    message.classList.add("message-appear");
+    message.textContent = contents;
+    container.appendChild(message);
+    setTimeout(() => {
+        message.classList.remove("message-appear");
+        message.classList.add("message-disappear");
+        message.addEventListener("animationend", () => container.removeChild(message), {once: true});
+    }, 3000);
 }
 
 function changeForm(

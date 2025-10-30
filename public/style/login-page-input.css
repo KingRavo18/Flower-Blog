@@ -60,6 +60,7 @@
 }
 
 .login_signup_container{
+    position: relative;
     height: 100vh;
     padding: 0 1.5vw;
     background-color: hsla(351, 100%, 92%, 0.85);
@@ -84,18 +85,44 @@
     }
 }
 
+/* ERROR AND SUCCESS MESSAGES */
+
 .error-message,
 .success-message{
+    position: absolute;
     text-align: center;
     width: 100%;
     padding: 1vw;
+    bottom: 2vw;
+    left: 1vw;
     text-wrap: pretty;
+    padding: 0 1.5vw;
+    animation-duration: 500ms;
+    border-radius: 5px;
 }
-
 .error-message{
+    border: 2px solid rgb(255, 160, 176);
+    background-color: hsl(351, 100%, 92%);
     color: red;
 }
-
 .success-message{
+    border: 2px solid rgb(1, 94, 1);
+    background-color: rgb(183, 245, 183);
     color: green;
+}
+
+.message-appear{
+    animation-name: message-appear;
+}
+@keyframes message-appear{
+    from{ bottom: -5vw; }
+    to{ bottom: 2vw; }
+}
+
+.message-disappear{
+    animation-name: message-disappear;
+}
+@keyframes message-disappear{
+    from{ bottom: 2vw; }
+    to{ bottom: -5vw; }
 }

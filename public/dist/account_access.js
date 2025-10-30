@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("registration-form").addEventListener("submit", registerUser);
+    document.getElementById("sign-in-form").addEventListener("submit", signinUser);
     document.getElementById("change-form-trigger-signin").addEventListener("click", () => changeForm("signin_container", "registration_container", "change-form-trigger-register", "right-form-appear-animation", "right-form-disappear-animation", "left-form-appear-animation"));
     document.getElementById("change-form-trigger-register").addEventListener("click", () => changeForm("registration_container", "signin_container", "change-form-trigger-signin", "left-form-appear-animation", "left-form-disappear-animation", "right-form-appear-animation"));
     document.getElementById("signin-password-visibility").addEventListener("click", () => togglePasswordVisibility("signin-password-visibility", "sign-in-password"));
@@ -26,17 +27,14 @@ async function registerUser(event) {
         }
         usernameInput.value = "";
         passwordInput.value = "";
-        message.classList.remove("error-message");
-        message.classList.add("success-message");
-        message.textContent = data.query_success;
+        displayMessage("registration_container", "success-message", data.query_success);
     }
     catch (error) {
-        message.classList.remove("success-message");
-        message.classList.add("error-message");
-        message.textContent = error.message;
+        displayMessage("registration_container", "error-message", error.message);
     }
 }
-async function signinUser() {
+async function signinUser(event) {
+    event.preventDefault();
 }
 function validateInput(username, password) {
     if (username.trim() === "") {
@@ -61,7 +59,18 @@ function validateInput(username, password) {
         throw new Error("A password must contain a special character");
     }
 }
-function displayMessage(status, contents) {
+function displayMessage(current_container_id, message_class, contents) {
+    const container = document.getElementById(current_container_id);
+    const message = document.createElement("p");
+    message.classList.add(message_class);
+    message.classList.add("message-appear");
+    message.textContent = contents;
+    container.appendChild(message);
+    setTimeout(() => {
+        message.classList.remove("message-appear");
+        message.classList.add("message-disappear");
+        message.addEventListener("animationend", () => container.removeChild(message), { once: true });
+    }, 3000);
 }
 function changeForm(currentFormId, nextFormId, nextFormTriggerId, currentFormAppearClass, currentFormDisappearClass, nextFormAppearClass) {
     const currentForm = document.getElementById(currentFormId);
