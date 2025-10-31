@@ -12,6 +12,6 @@ async function fetchNavbar(){
         (document.getElementById("navigation-bar") as HTMLElement).innerHTML = data;
     }
     catch(error){
-        console.error();
+        console.error((error as Error).message);
     }
 }
