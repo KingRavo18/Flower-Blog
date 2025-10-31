@@ -234,6 +234,9 @@
   .w-full {
     width: 100%;
   }
+  .max-w-\[30vw\] {
+    max-width: 30vw;
+  }
   .-translate-x-1\/2 {
     --tw-translate-x: calc(calc(1/2 * 100%) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
@@ -341,6 +344,9 @@
   .\[animation-duration\:2000ms\] {
     animation-duration: 2000ms;
   }
+  .\[animation-name\:description-fall\] {
+    animation-name: description-fall;
+  }
   .\[animation-name\:title-fall\] {
     animation-name: title-fall;
   }
@@ -364,9 +370,6 @@
     }
   }
 }
-.basic-text-size {
-  font-size: 1.15vw;
-}
 .click-disabled {
   pointer-events: none;
 }
@@ -376,6 +379,14 @@
   }
   to {
     margin-top: 2vw;
+  }
+}
+@keyframes description-fall {
+  from {
+    top: 200%;
+  }
+  to {
+    top: 50%;
   }
 }
 .right-form-appear-animation {
@@ -471,6 +482,7 @@
   padding: 0 1.5vw;
   animation-duration: 500ms;
   border-radius: 5px;
+  box-shadow: 2px 2px 3px gray;
 }
 .error-message {
   border: 2px solid rgb(255, 160, 176);

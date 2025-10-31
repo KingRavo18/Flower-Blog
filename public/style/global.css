@@ -4,3 +4,7 @@ header{
     position: fixed;
     background-color: hsla(351, 100%, 92%, 0.85);
 }
+
+.basic-text-size{
+    font-size: 1.15vw;
+}
