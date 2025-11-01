@@ -1,17 +1,23 @@
 <header>
-    <span id="menu-toggle-btn" class="material-symbols-outlined select-none cursor-pointer text-[900%]">
+    <span id="menu-activate-btn" class="material-symbols-outlined select-none cursor-pointer">
         menu
     </span>
     <p class="text-[140%] ml-[1vw]">
         FLOWER-BLOG
     </p>
 </header>
-<div id="toggleable-sidebar">
-    <span id="menu-toggle-btn" class="material-symbols-outlined select-none cursor-pointer text-[900%] h-[5vw]">
-        menu
-    </span>
+
+<div id="toggleable-sidebar" class="toggleable-sidebar hide-sidebar">
+    <div class="h-[5vw] flex items-center">
+        <span id="menu-deactivate-btn" class="material-symbols-outlined select-none cursor-pointer">
+            menu
+        </span>
+    </div>
     <ul>
         <li>Home</li>
-        <li>Logout</li>
+        <li id="logout-list-btn">Logout</li>
     </ul>
+</div>
+<div id="logout-window">
+    
 </div>

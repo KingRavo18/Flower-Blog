@@ -25,10 +25,23 @@ async function fetchNavbar() {
         }
         const data = await response.text();
         document.body.innerHTML = data;
+        const { openSidebar, closeSidebar } = toggleSidebar();
+        document.getElementById("menu-activate-btn").addEventListener("click", () => openSidebar());
+        document.getElementById("menu-deactivate-btn").addEventListener("click", () => closeSidebar());
     }
     catch (error) {
         console.error(error.message);
     }
+}
+function toggleSidebar() {
+    const sidebar = document.getElementById("toggleable-sidebar");
+    function openSidebar() {
+        sidebar.classList.remove("hide-sidebar");
+    }
+    function closeSidebar() {
+        sidebar.classList.add("hide-sidebar");
+    }
+    return { openSidebar, closeSidebar };
 }
 export {};
 //# sourceMappingURL=global.js.map

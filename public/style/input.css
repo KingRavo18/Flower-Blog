@@ -30,7 +30,7 @@ header{
     to{ top: 0 }
 }
 
-#toggleable-sidebar{
+.toggleable-sidebar{
     position: fixed;
     left: 0;
     z-index: 2;
@@ -41,6 +41,9 @@ header{
     height: 100vh;
     background-color: hsla(351, 100%, 92%);
     border-right: 2px solid rgb(255, 160, 176);
+}
+.hide-sidebar{
+    display: none;
 }
 
 .text-input{

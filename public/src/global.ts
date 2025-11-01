@@ -27,8 +27,27 @@ async function fetchNavbar(): Promise<void>{
         }
         const data = await response.text();
         document.body.innerHTML = data;
+
+        const {openSidebar, closeSidebar} = toggleSidebar();
+        (document.getElementById("menu-activate-btn") as HTMLElement).addEventListener("click", () => openSidebar());
+        (document.getElementById("menu-deactivate-btn") as HTMLElement).addEventListener("click", () => closeSidebar());
     }
     catch(error){
         console.error((error as Error).message);
     }
+}
+
+interface toggleSidebarReturnTypes {
+    openSidebar: () => void;
+    closeSidebar: () => void;
+}
+function toggleSidebar(): toggleSidebarReturnTypes{
+    const sidebar = document.getElementById("toggleable-sidebar") as HTMLElement;
+    function openSidebar(): void{
+        sidebar.classList.remove("hide-sidebar");
+    }
+    function closeSidebar(): void{
+        sidebar.classList.add("hide-sidebar");
+    }
+    return {openSidebar, closeSidebar};
 }
