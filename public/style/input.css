@@ -41,9 +41,22 @@ header{
     height: 100vh;
     background-color: hsla(351, 100%, 92%);
     border-right: 2px solid rgb(255, 160, 176);
+    animation-name: sidebarAppear;
+    animation-duration: 500ms;
 }
 .hide-sidebar{
     display: none;
+}
+@keyframes sidebarAppear{
+    from{ left: -10vw; }
+    to{ left: 0; }
+}
+.sidebar-disappear{
+    animation-name: sidebarDisappear;
+}
+@keyframes sidebarDisappear{
+    from{ left: 0; }
+    to{ left: -10vw; }
 }
 
 .text-input{

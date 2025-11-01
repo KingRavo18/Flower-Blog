@@ -47,7 +47,11 @@ function toggleSidebar(): toggleSidebarReturnTypes{
         sidebar.classList.remove("hide-sidebar");
     }
     function closeSidebar(): void{
-        sidebar.classList.add("hide-sidebar");
+        sidebar.classList.add("sidebar-disappear");
+        sidebar.addEventListener("animationend", () => {
+            sidebar.classList.remove("sidebar-disappear");
+            sidebar.classList.add("hide-sidebar");
+        }, { once: true });
     }
     return {openSidebar, closeSidebar};
 }
