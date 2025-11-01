@@ -9,6 +9,8 @@
       "Courier New", monospace;
     --spacing: 0.25rem;
     --font-weight-bold: 700;
+    --default-transition-duration: 150ms;
+    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
   }
@@ -201,9 +203,6 @@
       max-width: 96rem;
     }
   }
-  .m-0 {
-    margin: calc(var(--spacing) * 0);
-  }
   .my-\[3vw\] {
     margin-block: 3vw;
   }
@@ -216,6 +215,9 @@
   .mb-\[2vw\] {
     margin-bottom: 2vw;
   }
+  .ml-\[1vw\] {
+    margin-left: 1vw;
+  }
   .block {
     display: block;
   }
@@ -227,9 +229,6 @@
   }
   .hidden {
     display: none;
-  }
-  .h-screen {
-    height: 100vh;
   }
   .w-full {
     width: 100%;
@@ -305,14 +304,14 @@
   .text-right {
     text-align: right;
   }
-  .font-\[\'Trebuchet_MS\'\,\'Lucida_Sans_Unicode\'\,\'Lucida_Grande\'\,\'Lucida_Sans\'\,Arial\,sans-serif\] {
-    font-family: 'Trebuchet MS','Lucida Sans Unicode','Lucida Grande','Lucida Sans',Arial,sans-serif;
-  }
   .text-\[3vw\] {
     font-size: 3vw;
   }
   .text-\[4vw\] {
     font-size: 4vw;
+  }
+  .text-\[140\%\] {
+    font-size: 140%;
   }
   .text-\[900\%\] {
     font-size: 900%;
@@ -344,8 +343,8 @@
   .\[animation-duration\:2000ms\] {
     animation-duration: 2000ms;
   }
-  .\[animation-name\:description-fall\] {
-    animation-name: description-fall;
+  .\[animation-name\:signin-page-description-fall\] {
+    animation-name: signin-page-description-fall;
   }
   .\[animation-name\:title-fall\] {
     animation-name: title-fall;
@@ -370,8 +369,43 @@
     }
   }
 }
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.basic-text-size {
+  font-size: 1.15vw;
+}
 .click-disabled {
   pointer-events: none;
+}
+#navigation-bar {
+  padding: 0 2vw;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  background-color: hsla(351, 100%, 92%, 0.85);
+  border-bottom: 2px solid rgb(255, 160, 176);
+  height: 5vw;
+  top: 0;
+  left: 0;
+  width: 100vw;
+}
+.text-input {
+  background-color: white;
+  cursor: pointer;
+  padding: 3px 30px 3px 10px;
+  border: 2px solid rgb(255, 160, 176);
+  border-radius: 5px;
+  transition: 200ms;
+  &:hover {
+    background-color: rgb(253, 239, 239);
+  }
+  &:focus {
+    outline: none;
+    border: 2px solid rgb(228, 140, 155);
+  }
 }
 @keyframes title-fall {
   from {
@@ -381,7 +415,7 @@
     margin-top: 2vw;
   }
 }
-@keyframes description-fall {
+@keyframes signin-page-description-fall {
   from {
     top: 200%;
   }
@@ -431,21 +465,6 @@
   }
   to {
     margin-left: -50vw;
-  }
-}
-.text-input {
-  background-color: white;
-  cursor: pointer;
-  padding: 3px 30px 3px 10px;
-  border: 2px solid rgb(255, 160, 176);
-  border-radius: 5px;
-  transition: 200ms;
-  &:hover {
-    background-color: rgb(253, 239, 239);
-  }
-  &:focus {
-    outline: none;
-    border: 2px solid rgb(228, 140, 155);
   }
 }
 .login_signup_container {

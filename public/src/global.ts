@@ -1,8 +1,25 @@
 document.addEventListener("DOMContentLoaded", () => {
+    checkSession();
     fetchNavbar();
 }, {once: true});
 
-async function fetchNavbar(){
+async function checkSession(): Promise<void>{
+    try{
+        const response = await fetch("../backend/Session_Maintanance/check_session.php");
+        if(!response.ok){
+            throw new Error("Could not find the session check.");
+        }
+        const data = await response.json();
+        if(data.session_validation === "Failed"){
+            throw new Error("Session validation failed.");
+        }
+    }
+    catch(error){
+        window.location.replace("../backend/Session_Maintanance/logout.php");
+    }
+}
+
+async function fetchNavbar(): Promise<void>{
     const header = document.getElementById("navigation-bar") as HTMLElement;
     if(!header){
         return;

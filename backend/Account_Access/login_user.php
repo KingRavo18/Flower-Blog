@@ -20,15 +20,15 @@ class SigninUser extends DbConnection{
     }
 
     private function executeQuery(){
-        $stmt = parent::conn()->prepare("SELECT id, username, password FROM users WHERE username = :username");
+        $stmt = parent::conn()->prepare("SELECT id, password FROM users WHERE username = :username");
         $stmt->execute(["username" => $this->username]);
         $user = $stmt->fetch();
         if(!$user || !password_verify($this->password, $user->password)){
             throw new Exception("You have entered and incorrect username or password.");
         }
-        $SESSION["user_id"] = $user->id;
-        $SESSION["username"] = $user->username;
-        $SESSION["password"] = $user->password;
+        $_SESSION["id"] = $user->id;
+        $_SESSION["username"] = $this->username;
+        $_SESSION["password"] = $user->password;
         $stmt = null;
     }
 

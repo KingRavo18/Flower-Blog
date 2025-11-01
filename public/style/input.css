@@ -1,46 +1,25 @@
 @import "tailwindcss";
 
-.click-disabled{
-    pointer-events: none;
+body{
+    margin: 0;
+    height: 100vh;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-@keyframes title-fall{
-    from{ margin-top: -30vw; }
-    to{ margin-top: 2vw; }
-}
-@keyframes description-fall{
-    from{ top: 200%; }
-    to{ top: 50%;  }
-}
+.basic-text-size{ font-size: 1.15vw; }
+.click-disabled{ pointer-events: none; }
 
-.right-form-appear-animation{
-    animation-name: right-form-appear;
-}
-@keyframes right-form-appear{
-    from{ margin-right: -50vw; }
-    to{ margin-right: 0; }
-}
-.right-form-disappear-animation{
-    animation-name: right-form-disappear;
-}
-@keyframes right-form-disappear{
-    from{ margin-right: 0; }
-    to{ margin-right: -50vw; }
-}
-
-.left-form-appear-animation{
-    animation-name: left-form-appear;
-}
-@keyframes left-form-appear{
-    from{ margin-left: -50vw; }
-    to{ margin-left: 0; }
-}
-.left-form-disappear-animation{
-    animation-name: left-form-disappear;
-}
-@keyframes left-form-disappear{
-    from{ margin-left: 0; }
-    to{ margin-left: -50vw; }
+#navigation-bar{
+    padding: 0 2vw;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    background-color: hsla(351, 100%, 92%, 0.85);
+    border-bottom: 2px solid rgb(255, 160, 176);
+    height: 5vw;
+    top: 0;
+    left: 0;
+    width: 100vw;
 }
 
 .text-input{
@@ -51,13 +30,45 @@
     border-radius: 5px;
     transition: 200ms;
 
-    &:hover{ 
-        background-color: rgb(253, 239, 239); 
-    }
+    &:hover{ background-color: rgb(253, 239, 239); }
     &:focus{
         outline: none;
         border: 2px solid rgb(228, 140, 155);
     }
+}
+
+@keyframes title-fall{
+    from{ margin-top: -30vw; }
+    to{ margin-top: 2vw; }
+}
+
+/* SIGNIN PAGE EXCLUSIVE STYLES */
+
+@keyframes signin-page-description-fall{
+    from{ top: 200%; }
+    to{ top: 50%; }
+}
+
+.right-form-appear-animation{ animation-name: right-form-appear; }
+@keyframes right-form-appear{
+    from{ margin-right: -50vw; }
+    to{ margin-right: 0; }
+}
+.right-form-disappear-animation{ animation-name: right-form-disappear; }
+@keyframes right-form-disappear{
+    from{ margin-right: 0; }
+    to{ margin-right: -50vw; }
+}
+
+.left-form-appear-animation{ animation-name: left-form-appear; }
+@keyframes left-form-appear{
+    from{ margin-left: -50vw; }
+    to{ margin-left: 0; }
+}
+.left-form-disappear-animation{ animation-name: left-form-disappear; }
+@keyframes left-form-disappear{
+    from{ margin-left: 0; }
+    to{ margin-left: -50vw; }
 }
 
 .login_signup_container{
@@ -80,11 +91,10 @@
         margin-left: 50%;
         transform: translateX(-50%);
 
-        &:hover{
-            background-color: hsla(351, 100%, 92%);
-        }
+        &:hover{ background-color: hsla(351, 100%, 92%); }
     }
 }
+
 
 /* ERROR AND SUCCESS MESSAGES */
 
@@ -113,24 +123,16 @@
     color: green;
 }
 
-.left-message{
-    left: 1vw;
-}
-.right-message{
-    right: 1vw;
-}
+.left-message{ left: 1vw; }
+.right-message{ right: 1vw; }
 
-.message-appear{
-    animation-name: message-appear;
-}
+.message-appear{ animation-name: message-appear; }
 @keyframes message-appear{
     from{ bottom: -5vw; }
     to{ bottom: 1vw; }
 }
 
-.message-disappear{
-    animation-name: message-disappear;
-}
+.message-disappear{ animation-name: message-disappear; }
 @keyframes message-disappear{
     from{ bottom: 1vw; }
     to{ bottom: -5vw; }
