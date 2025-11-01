@@ -9,9 +9,10 @@ body{
 .basic-text-size{ font-size: 1.15vw; }
 .click-disabled{ pointer-events: none; }
 
-#navigation-bar{
+header{
     padding: 0 2vw;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     position: fixed;
     background-color: hsla(351, 100%, 92%, 0.85);
@@ -20,6 +21,26 @@ body{
     top: 0;
     left: 0;
     width: 100vw;
+    animation-name: appear-navbar;
+    animation-duration: 1500ms;
+    z-index: 1;
+}
+@keyframes appear-navbar{
+    from{ top: -20vw; }
+    to{ top: 0 }
+}
+
+#toggleable-sidebar{
+    position: fixed;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 6vw;
+    height: 100vh;
+    background-color: hsla(351, 100%, 92%);
+    border-right: 2px solid rgb(255, 160, 176);
 }
 
 .text-input{
