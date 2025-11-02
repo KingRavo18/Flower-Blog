@@ -44,14 +44,19 @@ interface toggleSidebarReturnTypes {
 function toggleSidebar(): toggleSidebarReturnTypes{
     const sidebar = document.getElementById("toggleable-sidebar") as HTMLElement;
     function openSidebar(): void{
-        sidebar.classList.remove("hide-sidebar");
+        sidebar.classList.remove("hide-element");
+        sidebar.classList.add("show-element-flex");
     }
     function closeSidebar(): void{
         sidebar.classList.add("sidebar-disappear");
         sidebar.addEventListener("animationend", () => {
             sidebar.classList.remove("sidebar-disappear");
-            sidebar.classList.add("hide-sidebar");
+            sidebar.classList.remove("show-element-flex");
+            sidebar.classList.add("hide-element");
         }, { once: true });
     }
     return {openSidebar, closeSidebar};
+}
+function toggleLogoutWindow(){
+    
 }

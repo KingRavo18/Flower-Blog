@@ -2,22 +2,28 @@
     <span id="menu-activate-btn" class="material-symbols-outlined select-none cursor-pointer">
         menu
     </span>
-    <p class="text-[140%] ml-[1vw]">
+    <a href="./main_page.html" class="text-[140%] ml-[1vw] cursor-pointer">
         FLOWER-BLOG
-    </p>
+    </a>
 </header>
 
-<div id="toggleable-sidebar" class="toggleable-sidebar hide-sidebar">
+<div id="toggleable-sidebar" class="toggleable-sidebar hide-element">
     <div class="h-[5vw] flex items-center">
         <span id="menu-deactivate-btn" class="material-symbols-outlined select-none cursor-pointer">
             menu
         </span>
     </div>
-    <ul>
-        <li>Home</li>
+    <ul class="p-0">
+        <li><a href="./main_page.html">Home</a></li>
         <li id="logout-list-btn">Logout</li>
     </ul>
 </div>
-<div id="logout-window">
-    
+<div id="logout-window" class="bg-[hsl(351,100%,92%)] fixed z-3 left-[50%] -translate-x-1/2 top-[50%] -translate-y-1/2 hide-element">
+    <p>Are you sure?</p>
+    <div class="flex justify-center gap-[1vw]">
+        <form>
+            <input type="submit" value="Yes">
+        </form>
+        <button id="logout-deny-btn">No</button>
+    </div>
 </div>

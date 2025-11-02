@@ -36,16 +36,20 @@ async function fetchNavbar() {
 function toggleSidebar() {
     const sidebar = document.getElementById("toggleable-sidebar");
     function openSidebar() {
-        sidebar.classList.remove("hide-sidebar");
+        sidebar.classList.remove("hide-element");
+        sidebar.classList.add("show-element-flex");
     }
     function closeSidebar() {
         sidebar.classList.add("sidebar-disappear");
         sidebar.addEventListener("animationend", () => {
             sidebar.classList.remove("sidebar-disappear");
-            sidebar.classList.add("hide-sidebar");
+            sidebar.classList.remove("show-element-flex");
+            sidebar.classList.add("hide-element");
         }, { once: true });
     }
     return { openSidebar, closeSidebar };
+}
+function toggleLogoutWindow() {
 }
 export {};
 //# sourceMappingURL=global.js.map

@@ -8,6 +8,8 @@ body{
 
 .basic-text-size{ font-size: 1.15vw; }
 .click-disabled{ pointer-events: none; }
+.hide-element{ display: none; }
+.show-element-flex{ display: flex; }
 
 header{
     padding: 0 2vw;
@@ -34,19 +36,27 @@ header{
     position: fixed;
     left: 0;
     z-index: 2;
-    display: flex;
     flex-direction: column;
     align-items: center;
-    width: 6vw;
+    width: auto;
     height: 100vh;
-    background-color: hsla(351, 100%, 92%);
+    background-color: hsl(351, 100%, 92%);
     border-right: 2px solid rgb(255, 160, 176);
     animation-name: sidebarAppear;
     animation-duration: 500ms;
+
+    & li{
+        cursor: pointer;
+        padding: 0.5vw 1.5vw;
+        text-decoration: none;
+        transition: 200ms;
+
+        &:hover{
+            background-color: hsl(358, 81%, 94%);
+        }
+    }
 }
-.hide-sidebar{
-    display: none;
-}
+
 @keyframes sidebarAppear{
     from{ left: -10vw; }
     to{ left: 0; }
@@ -58,7 +68,6 @@ header{
     from{ left: 0; }
     to{ left: -10vw; }
 }
-
 .text-input{
     background-color: white;
     cursor: pointer;
