@@ -10,6 +10,7 @@ body{
 .click-disabled{ pointer-events: none; }
 .hide-element{ display: none; }
 .show-element-flex{ display: flex; }
+.show-element-block{ display: block; }
 
 header{
     padding: 0 2vw;
@@ -68,6 +69,19 @@ header{
     from{ left: 0; }
     to{ left: -10vw; }
 }
+
+@keyframes logout-window-appear{
+    from{ margin-top: -10vw; }
+    to{ margin-top: 0; }
+}
+.logout-window-disappear{
+    animation-name: logout-window-disappear;
+}
+@keyframes logout-window-disappear{
+    from{ margin-top: 0; }
+    to{ margin-top: -10vw; }
+}
+
 .text-input{
     background-color: white;
     cursor: pointer;
