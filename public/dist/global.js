@@ -25,7 +25,9 @@ async function fetchNavbar() {
             throw new Error("Could not find the navigation bar.");
         }
         const data = await response.text();
-        document.body.innerHTML = data;
+        const navigation_section = document.createElement("section");
+        navigation_section.innerHTML = data;
+        document.body.appendChild(navigation_section);
         toggleSidebar();
         toggleLogoutWindow();
     }

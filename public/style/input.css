@@ -6,6 +6,24 @@ body{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+h1{
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    border: 2px solid rgb(255, 160, 176);
+    position: absolute;
+    padding: 15px 10px;
+    margin-top: 2vw;
+    font-weight: bold;
+    animation-duration: 1000ms;
+    animation-name: title-fall;
+    background-color: hsla(351, 100%, 92%, 0.9);
+}
+@keyframes title-fall{
+    from{ margin-top: -30vw; }
+    to{ margin-top: 2vw; }
+}
+
 /* GLOBAL CLASSES */
 
 .basic-text-size{ font-size: 1.15vw; }
@@ -42,17 +60,10 @@ body{
     }
 }
 
-/* GLOBAL ANIMATIONS */
-
-@keyframes title-fall{
-    from{ margin-top: -30vw; }
-    to{ margin-top: 2vw; }
-}
-
 /* HEADER AND SIDEBAR */
 
 header{
-    padding: 0 2vw;
+    padding: 0 2vw 0 1vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -75,6 +86,7 @@ header{
 .toggleable-sidebar{
     position: fixed;
     left: 0;
+    top: 0;
     z-index: 2;
     flex-direction: column;
     align-items: center;
@@ -90,9 +102,13 @@ header{
         padding: 0.5vw 1.5vw;
         text-decoration: none;
         transition: 200ms;
+        user-select: none;
 
         &:hover{
-            background-color: hsl(358, 81%, 94%);
+            background-color: rgb(255, 160, 176);
+        }
+        &:active{
+            background-color: rgb(228, 140, 155);
         }
     }
 }
@@ -187,7 +203,7 @@ header{
     padding: 0 1.5vw;
     animation-duration: 500ms;
     border-radius: 5px;
-    box-shadow: 2px 2px 3px gray;
+    box-shadow: 0.5px 2px 5px gray;
 }
 .error-message{
     border: 2px solid rgb(255, 160, 176);

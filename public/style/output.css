@@ -296,6 +296,9 @@
   .rounded-\[10px\] {
     border-radius: 10px;
   }
+  .rounded-\[50\%\] {
+    border-radius: 50%;
+  }
   .border-2 {
     border-style: var(--tw-border-style);
     border-width: 2px;
@@ -342,6 +345,9 @@
   .p-2\.5 {
     padding: calc(var(--spacing) * 2.5);
   }
+  .p-\[1vw\] {
+    padding: 1vw;
+  }
   .px-\[1\.5vw\] {
     padding-inline: 1.5vw;
   }
@@ -357,6 +363,9 @@
   .py-\[1\.2vw\] {
     padding-block: 1.2vw;
   }
+  .pt-\[5vw\] {
+    padding-top: 5vw;
+  }
   .text-center {
     text-align: center;
   }
@@ -368,6 +377,9 @@
   }
   .text-\[1\.5vw\] {
     font-size: 1.5vw;
+  }
+  .text-\[2vw\] {
+    font-size: 2vw;
   }
   .text-\[3vw\] {
     font-size: 3vw;
@@ -393,6 +405,10 @@
   }
   .underline {
     text-decoration-line: underline;
+  }
+  .shadow-\[0\.5px_2px_5px_rgb\(70\,70\,70\)\] {
+    --tw-shadow: 0.5px 2px 5px var(--tw-shadow-color, rgb(70,70,70));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   .duration-200 {
     --tw-duration: 200ms;
@@ -423,6 +439,13 @@
   .\[animation-name\:title-fall\] {
     animation-name: title-fall;
   }
+  .hover\:bg-\[rgb\(255\,160\,176\)\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: rgb(255,160,176);
+      }
+    }
+  }
   .hover\:text-\[rgb\(98\,0\,255\)\] {
     &:hover {
       @media (hover: hover) {
@@ -437,6 +460,11 @@
       }
     }
   }
+  .active\:bg-\[rgb\(228\,140\,155\)\] {
+    &:active {
+      background-color: rgb(228,140,155);
+    }
+  }
   .active\:text-\[rgb\(128\,0\,255\)\] {
     &:active {
       color: rgb(128,0,255);
@@ -447,6 +475,27 @@ body {
   margin: 0;
   height: 100vh;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+h1 {
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  border: 2px solid rgb(255, 160, 176);
+  position: absolute;
+  padding: 15px 10px;
+  margin-top: 2vw;
+  font-weight: bold;
+  animation-duration: 1000ms;
+  animation-name: title-fall;
+  background-color: hsla(351, 100%, 92%, 0.9);
+}
+@keyframes title-fall {
+  from {
+    margin-top: -30vw;
+  }
+  to {
+    margin-top: 2vw;
+  }
 }
 .basic-text-size {
   font-size: 1.15vw;
@@ -490,16 +539,8 @@ body {
     border: 2px solid rgb(228, 140, 155);
   }
 }
-@keyframes title-fall {
-  from {
-    margin-top: -30vw;
-  }
-  to {
-    margin-top: 2vw;
-  }
-}
 header {
-  padding: 0 2vw;
+  padding: 0 2vw 0 1vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -525,6 +566,7 @@ header {
 .toggleable-sidebar {
   position: fixed;
   left: 0;
+  top: 0;
   z-index: 2;
   flex-direction: column;
   align-items: center;
@@ -539,8 +581,12 @@ header {
     padding: 0.5vw 1.5vw;
     text-decoration: none;
     transition: 200ms;
+    user-select: none;
     &:hover {
-      background-color: hsl(358, 81%, 94%);
+      background-color: rgb(255, 160, 176);
+    }
+    &:active {
+      background-color: rgb(228, 140, 155);
     }
   }
 }
@@ -676,7 +722,7 @@ header {
   padding: 0 1.5vw;
   animation-duration: 500ms;
   border-radius: 5px;
-  box-shadow: 2px 2px 3px gray;
+  box-shadow: 0.5px 2px 5px gray;
 }
 .error-message {
   border: 2px solid rgb(255, 160, 176);
@@ -740,6 +786,71 @@ header {
   syntax: "*";
   inherits: false;
 }
+@property --tw-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-inset-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-inset-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-inset-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-ring-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-ring-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-inset-ring-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-inset-ring-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-ring-inset {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-ring-offset-width {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --tw-ring-offset-color {
+  syntax: "*";
+  inherits: false;
+  initial-value: #fff;
+}
+@property --tw-ring-offset-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
 @property --tw-duration {
   syntax: "*";
   inherits: false;
@@ -752,6 +863,20 @@ header {
       --tw-translate-z: 0;
       --tw-border-style: solid;
       --tw-font-weight: initial;
+      --tw-shadow: 0 0 #0000;
+      --tw-shadow-color: initial;
+      --tw-shadow-alpha: 100%;
+      --tw-inset-shadow: 0 0 #0000;
+      --tw-inset-shadow-color: initial;
+      --tw-inset-shadow-alpha: 100%;
+      --tw-ring-color: initial;
+      --tw-ring-shadow: 0 0 #0000;
+      --tw-inset-ring-color: initial;
+      --tw-inset-ring-shadow: 0 0 #0000;
+      --tw-ring-inset: initial;
+      --tw-ring-offset-width: 0px;
+      --tw-ring-offset-color: #fff;
+      --tw-ring-offset-shadow: 0 0 #0000;
       --tw-duration: initial;
     }
   }
