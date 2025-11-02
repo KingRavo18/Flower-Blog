@@ -1,3 +1,5 @@
+import { toggleElement } from "./toggleElement_module.js";
+
 document.addEventListener("DOMContentLoaded", () => {
     checkSession();
     fetchNavbar();
@@ -36,33 +38,19 @@ async function fetchNavbar(): Promise<void>{
     }
 }
 function toggleSidebar(): void{
-    const {openElement, closeElement} = toggleElement("toggleable-sidebar", "show-element-flex", "sidebar-disappear");
+    const {openElement, closeElement} = toggleElement("toggleable-sidebar", "show-element-flex", "sidebar-disappear", "none", "none");
     (document.getElementById("menu-activate-btn") as HTMLElement).addEventListener("click", () => openElement());
     (document.getElementById("menu-deactivate-btn") as HTMLElement).addEventListener("click", () => closeElement());
 }
 function toggleLogoutWindow(): void{
-    const {openElement, closeElement} = toggleElement("toggleable-logout-window", "show-element-block", "logout-window-disappear");
+    const {openElement, closeElement} = toggleElement(
+        "logout-window-background", 
+        "show-element-block", 
+        "logout-window-disappear", 
+        "toggleable-logout-window",
+        "logout-window-background-disappear"
+    );
     (document.getElementById("logout-list-btn") as HTMLElement).addEventListener("click", () => openElement());
     (document.getElementById("logout-deny-btn") as HTMLElement).addEventListener("click", () => closeElement());
 }
 
-interface toggleElementReturnTypes {
-    openElement: () => void;
-    closeElement: () => void;
-}
-function toggleElement(elementId: string, showElementClass: string, hideElementAnimClass: string): toggleElementReturnTypes{
-    const element = document.getElementById(elementId) as HTMLElement;
-    function openElement(): void{
-        element.classList.remove("hide-element");
-        element.classList.add(showElementClass);
-    }
-    function closeElement(): void{
-        element.classList.add(hideElementAnimClass);
-        element.addEventListener("animationend", () => {
-            element.classList.remove(hideElementAnimClass);
-            element.classList.remove(showElementClass);
-            element.classList.add("hide-element");
-        }, { once: true });
-    }
-    return {openElement, closeElement};
-}

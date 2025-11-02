@@ -171,17 +171,26 @@
   .relative {
     position: relative;
   }
+  .top-0 {
+    top: calc(var(--spacing) * 0);
+  }
   .top-\[50\%\] {
     top: 50%;
   }
   .right-\[0\.6vw\] {
     right: 0.6vw;
   }
+  .left-0 {
+    left: calc(var(--spacing) * 0);
+  }
   .left-\[50\%\] {
     left: 50%;
   }
-  .z-3 {
-    z-index: 3;
+  .z-10 {
+    z-index: 10;
+  }
+  .z-11 {
+    z-index: 11;
   }
   .float-left {
     float: left;
@@ -222,6 +231,9 @@
   .ml-\[1vw\] {
     margin-left: 1vw;
   }
+  .ml-\[50\%\] {
+    margin-left: 50%;
+  }
   .block {
     display: block;
   }
@@ -237,8 +249,17 @@
   .h-\[5vw\] {
     height: 5vw;
   }
+  .h-screen {
+    height: 100vh;
+  }
+  .w-\[40\%\] {
+    width: 40%;
+  }
   .w-full {
     width: 100%;
+  }
+  .w-screen {
+    width: 100vw;
   }
   .max-w-\[30vw\] {
     max-width: 30vw;
@@ -269,12 +290,19 @@
   .overflow-hidden {
     overflow: hidden;
   }
+  .rounded-\[5px\] {
+    border-radius: 5px;
+  }
   .rounded-\[10px\] {
     border-radius: 10px;
   }
   .border-2 {
     border-style: var(--tw-border-style);
     border-width: 2px;
+  }
+  .border-3 {
+    border-style: var(--tw-border-style);
+    border-width: 3px;
   }
   .border-r-2 {
     border-right-style: var(--tw-border-style);
@@ -292,6 +320,9 @@
   }
   .bg-\[hsla\(351\,100\%\,92\%\,0\.9\)\] {
     background-color: hsla(351,100%,92%,0.9);
+  }
+  .bg-\[rgba\(0\,0\,0\,0\.5\)\] {
+    background-color: rgba(0,0,0,0.5);
   }
   .bg-\[url\(\'\.\.\/assets\/images\/flower-background\.jpg\'\)\] {
     background-image: url('../assets/images/flower-background.jpg');
@@ -311,11 +342,20 @@
   .p-2\.5 {
     padding: calc(var(--spacing) * 2.5);
   }
+  .px-\[1\.5vw\] {
+    padding-inline: 1.5vw;
+  }
+  .px-\[1vw\] {
+    padding-inline: 1vw;
+  }
   .px-\[15px\] {
     padding-inline: 15px;
   }
   .py-2\.5 {
     padding-block: calc(var(--spacing) * 2.5);
+  }
+  .py-\[1\.2vw\] {
+    padding-block: 1.2vw;
   }
   .text-center {
     text-align: center;
@@ -325,6 +365,9 @@
   }
   .text-right {
     text-align: right;
+  }
+  .text-\[1\.5vw\] {
+    font-size: 1.5vw;
   }
   .text-\[3vw\] {
     font-size: 3vw;
@@ -371,6 +414,9 @@
   .\[animation-name\:logout-window-appear\] {
     animation-name: logout-window-appear;
   }
+  .\[animation-name\:logout-window-background-appear\] {
+    animation-name: logout-window-background-appear;
+  }
   .\[animation-name\:signin-page-description-fall\] {
     animation-name: signin-page-description-fall;
   }
@@ -416,6 +462,41 @@ body {
 }
 .show-element-block {
   display: block;
+}
+.common-btn, .form-btn {
+  background-color: white;
+  cursor: pointer;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border-radius: 5px;
+  border: 2px solid rgb(255, 160, 176);
+  transition: 200ms;
+  &:hover {
+    background-color: hsla(351, 100%, 92%);
+  }
+}
+.text-input {
+  background-color: white;
+  cursor: pointer;
+  padding: 3px 30px 3px 10px;
+  border: 2px solid rgb(255, 160, 176);
+  border-radius: 5px;
+  transition: 200ms;
+  &:hover {
+    background-color: rgb(253, 239, 239);
+  }
+  &:focus {
+    outline: none;
+    border: 2px solid rgb(228, 140, 155);
+  }
+}
+@keyframes title-fall {
+  from {
+    margin-top: -30vw;
+  }
+  to {
+    margin-top: 2vw;
+  }
 }
 header {
   padding: 0 2vw;
@@ -482,11 +563,33 @@ header {
     left: -10vw;
   }
 }
-@keyframes logout-window-appear {
+@keyframes logout-window-background-appear {
   from {
-    margin-top: -10vw;
+    opacity: 0;
   }
   to {
+    opacity: 1;
+  }
+}
+.logout-window-background-disappear {
+  animation-name: logout-window-background-disappear;
+}
+@keyframes logout-window-background-disappear {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes logout-window-appear {
+  0% {
+    margin-top: 35vw;
+  }
+  60% {
+    margin-top: -1vw;
+  }
+  100% {
     margin-top: 0;
   }
 }
@@ -498,30 +601,7 @@ header {
     margin-top: 0;
   }
   to {
-    margin-top: -10vw;
-  }
-}
-.text-input {
-  background-color: white;
-  cursor: pointer;
-  padding: 3px 30px 3px 10px;
-  border: 2px solid rgb(255, 160, 176);
-  border-radius: 5px;
-  transition: 200ms;
-  &:hover {
-    background-color: rgb(253, 239, 239);
-  }
-  &:focus {
-    outline: none;
-    border: 2px solid rgb(228, 140, 155);
-  }
-}
-@keyframes title-fall {
-  from {
-    margin-top: -30vw;
-  }
-  to {
-    margin-top: 2vw;
+    margin-top: 35vw;
   }
 }
 @keyframes signin-page-description-fall {
@@ -584,20 +664,6 @@ header {
   width: 25vw;
   border-color: rgb(255,160,176);
   border-style: solid;
-  & .form-btn {
-    background-color: white;
-    cursor: pointer;
-    width: 40%;
-    padding: 3px 0;
-    border-radius: 5px;
-    border: 2px solid rgb(255, 160, 176);
-    transition: 200ms;
-    margin-left: 50%;
-    transform: translateX(-50%);
-    &:hover {
-      background-color: hsla(351, 100%, 92%);
-    }
-  }
 }
 .error-message, .success-message {
   position: absolute;

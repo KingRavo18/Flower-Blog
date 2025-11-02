@@ -1,3 +1,4 @@
+import { toggleElement } from "./toggleElement_module.js";
 document.addEventListener("DOMContentLoaded", () => {
     checkSession();
     fetchNavbar();
@@ -33,30 +34,13 @@ async function fetchNavbar() {
     }
 }
 function toggleSidebar() {
-    const { openElement, closeElement } = toggleElement("toggleable-sidebar", "show-element-flex", "sidebar-disappear");
+    const { openElement, closeElement } = toggleElement("toggleable-sidebar", "show-element-flex", "sidebar-disappear", "none", "none");
     document.getElementById("menu-activate-btn").addEventListener("click", () => openElement());
     document.getElementById("menu-deactivate-btn").addEventListener("click", () => closeElement());
 }
 function toggleLogoutWindow() {
-    const { openElement, closeElement } = toggleElement("toggleable-logout-window", "show-element-block", "logout-window-disappear");
+    const { openElement, closeElement } = toggleElement("logout-window-background", "show-element-block", "logout-window-disappear", "toggleable-logout-window", "logout-window-background-disappear");
     document.getElementById("logout-list-btn").addEventListener("click", () => openElement());
     document.getElementById("logout-deny-btn").addEventListener("click", () => closeElement());
 }
-function toggleElement(elementId, showElementClass, hideElementAnimClass) {
-    const element = document.getElementById(elementId);
-    function openElement() {
-        element.classList.remove("hide-element");
-        element.classList.add(showElementClass);
-    }
-    function closeElement() {
-        element.classList.add(hideElementAnimClass);
-        element.addEventListener("animationend", () => {
-            element.classList.remove(hideElementAnimClass);
-            element.classList.remove(showElementClass);
-            element.classList.add("hide-element");
-        }, { once: true });
-    }
-    return { openElement, closeElement };
-}
-export {};
 //# sourceMappingURL=global.js.map
