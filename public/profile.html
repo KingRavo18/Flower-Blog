@@ -9,12 +9,12 @@
     <title>Flower-Blog - Profile</title>
 </head>
 <body>
-    <main class="pt-[5vw]">
-        <h1 class="text-[2vw]">
-            Profile
-        </h1>
-        <div class="">
-
+    <main class="pt-[5vw] flex flex-col items-center">
+        <h1 id="profile-title" class="text-[3vw]"></h1>
+        <div class="flex mt-[10vw] gap-[1vw] p-[1vw] border-[rgb(255,160,176)] rounded-[5px] border-2 bg-[hsla(351,100%,92%,0.9)]">
+            <button id="username-change-btn" class="common-btn">Change Username</button>
+            <button id="password-change-btn" class="common-btn">Change Password</button>
+            <button id="password-change-btn" class="common-btn text-[red]">Delete Account</button>
         </div>
     </main>
     <script type="module" src="./dist/global.js"></script>
