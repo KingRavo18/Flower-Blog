@@ -287,9 +287,6 @@
   .gap-\[1vw\] {
     gap: 1vw;
   }
-  .gap-\[2vw\] {
-    gap: 2vw;
-  }
   .overflow-hidden {
     overflow: hidden;
   }
@@ -350,9 +347,6 @@
   }
   .p-\[1vw\] {
     padding: 1vw;
-  }
-  .p-\[3vw\] {
-    padding: 3vw;
   }
   .px-\[1\.5vw\] {
     padding-inline: 1.5vw;
@@ -481,7 +475,7 @@ h1 {
   font-weight: bold;
   animation-duration: 1000ms;
   animation-name: title-fall;
-  background-color: hsla(351, 100%, 92%, 0.9);
+  background-color: rgba(255, 214, 220, 0.9);
 }
 @keyframes title-fall {
   from {
@@ -514,7 +508,10 @@ h1 {
   border: 2px solid rgb(255, 160, 176);
   transition: 200ms;
   &:hover {
-    background-color: hsla(351, 100%, 92%);
+    background-color: rgb(255, 214, 220);
+  }
+  &:active {
+    background-color: rgb(228,140,155);
   }
 }
 .text-input {
@@ -538,7 +535,7 @@ header {
   justify-content: space-between;
   align-items: center;
   position: fixed;
-  background-color: hsla(351, 100%, 92%, 0.85);
+  background-color: rgba(255, 214, 220, 0.85);
   border-bottom: 2px solid rgb(255, 160, 176);
   height: 5vw;
   top: 0;
@@ -565,7 +562,7 @@ header {
   align-items: center;
   width: auto;
   height: 100vh;
-  background-color: hsl(351, 100%, 92%);
+  background-color: rgb(255, 214, 220);
   border-right: 2px solid rgb(255, 160, 176);
   animation-name: sidebarAppear;
   animation-duration: 500ms;
@@ -698,7 +695,7 @@ header {
   position: relative;
   height: 100vh;
   padding: 0 1.5vw;
-  background-color: hsla(351, 100%, 92%, 0.85);
+  background-color: rgba(255, 214, 220, 0.85);
   width: 25vw;
   border-color: rgb(255,160,176);
   border-style: solid;
@@ -718,7 +715,7 @@ header {
 }
 .error-message {
   border: 2px solid rgb(255, 160, 176);
-  background-color: hsl(351, 100%, 92%);
+  background-color: rgb(255, 214, 220);
   color: red;
 }
 .success-message {
