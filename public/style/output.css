@@ -219,9 +219,6 @@
   .my-\[3vw\] {
     margin-block: 3vw;
   }
-  .mt-\[2vw\] {
-    margin-top: 2vw;
-  }
   .mb-\[0\.5vw\] {
     margin-bottom: 0.5vw;
   }
@@ -354,12 +351,6 @@
   .px-\[1vw\] {
     padding-inline: 1vw;
   }
-  .px-\[15px\] {
-    padding-inline: 15px;
-  }
-  .py-2\.5 {
-    padding-block: calc(var(--spacing) * 2.5);
-  }
   .py-\[1\.2vw\] {
     padding-block: 1.2vw;
   }
@@ -421,9 +412,6 @@
   .\[animation-duration\:500ms\] {
     animation-duration: 500ms;
   }
-  .\[animation-duration\:1000ms\] {
-    animation-duration: 1000ms;
-  }
   .\[animation-duration\:2000ms\] {
     animation-duration: 2000ms;
   }
@@ -435,9 +423,6 @@
   }
   .\[animation-name\:signin-page-description-fall\] {
     animation-name: signin-page-description-fall;
-  }
-  .\[animation-name\:title-fall\] {
-    animation-name: title-fall;
   }
   .hover\:bg-\[rgb\(255\,160\,176\)\] {
     &:hover {
