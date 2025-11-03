@@ -72,27 +72,10 @@ h1{
 
 /* HEADER AND SIDEBAR */
 
-header{
-    padding: 0 2vw 0 1vw;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    background-color: rgba(255, 214, 220, 0.85);
-    border-bottom: 2px solid rgb(255, 160, 176);
-    height: 5vw;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    animation-name: appear-navbar;
-    animation-duration: 500ms;
-    z-index: 1;
-}
 @keyframes appear-navbar{
     from{ top: -20vw; }
     to{ top: 0 }
 }
-
 .toggleable-sidebar{
     position: fixed;
     left: 0;
@@ -113,12 +96,8 @@ header{
         text-decoration: none;
         transition: 200ms;
 
-        &:hover{
-            background-color: rgb(255, 160, 176);
-        }
-        &:active{
-            background-color: rgb(228, 140, 155);
-        }
+        &:hover{ background-color: rgb(255, 160, 176); }
+        &:active{ background-color: rgb(228, 140, 155); }
     }
 }
 
@@ -126,9 +105,7 @@ header{
     from{ left: -5vw; }
     to{ left: 0; }
 }
-.sidebar-disappear{
-    animation-name: sidebarDisappear;
-}
+.sidebar-disappear{ animation-name: sidebarDisappear; }
 @keyframes sidebarDisappear{
     from{ left: 0; }
     to{ left: -5vw; }
@@ -138,9 +115,7 @@ header{
     from{ opacity: 0; }
     to{ opacity: 1; }
 }
-.logout-window-background-disappear{
-    animation-name: logout-window-background-disappear;
-}
+.logout-window-background-disappear{ animation-name: logout-window-background-disappear; }
 @keyframes logout-window-background-disappear{
     from{ opacity: 1; }
     to{ opacity: 0; }
@@ -151,9 +126,7 @@ header{
     60%{ margin-top: -1vw; }
     100%{ margin-top: 0; }
 }
-.logout-window-disappear{
-    animation-name: logout-window-disappear;
-}
+.logout-window-disappear{ animation-name: logout-window-disappear; }
 @keyframes logout-window-disappear{
     from{ margin-top: 0; }
     to{ margin-top: 35vw; }

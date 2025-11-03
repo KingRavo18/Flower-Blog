@@ -186,6 +186,9 @@
   .left-\[50\%\] {
     left: 50%;
   }
+  .z-1 {
+    z-index: 1;
+  }
   .z-10 {
     z-index: 10;
   }
@@ -281,6 +284,9 @@
   .items-center {
     align-items: center;
   }
+  .justify-between {
+    justify-content: space-between;
+  }
   .justify-center {
     justify-content: center;
   }
@@ -327,6 +333,9 @@
   .bg-\[rgba\(0\,0\,0\,0\.5\)\] {
     background-color: rgba(0,0,0,0.5);
   }
+  .bg-\[rgba\(255\,214\,220\,0\.85\)\] {
+    background-color: rgba(255,214,220,0.85);
+  }
   .bg-\[url\(\'\.\.\/assets\/images\/flower-background\.jpg\'\)\] {
     background-image: url('../assets/images/flower-background.jpg');
   }
@@ -359,6 +368,12 @@
   }
   .pt-\[5vw\] {
     padding-top: 5vw;
+  }
+  .pr-\[2vw\] {
+    padding-right: 2vw;
+  }
+  .pl-\[1vw\] {
+    padding-left: 1vw;
   }
   .text-center {
     text-align: center;
@@ -417,6 +432,9 @@
   }
   .\[animation-duration\:1000ms\] {
     animation-duration: 1000ms;
+  }
+  .\[animation-name\:appear-navbar\] {
+    animation-name: appear-navbar;
   }
   .\[animation-name\:logout-window-appear\] {
     animation-name: logout-window-appear;
@@ -540,22 +558,6 @@ h1 {
   to {
     transform: translateY(0);
   }
-}
-header {
-  padding: 0 2vw 0 1vw;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  background-color: rgba(255, 214, 220, 0.85);
-  border-bottom: 2px solid rgb(255, 160, 176);
-  height: 5vw;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  animation-name: appear-navbar;
-  animation-duration: 500ms;
-  z-index: 1;
 }
 @keyframes appear-navbar {
   from {
