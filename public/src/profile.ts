@@ -36,3 +36,13 @@ async function updatePassword(): Promise<void>{
         
     }
 }
+
+function toggleUpdateUsernameWindow(): void{
+
+}
+function toggleUpdatePasswordWindow(): void{
+    
+}
+function toggleDeleteAccountWindow(): void{
+    
+}

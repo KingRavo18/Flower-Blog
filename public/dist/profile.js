@@ -28,4 +28,10 @@ async function updatePassword() {
     catch (error) {
     }
 }
+function toggleUpdateUsernameWindow() {
+}
+function toggleUpdatePasswordWindow() {
+}
+function toggleDeleteAccountWindow() {
+}
 //# sourceMappingURL=profile.js.map

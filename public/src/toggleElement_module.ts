@@ -13,6 +13,9 @@ export function toggleElement(
     const secondElement_OrElementAgain = belongingElementsId === "none" ? element : document.getElementById(belongingElementsId) as HTMLElement;
     function openElement(): void{
         element.classList.remove("hide-element");
+        if(belongingElementsId !== "none"){
+            secondElement_OrElementAgain.classList.remove("hide-element");
+        }
         element.classList.add(showElementClass);
     }
     function closeElement(): void{
@@ -24,6 +27,7 @@ export function toggleElement(
             secondElement_OrElementAgain.classList.remove(hideElementAnimClass);
             if(belongingElementsId !== "none"){
                 element.classList.remove(belongingElementDisappearAnimClass);
+                secondElement_OrElementAgain.classList.add("hide-element");
             }
             element.classList.remove(showElementClass);
             element.classList.add("hide-element");

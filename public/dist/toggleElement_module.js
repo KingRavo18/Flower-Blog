@@ -3,6 +3,9 @@ export function toggleElement(elementId, showElementClass, hideElementAnimClass,
     const secondElement_OrElementAgain = belongingElementsId === "none" ? element : document.getElementById(belongingElementsId);
     function openElement() {
         element.classList.remove("hide-element");
+        if (belongingElementsId !== "none") {
+            secondElement_OrElementAgain.classList.remove("hide-element");
+        }
         element.classList.add(showElementClass);
     }
     function closeElement() {
@@ -14,6 +17,7 @@ export function toggleElement(elementId, showElementClass, hideElementAnimClass,
             secondElement_OrElementAgain.classList.remove(hideElementAnimClass);
             if (belongingElementsId !== "none") {
                 element.classList.remove(belongingElementDisappearAnimClass);
+                secondElement_OrElementAgain.classList.add("hide-element");
             }
             element.classList.remove(showElementClass);
             element.classList.add("hide-element");

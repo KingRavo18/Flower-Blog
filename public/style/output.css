@@ -595,7 +595,7 @@ h1 {
 }
 @keyframes sidebarAppear {
   from {
-    left: -5vw;
+    left: -8vw;
   }
   to {
     left: 0;
@@ -609,7 +609,7 @@ h1 {
     left: 0;
   }
   to {
-    left: -5vw;
+    left: -8vw;
   }
 }
 @keyframes logout-window-background-appear {

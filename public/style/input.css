@@ -102,13 +102,13 @@ h1{
 }
 
 @keyframes sidebarAppear{
-    from{ left: -5vw; }
+    from{ left: -8vw; }
     to{ left: 0; }
 }
 .sidebar-disappear{ animation-name: sidebarDisappear; }
 @keyframes sidebarDisappear{
     from{ left: 0; }
-    to{ left: -5vw; }
+    to{ left: -8vw; }
 }
 
 @keyframes logout-window-background-appear{
