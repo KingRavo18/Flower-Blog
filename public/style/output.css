@@ -415,8 +415,8 @@
   .\[animation-duration\:500ms\] {
     animation-duration: 500ms;
   }
-  .\[animation-duration\:2000ms\] {
-    animation-duration: 2000ms;
+  .\[animation-duration\:1000ms\] {
+    animation-duration: 1000ms;
   }
   .\[animation-name\:logout-window-appear\] {
     animation-name: logout-window-appear;
@@ -424,8 +424,8 @@
   .\[animation-name\:logout-window-background-appear\] {
     animation-name: logout-window-background-appear;
   }
-  .\[animation-name\:signin-page-description-fall\] {
-    animation-name: signin-page-description-fall;
+  .\[animation-name\:signin-page-description-rise\] {
+    animation-name: signin-page-description-rise;
   }
   .hover\:bg-\[rgb\(255\,160\,176\)\] {
     &:hover {
@@ -473,7 +473,7 @@ h1 {
   padding: 2.5px 10px;
   margin-top: 2vw;
   font-weight: bold;
-  animation-duration: 1000ms;
+  animation-duration: 600ms;
   animation-name: title-fall;
   background-color: rgba(255, 214, 220, 0.9);
 }
@@ -529,6 +529,18 @@ h1 {
     border: 2px solid rgb(228, 140, 155);
   }
 }
+.contaner-appear-animation {
+  animation-name: appear-animation;
+  animation-duration: 700ms;
+}
+@keyframes appear-animation {
+  from {
+    transform: translateY(-100vh);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
 header {
   padding: 0 2vw 0 1vw;
   display: flex;
@@ -542,7 +554,7 @@ header {
   left: 0;
   width: 100vw;
   animation-name: appear-navbar;
-  animation-duration: 1500ms;
+  animation-duration: 500ms;
   z-index: 1;
 }
 @keyframes appear-navbar {
@@ -581,7 +593,7 @@ header {
 }
 @keyframes sidebarAppear {
   from {
-    left: -10vw;
+    left: -5vw;
   }
   to {
     left: 0;
@@ -595,7 +607,7 @@ header {
     left: 0;
   }
   to {
-    left: -10vw;
+    left: -5vw;
   }
 }
 @keyframes logout-window-background-appear {
@@ -639,11 +651,14 @@ header {
     margin-top: 35vw;
   }
 }
-@keyframes signin-page-description-fall {
-  from {
+@keyframes signin-page-description-rise {
+  0% {
     top: 200%;
   }
-  to {
+  60% {
+    top: 45%;
+  }
+  100% {
     top: 50%;
   }
 }

@@ -11,6 +11,8 @@ async function displayProfilePageTitle(): Promise<void>{
         if(!response.ok){
             throw new Error("Failed to retrieve username");
         }
+        const data = await response.json();
+        profile_title.textContent = `${data.username}'s Profile`;
     }
     catch(error){
         window.location.replace("../backend/Session_Maintanance/logout.php");

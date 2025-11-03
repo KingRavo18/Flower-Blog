@@ -15,7 +15,7 @@ h1{
     padding: 2.5px 10px;
     margin-top: 2vw;
     font-weight: bold;
-    animation-duration: 1000ms;
+    animation-duration: 600ms;
     animation-name: title-fall;
     background-color: rgba(255, 214, 220, 0.9);
 }
@@ -60,6 +60,16 @@ h1{
     }
 }
 
+/* GLOBAL ANIMATIONS */
+.contaner-appear-animation{
+    animation-name: appear-animation;
+    animation-duration: 700ms;
+}
+@keyframes appear-animation{
+    from{ transform: translateY(-100vh); }
+    to{ transform: translateY(0); }
+}
+
 /* HEADER AND SIDEBAR */
 
 header{
@@ -75,7 +85,7 @@ header{
     left: 0;
     width: 100vw;
     animation-name: appear-navbar;
-    animation-duration: 1500ms;
+    animation-duration: 500ms;
     z-index: 1;
 }
 @keyframes appear-navbar{
@@ -113,7 +123,7 @@ header{
 }
 
 @keyframes sidebarAppear{
-    from{ left: -10vw; }
+    from{ left: -5vw; }
     to{ left: 0; }
 }
 .sidebar-disappear{
@@ -121,7 +131,7 @@ header{
 }
 @keyframes sidebarDisappear{
     from{ left: 0; }
-    to{ left: -10vw; }
+    to{ left: -5vw; }
 }
 
 @keyframes logout-window-background-appear{
@@ -151,9 +161,10 @@ header{
 
 /* SIGNIN PAGE EXCLUSIVE STYLES */
 
-@keyframes signin-page-description-fall{
-    from{ top: 200%; }
-    to{ top: 50%; }
+@keyframes signin-page-description-rise{
+    0% { top: 200%; }
+    60% { top: 45%; }
+    100%{ top: 50%; }
 }
 
 .right-form-appear-animation{ animation-name: right-form-appear; }
