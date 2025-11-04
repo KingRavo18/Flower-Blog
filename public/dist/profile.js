@@ -1,9 +1,11 @@
 import { toggle_element_visibility } from "./toggleElement_module.js";
 document.addEventListener("DOMContentLoaded", () => {
-    displayProfilePageTitle();
-    toggleDeleteAccountPopup();
+    display_profile_page_title();
+    toggle_user_profile_popup("update-username-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
+    toggle_user_profile_popup("update-password-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
+    toggle_user_profile_popup("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
 }, { once: true });
-async function displayProfilePageTitle() {
+async function display_profile_page_title() {
     const profile_title = document.getElementById("profile-title");
     try {
         const response = await fetch("../backend/Data_Display/display_username.php");
@@ -17,25 +19,21 @@ async function displayProfilePageTitle() {
         window.location.replace("../backend/Session_Maintanance/logout.php");
     }
 }
-async function updateUsername() {
+function toggle_user_profile_popup(popup_id, show_popup_button_id, hide_popup_button_id) {
+    const { show_element, hide_element } = toggle_element_visibility("profile-popup-background", "show-element-block", "hide-popup-background-anim", popup_id, "show-element-flex", "hide-popup-anim");
+    document.getElementById(show_popup_button_id).addEventListener("click", () => show_element());
+    document.getElementById(hide_popup_button_id).addEventListener("click", () => hide_element());
+}
+async function update_username() {
     try {
     }
     catch (error) {
     }
 }
-async function updatePassword() {
+async function update_password() {
     try {
     }
     catch (error) {
     }
-}
-function toggleUpdateUsernamePopup() {
-}
-function toggleUpdatePasswordPopup() {
-}
-function toggleDeleteAccountPopup() {
-    const { show_element, hide_element } = toggle_element_visibility("profile-popup-background-container", "show-element-block", "hide-popup-background-anim", "delete-account-popup", "show-element-flex", "hide-popup-anim");
-    document.getElementById("account-deletion-popup-btn").addEventListener("click", () => show_element());
-    document.getElementById("close-account-deletion-popup-btn").addEventListener("click", () => hide_element());
 }
 //# sourceMappingURL=profile.js.map

@@ -1,11 +1,13 @@
 import { toggle_element_visibility } from "./toggleElement_module.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    displayProfilePageTitle();
-    toggleDeleteAccountPopup();
+    display_profile_page_title();
+    toggle_user_profile_popup("update-username-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
+    toggle_user_profile_popup("update-password-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
+    toggle_user_profile_popup("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
 }, {once: true});
 
-async function displayProfilePageTitle(): Promise<void>{
+async function display_profile_page_title(): Promise<void>{
     const profile_title = document.getElementById("profile-title") as HTMLElement;
     try{
         const response = await fetch("../backend/Data_Display/display_username.php");
@@ -20,39 +22,34 @@ async function displayProfilePageTitle(): Promise<void>{
     }
 }
 
-async function updateUsername(): Promise<void>{
-    try{
-
-    }
-    catch(error){
-        
-    }
-}
-
-async function updatePassword(): Promise<void>{
-    try{
-
-    }
-    catch(error){
-        
-    }
-}
-
-function toggleUpdateUsernamePopup(): void{
-
-}
-function toggleUpdatePasswordPopup(): void{
-    
-}
-function toggleDeleteAccountPopup(): void{
+function toggle_user_profile_popup(popup_id: string, show_popup_button_id: string, hide_popup_button_id: string): void{
     const {show_element, hide_element} = toggle_element_visibility(
-        "profile-popup-background-container", 
+        "profile-popup-background", 
         "show-element-block", 
         "hide-popup-background-anim",
-        "delete-account-popup",
+        popup_id,
         "show-element-flex", 
         "hide-popup-anim"
     );
-    (document.getElementById("account-deletion-popup-btn") as HTMLElement).addEventListener("click", () => show_element());
-    (document.getElementById("close-account-deletion-popup-btn") as HTMLElement).addEventListener("click", () => hide_element());
+    (document.getElementById(show_popup_button_id) as HTMLElement).addEventListener("click", () => show_element());
+    (document.getElementById(hide_popup_button_id) as HTMLElement).addEventListener("click", () => hide_element());
 }
+
+async function update_username(): Promise<void>{
+    try{
+
+    }
+    catch(error){
+        
+    }
+}
+
+async function update_password(): Promise<void>{
+    try{
+
+    }
+    catch(error){
+        
+    }
+}
+
