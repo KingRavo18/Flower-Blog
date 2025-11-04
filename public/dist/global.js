@@ -41,7 +41,7 @@ function toggleSidebar() {
     document.getElementById("menu-deactivate-btn").addEventListener("click", () => closeElement());
 }
 function toggleLogoutWindow() {
-    const { openElement, closeElement } = toggleElement("logout-window-background", "show-element-block", "logout-window-disappear", "toggleable-logout-window", "logout-window-background-disappear");
+    const { openElement, closeElement } = toggleElement("logout-window-background", "show-element-block", "popup-window-disappear", "toggleable-logout-window", "popup-window-background-disappear");
     document.getElementById("logout-list-btn").addEventListener("click", () => openElement());
     document.getElementById("logout-deny-btn").addEventListener("click", () => closeElement());
 }

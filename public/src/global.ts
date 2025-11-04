@@ -47,9 +47,9 @@ function toggleLogoutWindow(): void{
     const {openElement, closeElement} = toggleElement(
         "logout-window-background", 
         "show-element-block", 
-        "logout-window-disappear", 
+        "popup-window-disappear", 
         "toggleable-logout-window",
-        "logout-window-background-disappear"
+        "popup-window-background-disappear"
     );
     (document.getElementById("logout-list-btn") as HTMLElement).addEventListener("click", () => openElement());
     (document.getElementById("logout-deny-btn") as HTMLElement).addEventListener("click", () => closeElement());

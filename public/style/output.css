@@ -189,12 +189,6 @@
   .z-1 {
     z-index: 1;
   }
-  .z-10 {
-    z-index: 10;
-  }
-  .z-11 {
-    z-index: 11;
-  }
   .float-left {
     float: left;
   }
@@ -252,9 +246,6 @@
   .h-\[5vw\] {
     height: 5vw;
   }
-  .h-screen {
-    height: 100vh;
-  }
   .w-\[40\%\] {
     width: 40%;
   }
@@ -309,10 +300,6 @@
     border-style: var(--tw-border-style);
     border-width: 2px;
   }
-  .border-3 {
-    border-style: var(--tw-border-style);
-    border-width: 3px;
-  }
   .border-r-2 {
     border-right-style: var(--tw-border-style);
     border-right-width: 2px;
@@ -324,14 +311,8 @@
   .border-\[rgb\(255\,160\,176\)\] {
     border-color: rgb(255,160,176);
   }
-  .bg-\[hsl\(351\,100\%\,92\%\)\] {
-    background-color: hsl(351,100%,92%);
-  }
   .bg-\[hsla\(351\,100\%\,92\%\,0\.9\)\] {
     background-color: hsla(351,100%,92%,0.9);
-  }
-  .bg-\[rgba\(0\,0\,0\,0\.5\)\] {
-    background-color: rgba(0,0,0,0.5);
   }
   .bg-\[rgba\(255\,214\,220\,0\.85\)\] {
     background-color: rgba(255,214,220,0.85);
@@ -357,14 +338,8 @@
   .p-\[1vw\] {
     padding: 1vw;
   }
-  .px-\[1\.5vw\] {
-    padding-inline: 1.5vw;
-  }
   .px-\[1vw\] {
     padding-inline: 1vw;
-  }
-  .py-\[1\.2vw\] {
-    padding-block: 1.2vw;
   }
   .pt-\[5vw\] {
     padding-top: 5vw;
@@ -415,10 +390,6 @@
   .underline {
     text-decoration-line: underline;
   }
-  .shadow-\[0\.5px_2px_5px_rgb\(70\,70\,70\)\] {
-    --tw-shadow: 0.5px 2px 5px var(--tw-shadow-color, rgb(70,70,70));
-    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
   .duration-200 {
     --tw-duration: 200ms;
     transition-duration: 200ms;
@@ -435,12 +406,6 @@
   }
   .\[animation-name\:appear-navbar\] {
     animation-name: appear-navbar;
-  }
-  .\[animation-name\:logout-window-appear\] {
-    animation-name: logout-window-appear;
-  }
-  .\[animation-name\:logout-window-background-appear\] {
-    animation-name: logout-window-background-appear;
   }
   .\[animation-name\:signin-page-description-rise\] {
     animation-name: signin-page-description-rise;
@@ -547,16 +512,86 @@ h1 {
     border: 2px solid rgb(228, 140, 155);
   }
 }
-.contaner-appear-animation {
-  animation-name: appear-animation;
+.popup-window-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation-duration: 500ms;
+  animation-name: popup-window-background-appear;
+}
+@keyframes popup-window-background-appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.popup-window {
+  background-color: rgb(255, 214, 220);
+  position: fixed;
+  z-index: 11;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  animation-duration: 500ms;
+  animation-name: popup-window-appear;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.2vw 1.5vw;
+  gap: 1vw;
+  border-radius: 5px;
+  border: 3px solid rgb(255, 160, 176);
+  box-shadow: 0.5px 2px 5px rgb(70, 70, 70);
+}
+@keyframes popup-window-appear {
+  0% {
+    margin-top: 35vw;
+  }
+  60% {
+    margin-top: -1vw;
+  }
+  100% {
+    margin-top: 0;
+  }
+}
+.container-appear-animation {
+  animation-name: container-appear-animation;
   animation-duration: 700ms;
 }
-@keyframes appear-animation {
+@keyframes container-appear-animation {
   from {
     transform: translateY(-100vh);
   }
   to {
     transform: translateY(0);
+  }
+}
+.popup-window-background-disappear {
+  animation-name: popup-window-background-disappear;
+}
+@keyframes popup-window-background-disappear {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.popup-window-disappear {
+  animation-name: popup-window-disappear;
+}
+@keyframes popup-window-disappear {
+  from {
+    margin-top: 0;
+  }
+  to {
+    margin-top: 35vw;
   }
 }
 @keyframes appear-navbar {
@@ -610,47 +645,6 @@ h1 {
   }
   to {
     left: -8vw;
-  }
-}
-@keyframes logout-window-background-appear {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-.logout-window-background-disappear {
-  animation-name: logout-window-background-disappear;
-}
-@keyframes logout-window-background-disappear {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-@keyframes logout-window-appear {
-  0% {
-    margin-top: 35vw;
-  }
-  60% {
-    margin-top: -1vw;
-  }
-  100% {
-    margin-top: 0;
-  }
-}
-.logout-window-disappear {
-  animation-name: logout-window-disappear;
-}
-@keyframes logout-window-disappear {
-  from {
-    margin-top: 0;
-  }
-  to {
-    margin-top: 35vw;
   }
 }
 @keyframes signin-page-description-rise {
@@ -792,71 +786,6 @@ h1 {
   syntax: "*";
   inherits: false;
 }
-@property --tw-shadow {
-  syntax: "*";
-  inherits: false;
-  initial-value: 0 0 #0000;
-}
-@property --tw-shadow-color {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-shadow-alpha {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 100%;
-}
-@property --tw-inset-shadow {
-  syntax: "*";
-  inherits: false;
-  initial-value: 0 0 #0000;
-}
-@property --tw-inset-shadow-color {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-inset-shadow-alpha {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 100%;
-}
-@property --tw-ring-color {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-ring-shadow {
-  syntax: "*";
-  inherits: false;
-  initial-value: 0 0 #0000;
-}
-@property --tw-inset-ring-color {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-inset-ring-shadow {
-  syntax: "*";
-  inherits: false;
-  initial-value: 0 0 #0000;
-}
-@property --tw-ring-inset {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-ring-offset-width {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-@property --tw-ring-offset-color {
-  syntax: "*";
-  inherits: false;
-  initial-value: #fff;
-}
-@property --tw-ring-offset-shadow {
-  syntax: "*";
-  inherits: false;
-  initial-value: 0 0 #0000;
-}
 @property --tw-duration {
   syntax: "*";
   inherits: false;
@@ -869,20 +798,6 @@ h1 {
       --tw-translate-z: 0;
       --tw-border-style: solid;
       --tw-font-weight: initial;
-      --tw-shadow: 0 0 #0000;
-      --tw-shadow-color: initial;
-      --tw-shadow-alpha: 100%;
-      --tw-inset-shadow: 0 0 #0000;
-      --tw-inset-shadow-color: initial;
-      --tw-inset-shadow-alpha: 100%;
-      --tw-ring-color: initial;
-      --tw-ring-shadow: 0 0 #0000;
-      --tw-inset-ring-color: initial;
-      --tw-inset-ring-shadow: 0 0 #0000;
-      --tw-ring-inset: initial;
-      --tw-ring-offset-width: 0px;
-      --tw-ring-offset-color: #fff;
-      --tw-ring-offset-shadow: 0 0 #0000;
       --tw-duration: initial;
     }
   }

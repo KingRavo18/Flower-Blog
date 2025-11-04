@@ -60,14 +60,68 @@ h1{
     }
 }
 
+.popup-window-background{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation-duration: 500ms;
+    animation-name: popup-window-background-appear;
+}
+@keyframes popup-window-background-appear{
+    from{ opacity: 0; }
+    to{ opacity: 1; }
+}
+
+.popup-window{
+    background-color: rgb(255, 214, 220);
+    position: fixed;
+    z-index: 11;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    animation-duration: 500ms;
+    animation-name: popup-window-appear;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.2vw 1.5vw;
+    gap: 1vw;
+    border-radius: 5px;
+    border: 3px solid rgb(255, 160, 176);
+    box-shadow: 0.5px 2px 5px rgb(70, 70, 70);
+}   
+@keyframes popup-window-appear{
+    0%{ margin-top: 35vw; }
+    60%{ margin-top: -1vw; }
+    100%{ margin-top: 0; }
+}
+
+
 /* GLOBAL ANIMATIONS */
-.contaner-appear-animation{
-    animation-name: appear-animation;
+
+.container-appear-animation{
+    animation-name: container-appear-animation;
     animation-duration: 700ms;
 }
-@keyframes appear-animation{
+@keyframes container-appear-animation{
     from{ transform: translateY(-100vh); }
     to{ transform: translateY(0); }
+}
+
+.popup-window-background-disappear{ animation-name: popup-window-background-disappear; }
+@keyframes popup-window-background-disappear{
+    from{ opacity: 1; }
+    to{ opacity: 0; }
+}
+
+.popup-window-disappear{ animation-name: popup-window-disappear; }
+@keyframes popup-window-disappear{
+    from{ margin-top: 0; }
+    to{ margin-top: 35vw; }
 }
 
 /* HEADER AND SIDEBAR */
@@ -109,27 +163,6 @@ h1{
 @keyframes sidebarDisappear{
     from{ left: 0; }
     to{ left: -8vw; }
-}
-
-@keyframes logout-window-background-appear{
-    from{ opacity: 0; }
-    to{ opacity: 1; }
-}
-.logout-window-background-disappear{ animation-name: logout-window-background-disappear; }
-@keyframes logout-window-background-disappear{
-    from{ opacity: 1; }
-    to{ opacity: 0; }
-}
-
-@keyframes logout-window-appear{
-    0%{ margin-top: 35vw; }
-    60%{ margin-top: -1vw; }
-    100%{ margin-top: 0; }
-}
-.logout-window-disappear{ animation-name: logout-window-disappear; }
-@keyframes logout-window-disappear{
-    from{ margin-top: 0; }
-    to{ margin-top: 35vw; }
 }
 
 /* SIGNIN PAGE EXCLUSIVE STYLES */
