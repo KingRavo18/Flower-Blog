@@ -5,6 +5,7 @@ interface toggleElementReturnTypes {
 export function toggleElement(
     elementId: string, 
     showElementClass: string, 
+    belongingElementShowElementClass: string, 
     hideElementAnimClass: string, 
     belongingElementsId: string, 
     belongingElementDisappearAnimClass: string
@@ -15,6 +16,7 @@ export function toggleElement(
         element.classList.remove("hide-element");
         if(belongingElementsId !== "none"){
             secondElement_OrElementAgain.classList.remove("hide-element");
+            secondElement_OrElementAgain.classList.add(belongingElementShowElementClass);
         }
         element.classList.add(showElementClass);
     }
@@ -27,6 +29,7 @@ export function toggleElement(
             secondElement_OrElementAgain.classList.remove(hideElementAnimClass);
             if(belongingElementsId !== "none"){
                 element.classList.remove(belongingElementDisappearAnimClass);
+                secondElement_OrElementAgain.classList.remove(belongingElementShowElementClass);
                 secondElement_OrElementAgain.classList.add("hide-element");
             }
             element.classList.remove(showElementClass);

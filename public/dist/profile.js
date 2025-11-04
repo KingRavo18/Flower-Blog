@@ -1,6 +1,7 @@
 import { toggleElement } from "./toggleElement_module.js";
 document.addEventListener("DOMContentLoaded", () => {
     displayProfilePageTitle();
+    toggleDeleteAccountPopup();
 }, { once: true });
 async function displayProfilePageTitle() {
     const profile_title = document.getElementById("profile-title");
@@ -28,10 +29,13 @@ async function updatePassword() {
     catch (error) {
     }
 }
-function toggleUpdateUsernameWindow() {
+function toggleUpdateUsernamePopup() {
 }
-function toggleUpdatePasswordWindow() {
+function toggleUpdatePasswordPopup() {
 }
-function toggleDeleteAccountWindow() {
+function toggleDeleteAccountPopup() {
+    const { openElement, closeElement } = toggleElement("profile-popup-background-container", "show-element-block", "show-element-flex", "popup-window-disappear", "delete-account-popup", "popup-window-background-disappear");
+    document.getElementById("account-deletion-popup-btn").addEventListener("click", () => openElement());
+    document.getElementById("close-account-deletion-popup-btn").addEventListener("click", () => closeElement());
 }
 //# sourceMappingURL=profile.js.map

@@ -1,10 +1,11 @@
-export function toggleElement(elementId, showElementClass, hideElementAnimClass, belongingElementsId, belongingElementDisappearAnimClass) {
+export function toggleElement(elementId, showElementClass, belongingElementShowElementClass, hideElementAnimClass, belongingElementsId, belongingElementDisappearAnimClass) {
     const element = document.getElementById(elementId);
     const secondElement_OrElementAgain = belongingElementsId === "none" ? element : document.getElementById(belongingElementsId);
     function openElement() {
         element.classList.remove("hide-element");
         if (belongingElementsId !== "none") {
             secondElement_OrElementAgain.classList.remove("hide-element");
+            secondElement_OrElementAgain.classList.add(belongingElementShowElementClass);
         }
         element.classList.add(showElementClass);
     }
@@ -17,6 +18,7 @@ export function toggleElement(elementId, showElementClass, hideElementAnimClass,
             secondElement_OrElementAgain.classList.remove(hideElementAnimClass);
             if (belongingElementsId !== "none") {
                 element.classList.remove(belongingElementDisappearAnimClass);
+                secondElement_OrElementAgain.classList.remove(belongingElementShowElementClass);
                 secondElement_OrElementAgain.classList.add("hide-element");
             }
             element.classList.remove(showElementClass);

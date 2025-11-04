@@ -32,21 +32,22 @@ async function fetchNavbar(): Promise<void>{
         navigation_section.innerHTML = data;
         document.body.appendChild(navigation_section);
         toggleSidebar();
-        toggleLogoutWindow();
+        toggleLogoutPopup();
     }
     catch(error){
         console.error((error as Error).message);
     }
 }
 function toggleSidebar(): void{
-    const {openElement, closeElement} = toggleElement("toggleable-sidebar", "show-element-flex", "sidebar-disappear", "none", "none");
+    const {openElement, closeElement} = toggleElement("toggleable-sidebar", "show-element-flex", "none", "sidebar-disappear", "none", "none");
     (document.getElementById("menu-activate-btn") as HTMLElement).addEventListener("click", () => openElement());
     (document.getElementById("menu-deactivate-btn") as HTMLElement).addEventListener("click", () => closeElement());
 }
-function toggleLogoutWindow(): void{
+function toggleLogoutPopup(): void{
     const {openElement, closeElement} = toggleElement(
         "logout-window-background", 
         "show-element-block", 
+        "show-element-flex", 
         "popup-window-disappear", 
         "toggleable-logout-window",
         "popup-window-background-disappear"

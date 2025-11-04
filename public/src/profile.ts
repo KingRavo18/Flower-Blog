@@ -2,6 +2,7 @@ import { toggleElement } from "./toggleElement_module.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     displayProfilePageTitle();
+    toggleDeleteAccountPopup();
 }, {once: true});
 
 async function displayProfilePageTitle(): Promise<void>{
@@ -37,12 +38,21 @@ async function updatePassword(): Promise<void>{
     }
 }
 
-function toggleUpdateUsernameWindow(): void{
+function toggleUpdateUsernamePopup(): void{
 
 }
-function toggleUpdatePasswordWindow(): void{
+function toggleUpdatePasswordPopup(): void{
     
 }
-function toggleDeleteAccountWindow(): void{
-    
+function toggleDeleteAccountPopup(): void{
+    const {openElement, closeElement} = toggleElement(
+        "profile-popup-background-container", 
+        "show-element-block", 
+        "show-element-flex", 
+        "popup-window-disappear", 
+        "delete-account-popup",
+        "popup-window-background-disappear"
+    );
+    (document.getElementById("account-deletion-popup-btn") as HTMLElement).addEventListener("click", () => openElement());
+    (document.getElementById("close-account-deletion-popup-btn") as HTMLElement).addEventListener("click", () => closeElement());
 }

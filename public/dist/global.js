@@ -29,19 +29,19 @@ async function fetchNavbar() {
         navigation_section.innerHTML = data;
         document.body.appendChild(navigation_section);
         toggleSidebar();
-        toggleLogoutWindow();
+        toggleLogoutPopup();
     }
     catch (error) {
         console.error(error.message);
     }
 }
 function toggleSidebar() {
-    const { openElement, closeElement } = toggleElement("toggleable-sidebar", "show-element-flex", "sidebar-disappear", "none", "none");
+    const { openElement, closeElement } = toggleElement("toggleable-sidebar", "show-element-flex", "none", "sidebar-disappear", "none", "none");
     document.getElementById("menu-activate-btn").addEventListener("click", () => openElement());
     document.getElementById("menu-deactivate-btn").addEventListener("click", () => closeElement());
 }
-function toggleLogoutWindow() {
-    const { openElement, closeElement } = toggleElement("logout-window-background", "show-element-block", "popup-window-disappear", "toggleable-logout-window", "popup-window-background-disappear");
+function toggleLogoutPopup() {
+    const { openElement, closeElement } = toggleElement("logout-window-background", "show-element-block", "show-element-flex", "popup-window-disappear", "toggleable-logout-window", "popup-window-background-disappear");
     document.getElementById("logout-list-btn").addEventListener("click", () => openElement());
     document.getElementById("logout-deny-btn").addEventListener("click", () => closeElement());
 }
