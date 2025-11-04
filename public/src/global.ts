@@ -1,11 +1,11 @@
-import { toggleElement } from "./toggleElement_module.js";
+import { toggle_element_visibility } from "./toggleElement_module.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    checkSession();
-    fetchNavbar();
+    check_session();
+    fetch_navbar();
 }, {once: true});
 
-async function checkSession(): Promise<void>{
+async function check_session(): Promise<void>{
     try{
         const response = await fetch("../backend/Session_Maintanance/check_session.php");
         if(!response.ok){
@@ -21,7 +21,7 @@ async function checkSession(): Promise<void>{
     }
 }
 
-async function fetchNavbar(): Promise<void>{
+async function fetch_navbar(): Promise<void>{
     try{
         const response = await fetch("./assets/components/nav-bar.html");
         if(!response.ok){
@@ -31,28 +31,30 @@ async function fetchNavbar(): Promise<void>{
         const navigation_section = document.createElement("section");
         navigation_section.innerHTML = data;
         document.body.appendChild(navigation_section);
-        toggleSidebar();
-        toggleLogoutPopup();
+        toggle_sidebar_visibility();
+        toggle_logout_popup_visibility();
     }
     catch(error){
         console.error((error as Error).message);
     }
 }
-function toggleSidebar(): void{
-    const {openElement, closeElement} = toggleElement("toggleable-sidebar", "show-element-flex", "none", "sidebar-disappear", "none", "none");
-    (document.getElementById("menu-activate-btn") as HTMLElement).addEventListener("click", () => openElement());
-    (document.getElementById("menu-deactivate-btn") as HTMLElement).addEventListener("click", () => closeElement());
+
+function toggle_sidebar_visibility(): void{
+    const {show_element, hide_element} = toggle_element_visibility("toggleable-sidebar", "show-element-flex", "sidebar-disappear", "none", "none", "none");
+    (document.getElementById("show-sidebar-btn") as HTMLElement).addEventListener("click", () => show_element());
+    (document.getElementById("hide-sidebar-btn") as HTMLElement).addEventListener("click", () => hide_element());
 }
-function toggleLogoutPopup(): void{
-    const {openElement, closeElement} = toggleElement(
-        "logout-window-background", 
+
+function toggle_logout_popup_visibility(): void{
+    const {show_element, hide_element} = toggle_element_visibility(
+        "logout-popup-background", 
         "show-element-block", 
-        "show-element-flex", 
-        "popup-window-disappear", 
-        "toggleable-logout-window",
-        "popup-window-background-disappear"
+        "hide-popup-background-anim",
+        "logout-popup",
+        "show-element-flex",
+        "hide-popup-anim"
     );
-    (document.getElementById("logout-list-btn") as HTMLElement).addEventListener("click", () => openElement());
-    (document.getElementById("logout-deny-btn") as HTMLElement).addEventListener("click", () => closeElement());
+    (document.getElementById("show-logout-popup-btn") as HTMLElement).addEventListener("click", () => show_element());
+    (document.getElementById("hide-logout-popup-btn") as HTMLElement).addEventListener("click", () => hide_element());
 }
 

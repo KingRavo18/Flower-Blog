@@ -1,40 +1,44 @@
 interface toggleElementReturnTypes {
-    openElement: () => void;
-    closeElement: () => void;
+    show_element: () => void;
+    hide_element: () => void;
 }
-export function toggleElement(
-    elementId: string, 
-    showElementClass: string, 
-    belongingElementShowElementClass: string, 
-    hideElementAnimClass: string, 
-    belongingElementsId: string, 
-    belongingElementDisappearAnimClass: string
+export function toggle_element_visibility(
+    element_id: string, 
+    element_show_class: string, 
+    hide_element_anim_class: string, 
+    // Attached Element
+    attached_element_id: string, 
+    attached_element_show_class: string,
+    hide_attached_element_anim_class: string
 ): toggleElementReturnTypes{
-    const element = document.getElementById(elementId) as HTMLElement;
-    const secondElement_OrElementAgain = belongingElementsId === "none" ? element : document.getElementById(belongingElementsId) as HTMLElement;
-    function openElement(): void{
+    const element = document.getElementById(element_id) as HTMLElement;
+    const attached_element = document.getElementById(attached_element_id) as HTMLElement;
+    function show_element(): void{
         element.classList.remove("hide-element");
-        if(belongingElementsId !== "none"){
-            secondElement_OrElementAgain.classList.remove("hide-element");
-            secondElement_OrElementAgain.classList.add(belongingElementShowElementClass);
+        element.classList.add(element_show_class);
+        // Attached Element
+        if(attached_element_id !== "none"){
+            attached_element.classList.remove("hide-element");
+            attached_element.classList.add(attached_element_show_class);
         }
-        element.classList.add(showElementClass);
     }
-    function closeElement(): void{
-        secondElement_OrElementAgain.classList.add(hideElementAnimClass);
-        if(belongingElementsId !== "none"){
-            element.classList.add(belongingElementDisappearAnimClass);
+    function hide_element(): void{
+        element.classList.add(hide_element_anim_class);
+        // Attached Element
+        if(attached_element_id !== "none"){
+            attached_element.classList.add(hide_attached_element_anim_class);
         }
         element.addEventListener("animationend", () => {
-            secondElement_OrElementAgain.classList.remove(hideElementAnimClass);
-            if(belongingElementsId !== "none"){
-                element.classList.remove(belongingElementDisappearAnimClass);
-                secondElement_OrElementAgain.classList.remove(belongingElementShowElementClass);
-                secondElement_OrElementAgain.classList.add("hide-element");
-            }
-            element.classList.remove(showElementClass);
+            element.classList.remove(hide_element_anim_class);
+            element.classList.remove(element_show_class);
             element.classList.add("hide-element");
+            // Attached Element
+            if(attached_element_id !== "none"){
+                attached_element.classList.remove(hide_attached_element_anim_class);
+                attached_element.classList.remove(attached_element_show_class);
+                attached_element.classList.add("hide-element");
+            }
         }, { once: true });
     }
-    return {openElement, closeElement};
+    return {show_element, hide_element};
 }

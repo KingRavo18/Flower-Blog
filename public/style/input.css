@@ -111,14 +111,14 @@ h1{
     to{ transform: translateY(0); }
 }
 
-.popup-window-background-disappear{ animation-name: popup-window-background-disappear; }
-@keyframes popup-window-background-disappear{
+.hide-popup-background-anim{ animation-name: hide-popup-background-anim; }
+@keyframes hide-popup-background-anim{
     from{ opacity: 1; }
     to{ opacity: 0; }
 }
 
-.popup-window-disappear{ animation-name: popup-window-disappear; }
-@keyframes popup-window-disappear{
+.hide-popup-anim{ animation-name: hide-popup-anim; }
+@keyframes hide-popup-anim{
     from{ margin-top: 0; }
     to{ margin-top: 35vw; }
 }

@@ -2,7 +2,7 @@
     border-2 border-[rgb(255,160,176)] h-[5vw] top-0 left-0 w-screen 
     [animation-duration:500ms] [animation-name:appear-navbar] z-1"
 >
-    <span id="menu-activate-btn" class="material-symbols-outlined select-none 
+    <span id="show-sidebar-btn" class="material-symbols-outlined select-none 
         cursor-pointer p-[1vw] rounded-[50%] duration-200 hover:bg-[rgb(255,160,176)] active:bg-[rgb(228,140,155)]"
     >
         menu
@@ -14,7 +14,7 @@
 
 <div id="toggleable-sidebar" class="toggleable-sidebar hide-element">
     <div class="h-[5vw] flex items-center">
-        <span id="menu-deactivate-btn" class="material-symbols-outlined select-none 
+        <span id="hide-sidebar-btn" class="material-symbols-outlined select-none 
             cursor-pointer p-[1vw] rounded-[50%] duration-200 hover:bg-[rgb(255,160,176)] active:bg-[rgb(228,140,155)]"
         >
             menu
@@ -23,17 +23,17 @@
     <ul class="p-0">
         <li><a href="./main_page.html">Home</a></li>
         <li><a href="./profile.html">Profile</a></li>
-        <li id="logout-list-btn">Logout</li>
+        <li id="show-logout-popup-btn">Logout</li>
     </ul>
 </div>
-<div id="logout-window-background" class="popup-window-background hide-element"></div>
-<div id="toggleable-logout-window" class="popup-window hide-element">
+<div id="logout-popup-background" class="popup-window-background hide-element"></div>
+<div id="logout-popup" class="popup-window hide-element">
     <p class="text-[1.5vw]">Are you sure?</p>
     <div class="flex justify-center gap-[1vw]">
         <form action="../backend/Session_Maintanance/logout.php">
             <input type="submit" value="Yes" class="form-btn px-[1vw]">
         </form>
-        <button id="logout-deny-btn" class="common-btn px-[1vw]">No</button>
+        <button id="hide-logout-popup-btn" class="common-btn px-[1vw]">No</button>
     </div>
 </div>
 

@@ -1,4 +1,4 @@
-import { toggleElement } from "./toggleElement_module.js";
+import { toggle_element_visibility } from "./toggleElement_module.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     displayProfilePageTitle();
@@ -45,14 +45,14 @@ function toggleUpdatePasswordPopup(): void{
     
 }
 function toggleDeleteAccountPopup(): void{
-    const {openElement, closeElement} = toggleElement(
+    const {show_element, hide_element} = toggle_element_visibility(
         "profile-popup-background-container", 
         "show-element-block", 
-        "show-element-flex", 
-        "popup-window-disappear", 
+        "hide-popup-background-anim",
         "delete-account-popup",
-        "popup-window-background-disappear"
+        "show-element-flex", 
+        "hide-popup-anim"
     );
-    (document.getElementById("account-deletion-popup-btn") as HTMLElement).addEventListener("click", () => openElement());
-    (document.getElementById("close-account-deletion-popup-btn") as HTMLElement).addEventListener("click", () => closeElement());
+    (document.getElementById("account-deletion-popup-btn") as HTMLElement).addEventListener("click", () => show_element());
+    (document.getElementById("close-account-deletion-popup-btn") as HTMLElement).addEventListener("click", () => hide_element());
 }

@@ -1,4 +1,4 @@
-import { toggleElement } from "./toggleElement_module.js";
+import { toggle_element_visibility } from "./toggleElement_module.js";
 document.addEventListener("DOMContentLoaded", () => {
     displayProfilePageTitle();
     toggleDeleteAccountPopup();
@@ -34,8 +34,8 @@ function toggleUpdateUsernamePopup() {
 function toggleUpdatePasswordPopup() {
 }
 function toggleDeleteAccountPopup() {
-    const { openElement, closeElement } = toggleElement("profile-popup-background-container", "show-element-block", "show-element-flex", "popup-window-disappear", "delete-account-popup", "popup-window-background-disappear");
-    document.getElementById("account-deletion-popup-btn").addEventListener("click", () => openElement());
-    document.getElementById("close-account-deletion-popup-btn").addEventListener("click", () => closeElement());
+    const { show_element, hide_element } = toggle_element_visibility("profile-popup-background-container", "show-element-block", "hide-popup-background-anim", "delete-account-popup", "show-element-flex", "hide-popup-anim");
+    document.getElementById("account-deletion-popup-btn").addEventListener("click", () => show_element());
+    document.getElementById("close-account-deletion-popup-btn").addEventListener("click", () => hide_element());
 }
 //# sourceMappingURL=profile.js.map
