@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=menu" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=close,menu" />
     <link rel="stylesheet" href="./style/output.css">
     <link rel="icon" href="assets/icons/flower-icon.jpg"/>
     <title>Flower-Blog - Profile</title>
 </head>
 <body>
     <main class="pt-[5vw] flex flex-col items-center">
+
         <h1 id="profile-title" class="text-[3vw]"></h1>
+
+        <!-- PROFILE DATA UPDATING CONTAINER -->
+
         <div class="flex mt-[10vw] gap-[1vw] p-[1vw] border-[rgb(255,160,176)] rounded-[5px] border-2 
             bg-[hsla(351,100%,92%,0.9)] container-appear-animation"
         >
@@ -18,19 +22,79 @@
             <button id="show-password-change-popup-btn" class="common-btn">Change Password</button>
             <button id="show-account-deletion-popup-btn" class="common-btn text-[red]">Delete Account</button>
         </div>
+
+        <!-- POPUPS FOR THE PREVIOUS CONTAINER -->
+         
         <div id="profile-popup-background" class="popup-window-background hide-element"></div>
-        <div id="update-username-popup" class="popup-window hide-element">
-            <h2>Change Username</h2>
-            <span id="hide-username-change-popup-btn">X</span>
+
+        <!-- USERNAME CHANGE POPUP -->
+
+        <div id="username-change-popup" class="popup-window hide-element">
+            <div class="relative flex w-full">
+                <span id="hide-username-change-popup-btn" class="material-symbols-outlined absolute 
+                    p-[0.25vw] rounded-[50%] -top-[0.75vw] -right-[1vw] cursor-pointer select-none duration-200 hover:bg-[rgb(255,160,176)] active:bg-[rgb(228,140,155)]">
+                    close
+                </span>
+            </div>
+            <form id="username-change-form" class="flex flex-col">
+                <label for="username-change-password-input" class="cursor-pointer">
+                    Current password:
+                </label>
+                <input type="password" id="username-change-password-input" name="password" class="text-input mb-[0.5vw]">
+                <label for="username-change-new-username-input" class="cursor-pointer">
+                    New username:
+                </label>
+                <input type="text" id="username-change-new-username-input" name="new-username" class="text-input mb-[0.5vw]">
+                <input type="submit" value="Change Username" class="form-btn">
+            </form>
         </div> 
-        <div id="update-password-popup" class="popup-window hide-element">
-            <h2>Change Password</h2>
-            <span id="hide-password-change-popup-btn">X</span>
+
+        <!-- PASSWORD CHANGE POPUP -->
+
+        <div id="password-change-popup" class="popup-window hide-element">
+            <div class="relative flex w-full">
+                <span id="hide-password-change-popup-btn" class="material-symbols-outlined absolute 
+                    p-[0.25vw] rounded-[50%] -top-[0.75vw] -right-[1vw] cursor-pointer select-none duration-200 hover:bg-[rgb(255,160,176)] active:bg-[rgb(228,140,155)]">
+                    close
+                </span>
+            </div>
+            <form id="password-change-form" class="flex flex-col">
+                <label for="password-change-current-password-input" class="cursor-pointer">
+                    Current password:
+                </label>
+                <input type="password" id="password-change-current-password-input" name="current-password" class="text-input mb-[0.5vw]">
+                <label for="password-change-new-password-input" class="cursor-pointer">
+                    New password:
+                </label>
+                <input type="password" id="password-change-new-password-input" name="new-password" class="text-input mb-[0.5vw]">
+                <input type="submit" value="Change Password" class="form-btn">
+            </form>
         </div>
+
+        <!-- ACCOUNT DELETION POPUP -->
+
         <div id="account-deletion-popup" class="popup-window hide-element">
-            <h2>Delete Account</h2>
-            <span id="hide-account-deletion-popup-btn">X</span>
+            <div class="relative flex w-full">
+                <span id="hide-account-deletion-popup-btn" class="material-symbols-outlined absolute 
+                    p-[0.25vw] rounded-[50%] -top-[0.75vw] -right-[1vw] cursor-pointer select-none duration-200 hover:bg-[rgb(255,160,176)] active:bg-[rgb(228,140,155)]">
+                    close
+                </span>
+            </div>
+            <form id="acccount-deletion-form" class="flex flex-col">
+                <label for="account-deletion-username-input" class="cursor-pointer">
+                    Username:
+                </label>
+                <input type="text" id="account-deletion-username-input" name="username" class="text-input mb-[0.5vw]">
+                <label for="account-deletion-password-input" class="cursor-pointer">
+                    Password:
+                </label>
+                <input type="password" id="account-deletion-password-input" name="password" class="text-input mb-[0.5vw]">
+                <input type="submit" value="Delete Account" class="form-btn text-[red]">
+            </form>
         </div>
+
+        <!-- NEXT CONTAINER -->
+
     </main>
     <script type="module" src="./dist/global.js"></script>
     <script type="module" src="./dist/profile.js"></script>

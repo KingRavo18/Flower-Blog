@@ -2,9 +2,13 @@ import { toggle_element_visibility } from "./toggleElement_module.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     display_profile_page_title();
-    toggle_user_profile_popup("update-username-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
-    toggle_user_profile_popup("update-password-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
+    toggle_user_profile_popup("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
+    toggle_user_profile_popup("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
     toggle_user_profile_popup("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
+
+    (document.getElementById("username-change-form") as HTMLFormElement).addEventListener("submit", change_username);
+    (document.getElementById("password-change-form") as HTMLFormElement).addEventListener("submit", change_password);
+    (document.getElementById("acccount-deletion-form") as HTMLFormElement).addEventListener("submit", delete_account);
 }, {once: true});
 
 async function display_profile_page_title(): Promise<void>{
@@ -35,7 +39,8 @@ function toggle_user_profile_popup(popup_id: string, show_popup_button_id: strin
     (document.getElementById(hide_popup_button_id) as HTMLElement).addEventListener("click", () => hide_element());
 }
 
-async function update_username(): Promise<void>{
+async function change_username(event: SubmitEvent): Promise<void>{
+    event.preventDefault();
     try{
 
     }
@@ -44,7 +49,8 @@ async function update_username(): Promise<void>{
     }
 }
 
-async function update_password(): Promise<void>{
+async function change_password(event: SubmitEvent): Promise<void>{
+    event.preventDefault();
     try{
 
     }
@@ -53,3 +59,12 @@ async function update_password(): Promise<void>{
     }
 }
 
+async function delete_account(event: SubmitEvent): Promise<void>{
+    event.preventDefault();
+    try{
+        
+    }
+    catch(error){
+        
+    }
+}

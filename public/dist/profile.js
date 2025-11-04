@@ -1,9 +1,12 @@
 import { toggle_element_visibility } from "./toggleElement_module.js";
 document.addEventListener("DOMContentLoaded", () => {
     display_profile_page_title();
-    toggle_user_profile_popup("update-username-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
-    toggle_user_profile_popup("update-password-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
+    toggle_user_profile_popup("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
+    toggle_user_profile_popup("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
     toggle_user_profile_popup("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
+    document.getElementById("username-change-form").addEventListener("submit", change_username);
+    document.getElementById("password-change-form").addEventListener("submit", change_password);
+    document.getElementById("acccount-deletion-form").addEventListener("submit", delete_account);
 }, { once: true });
 async function display_profile_page_title() {
     const profile_title = document.getElementById("profile-title");
@@ -24,13 +27,22 @@ function toggle_user_profile_popup(popup_id, show_popup_button_id, hide_popup_bu
     document.getElementById(show_popup_button_id).addEventListener("click", () => show_element());
     document.getElementById(hide_popup_button_id).addEventListener("click", () => hide_element());
 }
-async function update_username() {
+async function change_username(event) {
+    event.preventDefault();
     try {
     }
     catch (error) {
     }
 }
-async function update_password() {
+async function change_password(event) {
+    event.preventDefault();
+    try {
+    }
+    catch (error) {
+    }
+}
+async function delete_account(event) {
+    event.preventDefault();
     try {
     }
     catch (error) {
