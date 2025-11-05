@@ -21,7 +21,7 @@ class Account_Deletion extends Db_Connection{
             throw new Exception("You have entered an incorrect username or password.");
         }
     }
-
+    
     private function verify_account(){
         $stmt = parent::conn()->prepare("SELECT password from users WHERE username = ?");
         $stmt->execute([$this->username]);

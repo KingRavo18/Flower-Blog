@@ -30,16 +30,68 @@ function toggle_user_profile_popup(popup_id, show_popup_button_id, hide_popup_bu
 }
 async function change_username(event) {
     event.preventDefault();
+    const password_input = document.getElementById("username-change-password-input");
+    const new_username_input = document.getElementById("username-change-new-username-input");
     try {
+        if (password_input.value.trim() === "") {
+            throw new Error("Please input your password");
+        }
+        if (new_username_input.value.trim() === "") {
+            throw new Error("Please input your new username");
+        }
     }
     catch (error) {
+        display_message("profile-popup-background", "error-message", error.message, "center-message");
     }
 }
 async function change_password(event) {
     event.preventDefault();
+    const current_password_input = document.getElementById("password-change-current-password-input");
+    const new_password_input = document.getElementById("password-change-new-password-input");
     try {
+        if (current_password_input.value.trim() === "") {
+            throw new Error("Please input your current password");
+        }
+        validate_new_password(new_password_input.value);
+        const response = await fetch("../backend/Update_Profile/change_password.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ current_password: current_password_input.value, new_password: new_password_input.value }),
+        });
+        if (!response.ok) {
+            throw new Error("Could not change password. Plese try again later.");
+        }
+        const data = await response.json();
+        if (data.query_fail) {
+            throw new Error(data.query_fail);
+        }
+        display_message("profile-popup-background", "success-message", data.query_success, "center-message");
     }
     catch (error) {
+        display_message("profile-popup-background", "error-message", error.message, "center-message");
+    }
+}
+function validate_new_password(password) {
+    if (password.trim() === "") {
+        throw new Error("Please input your password");
+    }
+    if (password.trim() === "") {
+        throw new Error("Please input a password");
+    }
+    if (password.length < 8) {
+        throw new Error("A password must be at least 8 symbols long");
+    }
+    if (!Boolean(password.match(/[a-z]/))) {
+        throw new Error("A password must contain a non-capital letter");
+    }
+    if (!Boolean(password.match(/[A-Z]/))) {
+        throw new Error("A password must contain a capital letter");
+    }
+    if (!Boolean(password.match(/[0-9]/))) {
+        throw new Error("A password must contain a number");
+    }
+    if (!Boolean(password.match(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/))) {
+        throw new Error("A password must contain a special character");
     }
 }
 async function delete_account(event) {
@@ -50,21 +102,26 @@ async function delete_account(event) {
         if (username_input.value.trim() === "") {
             throw new Error("Please input your username");
         }
-        validate_password_input(password_input.value);
-        const response = await fetch("", {});
+        if (password_input.value.trim() === "") {
+            throw new Error("Please input your password");
+        }
+        const response = await fetch("../backend/Account_Termination/delete_account.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ username: username_input.value, password: password_input.value }),
+        });
         if (!response.ok) {
             throw new Error("Could not delete account. Plese try again later.");
         }
         const data = await response.json();
+        if (data.query_fail) {
+            throw new Error(data.query_fail);
+        }
+        display_message("profile-popup-background", "success-message", data.query_success, "center-message");
         setTimeout(() => window.location.replace("../backend/Session_Maintanance/logout.php"), 1000);
     }
     catch (error) {
         display_message("profile-popup-background", "error-message", error.message, "center-message");
-    }
-}
-function validate_password_input(input_value) {
-    if (input_value.trim() === "") {
-        throw new Error("Please input your password");
     }
 }
 //# sourceMappingURL=profile.js.map
