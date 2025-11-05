@@ -47,7 +47,9 @@ async function delete_account(event) {
     const username_input = document.getElementById("account-deletion-username-input");
     const password_input = document.getElementById("account-deletion-password-input");
     try {
-        validate_username_input(username_input.value);
+        if (username_input.value.trim() === "") {
+            throw new Error("Please input your username");
+        }
         validate_password_input(password_input.value);
         const response = await fetch("", {});
         if (!response.ok) {
@@ -58,11 +60,6 @@ async function delete_account(event) {
     }
     catch (error) {
         display_message("profile-popup-background", "error-message", error.message, "center-message");
-    }
-}
-function validate_username_input(input_value) {
-    if (input_value.trim() === "") {
-        throw new Error("Please input your username");
     }
 }
 function validate_password_input(input_value) {

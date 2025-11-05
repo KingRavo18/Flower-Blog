@@ -65,7 +65,9 @@ async function delete_account(event: SubmitEvent): Promise<void>{
     const username_input = document.getElementById("account-deletion-username-input") as HTMLInputElement;
     const password_input = document.getElementById("account-deletion-password-input") as HTMLInputElement;
     try{
-        validate_username_input(username_input.value);
+        if(username_input.value.trim() === ""){
+            throw new Error("Please input your username");
+        }   
         validate_password_input(password_input.value);
         const response = await fetch("", {
 
@@ -78,12 +80,6 @@ async function delete_account(event: SubmitEvent): Promise<void>{
     }
     catch(error){
         display_message("profile-popup-background", "error-message", (error as Error).message, "center-message");
-    }
-}
-
-function validate_username_input(input_value: string): void{
-    if(input_value.trim() === ""){
-        throw new Error("Please input your username");
     }
 }
 
