@@ -47,8 +47,8 @@ async function delete_account(event) {
     const username_input = document.getElementById("account-deletion-username-input");
     const password_input = document.getElementById("account-deletion-password-input");
     try {
-        validate_input(username_input.value, "Please input your username");
-        validate_input(password_input.value, "Please input your password");
+        validate_username_input(username_input.value);
+        validate_password_input(password_input.value);
         const response = await fetch("", {});
         if (!response.ok) {
             throw new Error("Could not delete account. Plese try again later.");
@@ -60,9 +60,14 @@ async function delete_account(event) {
         display_message("profile-popup-background", "error-message", error.message, "center-message");
     }
 }
-function validate_input(input_value, response_message) {
+function validate_username_input(input_value) {
     if (input_value.trim() === "") {
-        throw new Error(response_message);
+        throw new Error("Please input your username");
+    }
+}
+function validate_password_input(input_value) {
+    if (input_value.trim() === "") {
+        throw new Error("Please input your password");
     }
 }
 //# sourceMappingURL=profile.js.map
