@@ -18,9 +18,9 @@
         <div class="flex mt-[10vw] gap-[1vw] p-[1vw] border-[rgb(255,160,176)] rounded-[5px] border-2 
             bg-[hsla(351,100%,92%,0.9)] container-appear-animation"
         >
-            <button id="show-username-change-popup-btn" class="common-btn">Change Username</button>
-            <button id="show-password-change-popup-btn" class="common-btn">Change Password</button>
-            <button id="show-account-deletion-popup-btn" class="common-btn text-[red]">Delete Account</button>
+            <button id="show-username-change-popup-btn" title="Change username?" class="common-btn">Change Username</button>
+            <button id="show-password-change-popup-btn" title="Change password?" class="common-btn">Change Password</button>
+            <button id="show-account-deletion-popup-btn" title="Delete your account?" class="common-btn text-[red]">Delete Account</button>
         </div>
 
         <!-- POPUPS FOR THE PREVIOUS CONTAINER -->
@@ -31,7 +31,7 @@
 
         <div id="username-change-popup" class="popup-window hide-element">
             <div class="relative flex w-full">
-                <span id="hide-username-change-popup-btn" class="material-symbols-outlined absolute 
+                <span id="hide-username-change-popup-btn" title="Close popup" class="material-symbols-outlined absolute 
                     p-[0.25vw] rounded-[50%] -top-[0.75vw] -right-[1vw] cursor-pointer select-none duration-200 hover:bg-[rgb(255,160,176)] active:bg-[rgb(228,140,155)]">
                     close
                 </span>
@@ -40,12 +40,12 @@
                 <label for="username-change-password-input" class="cursor-pointer">
                     Current password:
                 </label>
-                <input type="password" id="username-change-password-input" name="password" class="text-input mb-[0.5vw]">
+                <input type="password" id="username-change-password-input" title="Enter current password" name="password" class="text-input mb-[0.5vw]">
                 <label for="username-change-new-username-input" class="cursor-pointer">
                     New username:
                 </label>
-                <input type="text" id="username-change-new-username-input" name="new-username" class="text-input mb-[0.5vw]">
-                <input type="submit" value="Change Username" class="form-btn">
+                <input type="text" id="username-change-new-username-input" title="Enter new username" name="new-username" class="text-input mb-[0.5vw]">
+                <input type="submit" value="Change Username" title="Change username" class="form-btn">
             </form>
         </div> 
 
@@ -53,7 +53,7 @@
 
         <div id="password-change-popup" class="popup-window hide-element">
             <div class="relative flex w-full">
-                <span id="hide-password-change-popup-btn" class="material-symbols-outlined absolute 
+                <span id="hide-password-change-popup-btn" title="Close popup" class="material-symbols-outlined absolute 
                     p-[0.25vw] rounded-[50%] -top-[0.75vw] -right-[1vw] cursor-pointer select-none duration-200 hover:bg-[rgb(255,160,176)] active:bg-[rgb(228,140,155)]">
                     close
                 </span>
@@ -62,12 +62,12 @@
                 <label for="password-change-current-password-input" class="cursor-pointer">
                     Current password:
                 </label>
-                <input type="password" id="password-change-current-password-input" name="current-password" class="text-input mb-[0.5vw]">
+                <input type="password" id="password-change-current-password-input" title="Enter current password" name="current-password" class="text-input mb-[0.5vw]">
                 <label for="password-change-new-password-input" class="cursor-pointer">
                     New password:
                 </label>
-                <input type="password" id="password-change-new-password-input" name="new-password" class="text-input mb-[0.5vw]">
-                <input type="submit" value="Change Password" class="form-btn">
+                <input type="password" id="password-change-new-password-input" title="Enter new password" name="new-password" class="text-input mb-[0.5vw]">
+                <input type="submit" value="Change Password" title="Change password" class="form-btn">
             </form>
         </div>
 
@@ -75,7 +75,7 @@
 
         <div id="account-deletion-popup" class="popup-window hide-element">
             <div class="relative flex w-full">
-                <span id="hide-account-deletion-popup-btn" class="material-symbols-outlined absolute 
+                <span id="hide-account-deletion-popup-btn" title="Close popup" class="material-symbols-outlined absolute 
                     p-[0.25vw] rounded-[50%] -top-[0.75vw] -right-[1vw] cursor-pointer select-none duration-200 hover:bg-[rgb(255,160,176)] active:bg-[rgb(228,140,155)]">
                     close
                 </span>
@@ -89,7 +89,7 @@
                     Password:
                 </label>
                 <input type="password" id="account-deletion-password-input" name="password" class="text-input mb-[0.5vw]">
-                <input type="submit" value="Delete Account" class="form-btn text-[red]">
+                <input type="submit" value="Delete Account" title="Delete my account" class="form-btn text-[red]">
             </form>
         </div>
 

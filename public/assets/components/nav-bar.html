@@ -2,12 +2,12 @@
     border-2 border-[rgb(255,160,176)] h-[5vw] top-0 left-0 w-screen 
     [animation-duration:500ms] [animation-name:appear-navbar] z-1"
 >
-    <span id="show-sidebar-btn" class="material-symbols-outlined select-none 
+    <span id="show-sidebar-btn" title="Show Sidebar" class="material-symbols-outlined select-none 
         cursor-pointer p-[1vw] rounded-[50%] duration-200 hover:bg-[rgb(255,160,176)] active:bg-[rgb(228,140,155)]"
     >
         menu
     </span>
-    <a href="./main_page.html" class="text-[140%] ml-[1vw] cursor-pointer">
+    <a href="./main_page.html" title="Go to home page" class="text-[140%] ml-[1vw] cursor-pointer">
         FLOWER-BLOG
     </a>
 </header>
@@ -16,16 +16,16 @@
 
 <div id="toggleable-sidebar" class="toggleable-sidebar hide-element">
     <div class="h-[5vw] flex items-center">
-        <span id="hide-sidebar-btn" class="material-symbols-outlined select-none 
+        <span id="hide-sidebar-btn" title="Hide Sidebar" class="material-symbols-outlined select-none 
             cursor-pointer p-[1vw] rounded-[50%] duration-200 hover:bg-[rgb(255,160,176)] active:bg-[rgb(228,140,155)]"
         >
             menu
         </span>
     </div>
     <ul class="p-0">
-        <li><a href="./main_page.html">Home</a></li>
-        <li><a href="./profile.html">Profile</a></li>
-        <li id="show-logout-popup-btn">Logout</li>
+        <li><a href="./main_page.html" title="Go to Home page">Home</a></li>
+        <li><a href="./profile.html" title="Go to Profile page">Profile</a></li>
+        <li id="show-logout-popup-btn" title="Log out?">Logout</li>
     </ul>
 </div>
 
@@ -37,9 +37,9 @@
     <p class="text-[1.5vw]">Are you sure?</p>
     <div class="flex justify-center gap-[1vw]">
         <form action="../backend/Session_Maintanance/logout.php">
-            <input type="submit" value="Yes" class="form-btn px-[1vw]">
+            <input type="submit" value="Yes" title="Yes, log out" class="form-btn px-[1vw]">
         </form>
-        <button id="hide-logout-popup-btn" class="common-btn px-[1vw]">No</button>
+        <button id="hide-logout-popup-btn" title="No, stay" class="common-btn px-[1vw]">No</button>
     </div>
 </div>
 
