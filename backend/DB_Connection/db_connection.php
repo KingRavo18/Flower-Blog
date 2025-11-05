@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-class DbConnection{
+class Db_Connection{
     private $db_server = "localhost";
     private $db_username = "root";
     private $db_password = "";

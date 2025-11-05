@@ -1,7 +1,7 @@
 <?php
 require ("../DB_Connection/db_connection.php");
 
-class Account_Deletion extends DbConnection{
+class Account_Deletion extends Db_Connection{
     private $username;
     private $password;
 
@@ -11,20 +11,39 @@ class Account_Deletion extends DbConnection{
     }
 
     private function validate_input(){
-
+        if(empty(trim($this->username))){
+            throw new Exception("Please input a username.");
+        }
+        if(empty(trim($this->password))){
+            throw new Exception("Please input a password.");
+        }
+        if($this->username !== $_SESSION["username"]){
+            throw new Exception("You have entered an incorrect username or password.");
+        }
     }
 
     private function verify_account(){
-
+        $stmt = parent::conn()->prepare("SELECT password from users WHERE username = ?");
+        $stmt->execute([$this->username]);
+        $user = $stmt->fetch();
+        if(!password_verify($this->password, $user->password)){
+            throw new Exception("You have entered an incorrect username or password.");
+        }
+        $stmt = null;
     }
 
     private function execute_query(){
-
+        $stmt = parent::conn()->prepare("DELETE from users WHERE username = ?");
+        $stmt->execute([$this->username]);
+        $stmt = null;
     }
 
     public function delete_account(){
         try{
-            
+            $this->validate_input();
+            $this->verify_account();
+            $this->execute_query();
+            echo json_encode(["query_success" => "The account has been deleted"]);
         }
         catch(PDOException $e){
             echo json_encode(["query_fail" => "A problem has occured. Please try again later"]);

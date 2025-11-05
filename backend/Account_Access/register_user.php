@@ -1,7 +1,7 @@
 <?php
 require("../DB_Connection/db_connection.php");
 
-class RegisterUser extends DbConnection{
+class RegisterUser extends Db_Connection{
     private $username;
     private $password;
 

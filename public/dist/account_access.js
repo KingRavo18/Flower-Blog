@@ -1,17 +1,18 @@
+import { display_message } from "./displayMessage_module.js";
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("registration-form").addEventListener("submit", registerUser);
-    document.getElementById("sign-in-form").addEventListener("submit", signInUser);
-    document.getElementById("change-form-trigger-signin").addEventListener("click", () => changeForm("signin_container", "registration_container", "change-form-trigger-register", "right-form-appear-animation", "right-form-disappear-animation", "left-form-appear-animation"));
-    document.getElementById("change-form-trigger-register").addEventListener("click", () => changeForm("registration_container", "signin_container", "change-form-trigger-signin", "left-form-appear-animation", "left-form-disappear-animation", "right-form-appear-animation"));
-    document.getElementById("signin-password-visibility").addEventListener("click", () => togglePasswordVisibility("signin-password-visibility", "sign-in-password"));
-    document.getElementById("register-password-visibility").addEventListener("click", () => togglePasswordVisibility("register-password-visibility", "register-password"));
+    document.getElementById("registration-form").addEventListener("submit", register_user);
+    document.getElementById("sign-in-form").addEventListener("submit", sign_in_user);
+    document.getElementById("change-form-trigger-signin").addEventListener("click", () => change_form("signin_container", "registration_container", "change-form-trigger-register", "right-form-appear-animation", "right-form-disappear-animation", "left-form-appear-animation"));
+    document.getElementById("change-form-trigger-register").addEventListener("click", () => change_form("registration_container", "signin_container", "change-form-trigger-signin", "left-form-appear-animation", "left-form-disappear-animation", "right-form-appear-animation"));
+    document.getElementById("signin-password-visibility").addEventListener("click", () => toggle_password_visibility("signin-password-visibility", "sign-in-password"));
+    document.getElementById("register-password-visibility").addEventListener("click", () => toggle_password_visibility("register-password-visibility", "register-password"));
 }, { once: true });
-async function registerUser(event) {
+async function register_user(event) {
     event.preventDefault();
     const usernameInput = document.getElementById("register-username");
     const passwordInput = document.getElementById("register-password");
     try {
-        validateInput(usernameInput.value, passwordInput.value);
+        validate_input(usernameInput.value, passwordInput.value);
         const response = await fetch("../backend/Account_Access/register_user.php", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -26,22 +27,22 @@ async function registerUser(event) {
         }
         usernameInput.value = "";
         passwordInput.value = "";
-        displayMessage("registration_container", "success-message", data.query_success);
+        display_message("registration_container", "success-message", data.query_success, "left-message");
     }
     catch (error) {
-        displayMessage("registration_container", "error-message", error.message);
+        display_message("registration_container", "error-message", error.message, "left-message");
     }
 }
-async function signInUser(event) {
+async function sign_in_user(event) {
     event.preventDefault();
-    const usernameInput = document.getElementById("sign-in-username");
-    const passwordInput = document.getElementById("sign-in-password");
+    const username_input = document.getElementById("sign-in-username");
+    const password_input = document.getElementById("sign-in-password");
     try {
-        validateInput(usernameInput.value, passwordInput.value);
+        validate_input(username_input.value, password_input.value);
         const response = await fetch("../backend/Account_Access/login_user.php", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({ username: usernameInput.value, password: passwordInput.value }),
+            body: new URLSearchParams({ username: username_input.value, password: password_input.value }),
         });
         if (!response.ok) {
             throw new Error("Failed to sign in. Please try again later.");
@@ -50,14 +51,14 @@ async function signInUser(event) {
         if (data.query_fail) {
             throw new Error(data.query_fail);
         }
-        displayMessage("signin_container", "success-message", data.query_success);
+        display_message("signin_container", "success-message", data.query_success, "right-message");
         setTimeout(() => window.location.href = "./main_page.html", 1000);
     }
     catch (error) {
-        displayMessage("signin_container", "error-message", error.message);
+        display_message("signin_container", "error-message", error.message, "right-message");
     }
 }
-function validateInput(username, password) {
+function validate_input(username, password) {
     if (username.trim() === "") {
         throw new Error("Please input a username");
     }
@@ -80,41 +81,28 @@ function validateInput(username, password) {
         throw new Error("A password must contain a special character");
     }
 }
-function displayMessage(current_container_id, message_class, contents) {
-    const container = document.getElementById(current_container_id);
-    const message = document.createElement("p");
-    message.classList.add(message_class, "message-appear", current_container_id === "signin_container" ? "right-message" : "left-message");
-    message.textContent = contents;
-    container.appendChild(message);
-    setTimeout(() => {
-        message.classList.remove("message-appear");
-        message.classList.add("message-disappear");
-        message.addEventListener("animationend", () => container.removeChild(message), { once: true });
-    }, 3000);
-}
 //
 // The functions after this point only affect the UI
 //
-function changeForm(currentFormId, nextFormId, nextFormTriggerId, currentFormAppearAnimClass, currentFormDisappearAnimClass, nextFormAppearAnimClass) {
-    const currentForm = document.getElementById(currentFormId);
-    const nextForm = document.getElementById(nextFormId);
-    const nextFormTrigger = document.getElementById(nextFormTriggerId);
-    currentForm.classList.remove(currentFormAppearAnimClass);
-    currentForm.classList.add(currentFormDisappearAnimClass);
-    nextForm.classList.add(nextFormAppearAnimClass);
-    nextForm.style.display = "block";
-    nextFormTrigger.classList.add("click-disabled");
-    currentForm.addEventListener("animationend", () => {
-        currentForm.classList.remove(currentFormDisappearAnimClass);
-        currentForm.style.display = "none";
-        nextFormTrigger.classList.remove("click-disabled");
+function change_form(shown_form_id, hidden_form_id, hidden_form_change_trigger_id, shown_form_appear_anim_class, shown_form_disappear_anim_class, hidden_form_appear_anim_class) {
+    const shown_form = document.getElementById(shown_form_id);
+    const hidden_form = document.getElementById(hidden_form_id);
+    const hidden_form_change_trigger = document.getElementById(hidden_form_change_trigger_id);
+    shown_form.classList.remove(shown_form_appear_anim_class);
+    shown_form.classList.add(shown_form_disappear_anim_class);
+    hidden_form.classList.add(hidden_form_appear_anim_class);
+    hidden_form.style.display = "block";
+    hidden_form_change_trigger.classList.add("click-disabled");
+    shown_form.addEventListener("animationend", () => {
+        shown_form.classList.remove(shown_form_disappear_anim_class);
+        shown_form.style.display = "none";
+        hidden_form_change_trigger.classList.remove("click-disabled");
     }, { once: true });
 }
-function togglePasswordVisibility(trigger_id, triggered_input_id) {
+function toggle_password_visibility(trigger_id, triggered_input_id) {
     const trigger = document.getElementById(trigger_id);
     const triggeredInput = document.getElementById(triggered_input_id);
     trigger.textContent = trigger.textContent === "visibility_off" ? "visibility" : "visibility_off";
     triggeredInput.type = triggeredInput.type === "text" ? "password" : "text";
 }
-export {};
 //# sourceMappingURL=account_access.js.map

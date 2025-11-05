@@ -1,4 +1,5 @@
 import { toggle_element_visibility } from "./toggleElement_module.js";
+import { display_message } from "./displayMessage_module.js";
 document.addEventListener("DOMContentLoaded", () => {
     display_profile_page_title();
     toggle_user_profile_popup("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
@@ -43,9 +44,25 @@ async function change_password(event) {
 }
 async function delete_account(event) {
     event.preventDefault();
+    const username_input = document.getElementById("account-deletion-username-input");
+    const password_input = document.getElementById("account-deletion-password-input");
     try {
+        validate_input(username_input.value, "Please input your username");
+        validate_input(password_input.value, "Please input your password");
+        const response = await fetch("", {});
+        if (!response.ok) {
+            throw new Error("Could not delete account. Plese try again later.");
+        }
+        const data = await response.json();
+        setTimeout(() => window.location.replace("../backend/Session_Maintanance/logout.php"), 1000);
     }
     catch (error) {
+        display_message("profile-popup-background", "error-message", error.message, "center-message");
+    }
+}
+function validate_input(input_value, response_message) {
+    if (input_value.trim() === "") {
+        throw new Error(response_message);
     }
 }
 //# sourceMappingURL=profile.js.map

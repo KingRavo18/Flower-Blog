@@ -211,9 +211,9 @@ h1{
     position: absolute;
     text-align: center;
     width: 100%;
-    padding: 1vw;
-    bottom: 1vw;
-    margin: 1vw;
+    max-width: 25vw;
+    bottom: 1.25vw;
+    z-index: 11;
     text-wrap: pretty;
     padding: 0 1.5vw;
     animation-duration: 500ms;
@@ -233,15 +233,19 @@ h1{
 
 .left-message{ left: 1vw; }
 .right-message{ right: 1vw; }
+.center-message{
+    left: 50%;
+    transform: translateX(-50%);
+}
 
 .message-appear{ animation-name: message-appear; }
 @keyframes message-appear{
     from{ bottom: -5vw; }
-    to{ bottom: 1vw; }
+    to{ bottom: 1.25vw; }
 }
 
 .message-disappear{ animation-name: message-disappear; }
 @keyframes message-disappear{
-    from{ bottom: 1vw; }
+    from{ bottom: 1.25vw; }
     to{ bottom: -5vw; }
 }

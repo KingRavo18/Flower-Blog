@@ -1,7 +1,7 @@
 <?php
 require ("../DB_Connection/db_connection.php");
 
-class SigninUser extends DbConnection{
+class Signin_User extends Db_Connection{
     private $username;
     private $password;
 
@@ -51,5 +51,5 @@ class SigninUser extends DbConnection{
 
 $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
 $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
-$signin = new SigninUser($username, $password);
+$signin = new Signin_User($username, $password);
 $signin->signinUser();
