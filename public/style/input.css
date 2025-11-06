@@ -6,24 +6,6 @@ body{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-h1{
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 10px;
-    border: 2px solid rgb(255, 160, 176);
-    position: absolute;
-    padding: 2.5px 10px;
-    margin-top: 2vw;
-    font-weight: bold;
-    animation-duration: 600ms;
-    animation-name: title-fall;
-    background-color: rgba(255, 214, 220, 0.9);
-}
-@keyframes title-fall{
-    from{ margin-top: -30vw; }
-    to{ margin-top: 2vw; }
-}
-
 /* GLOBAL CLASSES */
 
 .basic-text-size{ font-size: 1.15vw; }
@@ -31,6 +13,25 @@ h1{
 .hide-element{ display: none; }
 .show-element-flex{ display: flex; }
 .show-element-block{ display: block; }
+
+.page-title{
+    left: 50%;
+    border-radius: 10px;
+    border: 2px solid rgb(255, 160, 176);
+    padding: 2.5px 10px;
+    margin-top: 2vw;
+    font-weight: bold;
+    background-color: rgba(255, 214, 220, 0.9);
+}
+.page-title-h1{
+    animation-duration: 600ms;
+    transform: translateX(-50%);
+    animation-name: h1-title-fall;
+}
+@keyframes h1-title-fall{
+    from{ margin-top: -30vw; }
+    to{ margin-top: 2vw; }
+}
 
 .common-btn,
 .form-btn{
@@ -98,7 +99,6 @@ h1{
     60%{ margin-top: -1vw; }
     100%{ margin-top: 0; }
 }
-
 
 /* GLOBAL ANIMATIONS */
 
