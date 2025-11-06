@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     (document.getElementById("acccount-deletion-form") as HTMLFormElement).addEventListener("submit", delete_account);
 }, {once: true});
 
+
 async function display_profile_page_title(): Promise<void>{
     const profile_title = document.getElementById("profile-title") as HTMLElement;
     try{
@@ -27,6 +28,7 @@ async function display_profile_page_title(): Promise<void>{
     }
 }
 
+
 function toggle_user_profile_popup(popup_id: string, show_popup_button_id: string, hide_popup_button_id: string): void{
     const {show_element, hide_element} = toggle_element_visibility(
         "profile-popup-background", 
@@ -40,30 +42,51 @@ function toggle_user_profile_popup(popup_id: string, show_popup_button_id: strin
     (document.getElementById(hide_popup_button_id) as HTMLElement).addEventListener("click", () => hide_element());
 }
 
+
 async function change_username(event: SubmitEvent): Promise<void>{
     event.preventDefault();
     const password_input = document.getElementById("username-change-password-input") as HTMLInputElement;
     const new_username_input = document.getElementById("username-change-new-username-input") as HTMLInputElement;
     try{
-        if(password_input.value.trim() === ""){
-            throw new Error("Please input your password");
-        }   
-        if(new_username_input.value.trim() === ""){
-            throw new Error("Please input your new username");
-        }   
-
+        validate_username_change_inputs(password_input.value, new_username_input.value);
+        const response = await fetch("../backend/Update_Profile/change_username.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ password: password_input.value, new_username: new_username_input.value }),
+        });
+        if(!response.ok){
+            throw new Error("Could not change username. Plese try again later.");
+        }
+        const data = await response.json();
+        if(data.query_fail){
+            throw new Error(data.query_fail);
+        }
+        password_input.value = "";
+        new_username_input.value = "";
+        display_message("profile-popup-background", "success-message", data.query_success, "center-message");
+        display_profile_page_title();
     }
     catch(error){
         display_message("profile-popup-background", "error-message", (error as Error).message, "center-message");
     }
 }
 
+function validate_username_change_inputs(password: string, new_username: string): void{
+    if(password.trim() === ""){
+        throw new Error("Please input your password.");
+    }   
+    if(new_username.trim() === ""){
+        throw new Error("Please input your new username.");
+    }   
+}
+
+
 async function change_password(event: SubmitEvent): Promise<void>{
     event.preventDefault();
     const current_password_input = document.getElementById("password-change-current-password-input") as HTMLInputElement;
     const new_password_input = document.getElementById("password-change-new-password-input") as HTMLInputElement;
     try{
-        validate_new_password(current_password_input.value, new_password_input.value);
+        validate_password_change_inputs(current_password_input.value, new_password_input.value);
         const response = await fetch("../backend/Update_Profile/change_password.php", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -85,7 +108,7 @@ async function change_password(event: SubmitEvent): Promise<void>{
     }
 }
 
-function validate_new_password(current_password: string, new_password: string): void{
+function validate_password_change_inputs(current_password: string, new_password: string): void{
     if(current_password.trim() === ""){
         throw new Error("Please input your current password.");
     }   
@@ -112,17 +135,13 @@ function validate_new_password(current_password: string, new_password: string): 
     }   
 }
 
+
 async function delete_account(event: SubmitEvent): Promise<void>{
     event.preventDefault();
     const username_input = document.getElementById("account-deletion-username-input") as HTMLInputElement;
     const password_input = document.getElementById("account-deletion-password-input") as HTMLInputElement;
     try{
-        if(username_input.value.trim() === ""){
-            throw new Error("Please input your username");
-        }   
-        if(password_input.value.trim() === ""){
-            throw new Error("Please input your password");
-        }
+        validate_account_deletion_inputs(username_input.value, password_input.value);
         const response = await fetch("../backend/Account_Termination/delete_account.php", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -143,3 +162,23 @@ async function delete_account(event: SubmitEvent): Promise<void>{
     }
 }
 
+function validate_account_deletion_inputs(username: string, password: string){
+    if(username.trim() === ""){
+        throw new Error("Please input your username.");
+    }   
+    if(password.trim() === ""){
+        throw new Error("Please input your password.");
+    }
+}
+
+class Username_Change{
+
+}
+
+class Password_Change{
+
+}
+
+class Account_Deletion{
+    
+}

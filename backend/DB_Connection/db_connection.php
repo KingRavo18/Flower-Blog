@@ -18,7 +18,7 @@ class Db_Connection{
             return new PDO($dsn, $this->db_username, $this->db_password, $attribute_options);
         }
         catch(PDOException $e){
-            echo json_encode(["query_fail" => "A problem has occured. Please try again later"]);
+            echo json_encode(["query_fail" => "A problem has occured. Please try again later."]);
             session_destroy();
         }
     }

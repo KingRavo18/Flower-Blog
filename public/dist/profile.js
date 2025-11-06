@@ -33,15 +33,34 @@ async function change_username(event) {
     const password_input = document.getElementById("username-change-password-input");
     const new_username_input = document.getElementById("username-change-new-username-input");
     try {
-        if (password_input.value.trim() === "") {
-            throw new Error("Please input your password");
+        validate_username_change_inputs(password_input.value, new_username_input.value);
+        const response = await fetch("../backend/Update_Profile/change_username.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ password: password_input.value, new_username: new_username_input.value }),
+        });
+        if (!response.ok) {
+            throw new Error("Could not change username. Plese try again later.");
         }
-        if (new_username_input.value.trim() === "") {
-            throw new Error("Please input your new username");
+        const data = await response.json();
+        if (data.query_fail) {
+            throw new Error(data.query_fail);
         }
+        password_input.value = "";
+        new_username_input.value = "";
+        display_message("profile-popup-background", "success-message", data.query_success, "center-message");
+        display_profile_page_title();
     }
     catch (error) {
         display_message("profile-popup-background", "error-message", error.message, "center-message");
+    }
+}
+function validate_username_change_inputs(password, new_username) {
+    if (password.trim() === "") {
+        throw new Error("Please input your password.");
+    }
+    if (new_username.trim() === "") {
+        throw new Error("Please input your new username.");
     }
 }
 async function change_password(event) {
@@ -49,7 +68,7 @@ async function change_password(event) {
     const current_password_input = document.getElementById("password-change-current-password-input");
     const new_password_input = document.getElementById("password-change-new-password-input");
     try {
-        validate_new_password(current_password_input.value, new_password_input.value);
+        validate_password_change_inputs(current_password_input.value, new_password_input.value);
         const response = await fetch("../backend/Update_Profile/change_password.php", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -70,7 +89,7 @@ async function change_password(event) {
         display_message("profile-popup-background", "error-message", error.message, "center-message");
     }
 }
-function validate_new_password(current_password, new_password) {
+function validate_password_change_inputs(current_password, new_password) {
     if (current_password.trim() === "") {
         throw new Error("Please input your current password.");
     }
@@ -101,12 +120,7 @@ async function delete_account(event) {
     const username_input = document.getElementById("account-deletion-username-input");
     const password_input = document.getElementById("account-deletion-password-input");
     try {
-        if (username_input.value.trim() === "") {
-            throw new Error("Please input your username");
-        }
-        if (password_input.value.trim() === "") {
-            throw new Error("Please input your password");
-        }
+        validate_account_deletion_inputs(username_input.value, password_input.value);
         const response = await fetch("../backend/Account_Termination/delete_account.php", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -125,5 +139,19 @@ async function delete_account(event) {
     catch (error) {
         display_message("profile-popup-background", "error-message", error.message, "center-message");
     }
+}
+function validate_account_deletion_inputs(username, password) {
+    if (username.trim() === "") {
+        throw new Error("Please input your username.");
+    }
+    if (password.trim() === "") {
+        throw new Error("Please input your password.");
+    }
+}
+class Username_Change {
+}
+class Password_Change {
+}
+class Account_Deletion {
 }
 //# sourceMappingURL=profile.js.map
