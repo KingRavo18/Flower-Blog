@@ -60,10 +60,10 @@ class Password_Change extends Db_Connection{
             $this->validate_inputs();
             $this->verify_password();
             $this->execute_query();
-            echo json_encode(["query_success" => "Your password has been updated"]);
+            echo json_encode(["query_success" => "Your password has been changed."]);
         }
         catch(PDOException $e){
-            echo json_encode(["query_fail" => "A problem has occured. Please try again later"]);
+            echo json_encode(["query_fail" => "A problem has occured. Please try again later."]);
         }
         catch(Exception $e){
             echo json_encode(["query_fail" => $e->getMessage()]);

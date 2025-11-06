@@ -1,7 +1,7 @@
 <?php
 require("../DB_Connection/db_connection.php");
 
-class RegisterUser extends Db_Connection{
+class Register_User extends Db_Connection{
     private $username;
     private $password;
 
@@ -10,7 +10,7 @@ class RegisterUser extends Db_Connection{
         $this->password = $password;
     }
 
-    private function validateInput(){
+    private function validate_input(){
         if(empty(trim($this->username))){
             throw new Exception("Please input a username.");
         }
@@ -34,7 +34,7 @@ class RegisterUser extends Db_Connection{
         }
     }
 
-    private function checkUsernameExistance(){
+    private function check_username_existance(){
         $stmt = parent::conn()->prepare("SELECT username FROM users WHERE username = ?");
         $stmt->execute([$this->username]);
         $user_count = $stmt->rowCount();
@@ -44,18 +44,18 @@ class RegisterUser extends Db_Connection{
         $stmt = null;
     }
 
-    private function executeQuery(){
+    private function execute_query(){
         $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
         $stmt = parent::conn()->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
         $stmt->execute(["username" => $this->username, "password" => $password_hash]);
         $stmt = null;
     }
 
-    public function registerUser(){
+    public function register_user(){
         try{
-            $this->validateInput();
-            $this->checkUsernameExistance();
-            $this->executeQuery();
+            $this->validate_input();
+            $this->check_username_existance();
+            $this->execute_query();
             echo json_encode(["query_success" => "Registration was successful"]);
             session_destroy();
         }
@@ -72,5 +72,5 @@ class RegisterUser extends Db_Connection{
 
 $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
 $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
-$register_user = new RegisterUser($username, $password);
-$register_user->registerUser();
+$register_user = new Register_User($username, $password);
+$register_user->register_user();

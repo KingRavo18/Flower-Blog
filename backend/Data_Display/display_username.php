@@ -1,11 +1,11 @@
 <?php
 require ("../DB_Connection/db_connection.php");
 
-class DisplayUsername extends Db_Connection{
-    public function retrieveUsername(){
+class Display_Username extends Db_Connection{
+    public function retrieve_username(){
         echo json_encode(["username" => $_SESSION["username"]]);
     }
 }
 
-$retrive_username = new DisplayUsername();
-$retrive_username->retrieveUsername();
+$retrive_username = new Display_Username();
+$retrive_username->retrieve_username();

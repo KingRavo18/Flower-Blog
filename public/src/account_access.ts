@@ -64,7 +64,7 @@ async function sign_in_user(event: SubmitEvent): Promise<void>{
     const password_input = document.getElementById("sign-in-password") as HTMLInputElement;
     try{
         validate_input(username_input.value, password_input.value);
-        const response = await fetch("../backend/Account_Access/login_user.php", {
+        const response = await fetch("../backend/Account_Access/sign_in_user.php", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: new URLSearchParams({ username: username_input.value, password: password_input.value}),
