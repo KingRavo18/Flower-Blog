@@ -204,8 +204,8 @@
   .my-\[3vw\] {
     margin-block: 3vw;
   }
-  .mt-\[10vw\] {
-    margin-top: 10vw;
+  .mt-\[11vw\] {
+    margin-top: 11vw;
   }
   .mb-\[0\.5vw\] {
     margin-bottom: 0.5vw;
@@ -353,6 +353,9 @@
   .text-\[1\.5vw\] {
     font-size: 1.5vw;
   }
+  .text-\[2vw\] {
+    font-size: 2vw;
+  }
   .text-\[3vw\] {
     font-size: 3vw;
   }
@@ -458,21 +461,33 @@ body {
   border-radius: 10px;
   border: 2px solid rgb(255, 160, 176);
   padding: 2.5px 10px;
-  margin-top: 2vw;
+  margin-top: 3vw;
   font-weight: bold;
   background-color: rgba(255, 214, 220, 0.9);
 }
 .page-title-h1 {
   animation-duration: 600ms;
   transform: translateX(-50%);
-  animation-name: h1-title-fall;
+  animation-name: h1-title-anim;
 }
-@keyframes h1-title-fall {
+@keyframes h1-title-anim {
   from {
     margin-top: -30vw;
   }
   to {
-    margin-top: 2vw;
+    margin-top: 3vw;
+  }
+}
+.page-title-h2 {
+  animation-duration: 1000ms;
+  animation-name: h2-title-anim;
+}
+@keyframes h2-title-anim {
+  from {
+    margin-top: -30vw;
+  }
+  to {
+    margin-top: 3vw;
   }
 }
 .common-btn, .form-btn {
