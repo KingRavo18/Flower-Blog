@@ -63,10 +63,7 @@ async function change_password(event: SubmitEvent): Promise<void>{
     const current_password_input = document.getElementById("password-change-current-password-input") as HTMLInputElement;
     const new_password_input = document.getElementById("password-change-new-password-input") as HTMLInputElement;
     try{
-        if(current_password_input.value.trim() === ""){
-            throw new Error("Please input your current password");
-        }   
-        validate_new_password(new_password_input.value);
+        validate_new_password(current_password_input.value, new_password_input.value);
         const response = await fetch("../backend/Update_Profile/change_password.php", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -79,6 +76,8 @@ async function change_password(event: SubmitEvent): Promise<void>{
         if(data.query_fail){
             throw new Error(data.query_fail);
         }
+        current_password_input.value = "";
+        new_password_input.value = "";
         display_message("profile-popup-background", "success-message", data.query_success, "center-message");
     }
     catch(error){
@@ -86,28 +85,31 @@ async function change_password(event: SubmitEvent): Promise<void>{
     }
 }
 
-function validate_new_password(password: string): void{
-    if(password.trim() === ""){
-        throw new Error("Please input your password");
+function validate_new_password(current_password: string, new_password: string): void{
+    if(current_password.trim() === ""){
+        throw new Error("Please input your current password.");
+    }   
+    if(new_password.trim() === ""){
+        throw new Error("Please input your new password.");
     }
-    if(password.trim() === ""){
-        throw new Error("Please input a password");
+    if(new_password.length < 8){
+        throw new Error("A password must be at least 8 symbols long.");
     }
-    if(password.length < 8){
-        throw new Error("A password must be at least 8 symbols long");
+    if(!Boolean(new_password.match(/[a-z]/))){
+        throw new Error("A password must contain a non-capital letter.");
     }
-    if(!Boolean(password.match(/[a-z]/))){
-        throw new Error("A password must contain a non-capital letter");
+    if(!Boolean(new_password.match(/[A-Z]/))){
+        throw new Error("A password must contain a capital letter.");
     }
-    if(!Boolean(password.match(/[A-Z]/))){
-        throw new Error("A password must contain a capital letter");
+    if(!Boolean(new_password.match(/[0-9]/))){
+        throw new Error("A password must contain a number.");
     }
-    if(!Boolean(password.match(/[0-9]/))){
-        throw new Error("A password must contain a number");
-    }
-    if(!Boolean(password.match(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/))){
-        throw new Error("A password must contain a special character");
+    if(!Boolean(new_password.match(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/))){
+        throw new Error("A password must contain a special character.");
     } 
+    if(current_password.trim() === new_password.trim()){
+        throw new Error("Both input fields cannot contain the same password.");
+    }   
 }
 
 async function delete_account(event: SubmitEvent): Promise<void>{

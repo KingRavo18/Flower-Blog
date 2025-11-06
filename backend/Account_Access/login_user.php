@@ -10,7 +10,7 @@ class Signin_User extends Db_Connection{
         $this->password = $password;
     }
 
-    private function validateInput(){
+    private function validate_input(){
         if(empty(trim($this->username))){
             throw new Exception("Please input a username.");
         }
@@ -19,7 +19,7 @@ class Signin_User extends Db_Connection{
         }
     }
 
-    private function executeQuery(){
+    private function execute_query(){
         $stmt = parent::conn()->prepare("SELECT id, password FROM users WHERE username = :username");
         $stmt->execute(["username" => $this->username]);
         $user = $stmt->fetch();
@@ -28,14 +28,13 @@ class Signin_User extends Db_Connection{
         }
         $_SESSION["id"] = $user->id;
         $_SESSION["username"] = $this->username;
-        $_SESSION["password"] = $user->password;
         $stmt = null;
     }
 
-    public function signinUser(){
+    public function sign_in_user(){
         try{
-            $this->validateInput();
-            $this->executeQuery();
+            $this->validate_input();
+            $this->execute_query();
             echo json_encode(["query_success" => "You have successfully signed in."]);
         }
         catch(PDOException $e){
@@ -52,4 +51,4 @@ class Signin_User extends Db_Connection{
 $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
 $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
 $signin = new Signin_User($username, $password);
-$signin->signinUser();
+$signin->sign_in_user();

@@ -47,11 +47,9 @@ class Account_Deletion extends Db_Connection{
         }
         catch(PDOException $e){
             echo json_encode(["query_fail" => "A problem has occured. Please try again later"]);
-            session_destroy();
         }
         catch(Exception $e){
             echo json_encode(["query_fail" => $e->getMessage()]);
-            session_destroy();
         }
     }
 }

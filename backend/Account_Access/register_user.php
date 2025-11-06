@@ -57,6 +57,7 @@ class RegisterUser extends Db_Connection{
             $this->checkUsernameExistance();
             $this->executeQuery();
             echo json_encode(["query_success" => "Registration was successful"]);
+            session_destroy();
         }
         catch(PDOException $e){
             echo json_encode(["query_fail" => "A problem has occured. Please try again later"]);
