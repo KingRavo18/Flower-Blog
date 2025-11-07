@@ -3,20 +3,36 @@ import { display_message } from "./displayMessage_module.js";
 document.addEventListener("DOMContentLoaded", () => {
     const title_display = new Title_Display;
     title_display.display_profile_page_title();
-    toggle_user_profile_popup("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
-    toggle_user_profile_popup("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
-    toggle_user_profile_popup("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
+    const username_change_popup = new User_Profile_Popup("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
     const username_change = new Username_Change;
+    username_change_popup.init();
     document.getElementById("username-change-form").addEventListener("submit", (event) => username_change.init(event));
+    const password_change_popup = new User_Profile_Popup("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
     const password_change = new Password_Change;
+    password_change_popup.init();
     document.getElementById("password-change-form").addEventListener("submit", (event) => password_change.init(event));
+    const account_deletion_popup = new User_Profile_Popup("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
     const account_deletion = new Account_Deletion;
+    account_deletion_popup.init();
     document.getElementById("acccount-deletion-form").addEventListener("submit", (event) => account_deletion.init(event));
 }, { once: true });
-function toggle_user_profile_popup(popup_id, show_popup_button_id, hide_popup_button_id) {
-    const { show_element, hide_element } = toggle_element_visibility("profile-popup-background", "show-element-block", "hide-popup-background-anim", popup_id, "show-element-flex", "hide-popup-anim");
-    document.getElementById(show_popup_button_id).addEventListener("click", () => show_element());
-    document.getElementById(hide_popup_button_id).addEventListener("click", () => hide_element());
+class User_Profile_Popup {
+    popup_id;
+    show_popup_button_id;
+    hide_popup_button_id;
+    constructor(popup_id, show_popup_button_id, hide_popup_button_id) {
+        this.popup_id = popup_id;
+        this.show_popup_button_id = show_popup_button_id;
+        this.hide_popup_button_id = hide_popup_button_id;
+    }
+    init() {
+        this.#toggle_user_profile_popup();
+    }
+    #toggle_user_profile_popup() {
+        const { show_element, hide_element } = toggle_element_visibility("profile-popup-background", "show-element-block", "hide-popup-background-anim", this.popup_id, "show-element-flex", "hide-popup-anim");
+        document.getElementById(this.show_popup_button_id).addEventListener("click", () => show_element());
+        document.getElementById(this.hide_popup_button_id).addEventListener("click", () => hide_element());
+    }
 }
 class Title_Display {
     async display_profile_page_title() {

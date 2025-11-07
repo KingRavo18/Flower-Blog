@@ -1,28 +1,35 @@
 import { toggle_element_visibility } from "./toggleElement_module.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    check_session();
-    const page_navigation = new PageNavigation;
+    const session_check = new Session_Check;
+    session_check.init();
+    const page_navigation = new Page_Navigation;
     page_navigation.init();
 }, {once: true});
 
-async function check_session(): Promise<void>{
-    try{
-        const response = await fetch("../backend/Session_Maintanance/check_session.php");
-        if(!response.ok){
-            throw new Error("Could not find the session check.");
-        }
-        const data = await response.json();
-        if(data.session_validation === "Failed"){
-            throw new Error("Session validation failed.");
-        }
+class Session_Check{
+    async init(): Promise<void>{
+        await this.#check_session();
     }
-    catch(error){
-        window.location.replace("../backend/Session_Maintanance/logout.php");
+    
+    async #check_session(): Promise<void>{
+        try{
+            const response = await fetch("../backend/Session_Maintanance/check_session.php");
+            if(!response.ok){
+                throw new Error("Could not find the session check.");
+            }
+            const data = await response.json();
+            if(data.session_validation === "Failed"){
+                throw new Error("Session validation failed.");
+            }
+        }
+        catch(error){
+            window.location.replace("../backend/Session_Maintanance/logout.php");
+        }
     }
 }
 
-class PageNavigation{
+class Page_Navigation{
     async init(): Promise<void>{
         await this.#load_navbar();
     }
