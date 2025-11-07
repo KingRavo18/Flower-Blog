@@ -32,4 +32,4 @@ attached_element_id, attached_element_show_class, hide_attached_element_anim_cla
     }
     return { show_element, hide_element };
 }
-//# sourceMappingURL=toggleElement_module.js.map
+//# sourceMappingURL=module_element_toggle.js.map

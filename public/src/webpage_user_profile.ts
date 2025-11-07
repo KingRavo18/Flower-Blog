@@ -1,53 +1,16 @@
-import { toggle_element_visibility } from "./toggleElement_module.js";
-import { display_message } from "./displayMessage_module.js";
+import { toggle_element_visibility } from "./module_element_toggle.js";
+import { display_message } from "./module_message_display.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    const title_display = new Title_Display;
-    title_display.display_profile_page_title();
-
-    const username_change_popup = new User_Profile_Popup("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
-    const username_change = new Username_Change;
-    username_change_popup.init();
-    (document.getElementById("username-change-form") as HTMLFormElement).addEventListener("submit", (event) => username_change.init(event));
-    
-    const password_change_popup = new User_Profile_Popup("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
-    const password_change = new Password_Change;
-    password_change_popup.init();
-    (document.getElementById("password-change-form") as HTMLFormElement).addEventListener("submit", (event) => password_change.init(event));
-
-    const account_deletion_popup = new User_Profile_Popup("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
-    const account_deletion = new Account_Deletion;
-    account_deletion_popup.init();
-    (document.getElementById("acccount-deletion-form") as HTMLFormElement).addEventListener("submit", (event) => account_deletion.init(event));
+    display_title();
+    change_username();
+    change_password();
+    delete_account();
 }, {once: true});
 
-class User_Profile_Popup{
-    popup_id: string;
-    show_popup_button_id: string;
-    hide_popup_button_id: string;
-
-    constructor(popup_id: string, show_popup_button_id: string, hide_popup_button_id: string){
-        this.popup_id = popup_id;
-        this.show_popup_button_id = show_popup_button_id;
-        this.hide_popup_button_id = hide_popup_button_id;
-    }
-
-    init(){
-        this.#toggle_user_profile_popup();
-    }
-
-    #toggle_user_profile_popup(): void{
-        const {show_element, hide_element} = toggle_element_visibility(
-            "profile-popup-background", 
-            "show-element-block", 
-            "hide-popup-background-anim",
-            this.popup_id,
-            "show-element-flex", 
-            "hide-popup-anim"
-        );
-        (document.getElementById(this.show_popup_button_id) as HTMLElement).addEventListener("click", () => show_element());
-        (document.getElementById(this.hide_popup_button_id) as HTMLElement).addEventListener("click", () => hide_element());
-    }
+function display_title(){
+    const title_display = new Title_Display;
+    title_display.display_profile_page_title();
 }
 
 class Title_Display{
@@ -67,10 +30,18 @@ class Title_Display{
     }
 }
 
+function change_username(){
+    const username_change_popup = new Profile_Change_Popup("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
+    const username_change = new Username_Change;
+    username_change_popup.init();
+    (document.getElementById("username-change-form") as HTMLFormElement).addEventListener("submit", (event) => username_change.init(event));
+}
+
 class Username_Change extends Title_Display{
     async init(event: SubmitEvent){
         await this.#change_username(event);
     }
+
     async #change_username(event: SubmitEvent): Promise<void>{
         event.preventDefault();
         const password_input = document.getElementById("username-change-password-input") as HTMLInputElement;
@@ -107,6 +78,13 @@ class Username_Change extends Title_Display{
             throw new Error("Please input your new username.");
         }   
     }
+}
+
+function change_password(){
+    const password_change_popup = new Profile_Change_Popup("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
+    const password_change = new Password_Change;
+    password_change_popup.init();
+    (document.getElementById("password-change-form") as HTMLFormElement).addEventListener("submit", (event) => password_change.init(event));
 }
 
 class Password_Change{
@@ -169,6 +147,13 @@ class Password_Change{
     }
 }
 
+function delete_account(){
+    const account_deletion_popup = new Profile_Change_Popup("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
+    const account_deletion = new Account_Deletion;
+    account_deletion_popup.init();
+    (document.getElementById("acccount-deletion-form") as HTMLFormElement).addEventListener("submit", (event) => account_deletion.init(event));
+}
+
 class Account_Deletion{
     async init(event: SubmitEvent){
         await this.#delete_account(event);
@@ -207,5 +192,34 @@ class Account_Deletion{
         if(password.trim() === ""){
             throw new Error("Please input your password.");
         }
+    }
+}
+
+class Profile_Change_Popup{
+    popup_id: string;
+    show_popup_btn_id: string;
+    hide_popup_btn_id: string;
+
+    constructor(popup_id: string, show_popup_btn_id: string, hide_popup_btn_id: string){
+        this.popup_id = popup_id;
+        this.show_popup_btn_id = show_popup_btn_id;
+        this.hide_popup_btn_id = hide_popup_btn_id;
+    }
+
+    init(){
+        this.#toggle_user_profile_popup();
+    }
+
+    #toggle_user_profile_popup(): void{
+        const {show_element, hide_element} = toggle_element_visibility(
+            "profile-popup-background", 
+            "show-element-block", 
+            "hide-popup-background-anim",
+            this.popup_id,
+            "show-element-flex", 
+            "hide-popup-anim"
+        );
+        (document.getElementById(this.show_popup_btn_id) as HTMLElement).addEventListener("click", () => show_element());
+        (document.getElementById(this.hide_popup_btn_id) as HTMLElement).addEventListener("click", () => hide_element());
     }
 }

@@ -1,4 +1,4 @@
-import { display_message } from "./displayMessage_module.js";
+import { display_message } from "./module_message_display.js";
 document.addEventListener("DOMContentLoaded", () => {
     sign_in();
     register();
@@ -162,4 +162,4 @@ class Password_Visibility_Toggle {
         triggeredInput.type = triggeredInput.type === "text" ? "password" : "text";
     }
 }
-//# sourceMappingURL=account_access.js.map
+//# sourceMappingURL=webpage_account_access.js.map

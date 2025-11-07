@@ -1,10 +1,12 @@
-import { toggle_element_visibility } from "./toggleElement_module.js";
+import { toggle_element_visibility } from "./module_element_toggle.js";
 document.addEventListener("DOMContentLoaded", () => {
+    check_session();
+    load_page_heading();
+}, { once: true });
+function check_session() {
     const session_check = new Session_Check;
     session_check.init();
-    const page_navigation = new Page_Navigation;
-    page_navigation.init();
-}, { once: true });
+}
 class Session_Check {
     async init() {
         await this.#check_session();
@@ -25,7 +27,11 @@ class Session_Check {
         }
     }
 }
-class Page_Navigation {
+function load_page_heading() {
+    const page_navigation = new Page_Heading;
+    page_navigation.init();
+}
+class Page_Heading {
     async init() {
         await this.#load_navbar();
     }

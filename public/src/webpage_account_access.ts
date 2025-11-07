@@ -1,4 +1,4 @@
-import { display_message } from "./displayMessage_module.js";
+import { display_message } from "./module_message_display.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     sign_in();

@@ -10,4 +10,4 @@ export function display_message(element_id, message_class, contents, message_pos
         message.addEventListener("animationend", () => element.removeChild(message), { once: true });
     }, 3000);
 }
-//# sourceMappingURL=displayMessage_module.js.map
+//# sourceMappingURL=module_message_display.js.map
