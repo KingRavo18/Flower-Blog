@@ -223,3 +223,28 @@ class Profile_Change_Popup{
         (document.getElementById(this.hide_popup_btn_id) as HTMLElement).addEventListener("click", () => hide_element());
     }
 }
+
+async function display_personal_blogs(): Promise<void>{
+    try{
+        const response = await fetch("../backend/Blog_Managment/user_blogs_retrive.php");
+        if(!response.ok){
+            throw new Error("Could not fetch blogs. Please try again later.");
+        }
+        const data = await response.json();
+        if(data.query_fail){
+            throw new Error(data.query_fail);
+        }
+        create_blog();
+    }
+    catch(error){
+        display_message("document-body", "error-message", (error as Error).message, "center-message");
+    }
+}
+
+function create_blog(): void{
+    const blog_container = document.getElementById("user-blog-container") as HTMLElement;
+}
+
+class Blog_Managment{
+
+}

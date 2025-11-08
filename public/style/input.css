@@ -109,6 +109,10 @@ body{
     100%{ margin-top: 0; }
 }
 
+.displayed-tag{
+    background-color: white;
+}
+
 /* GLOBAL ANIMATIONS */
 
 .container-appear-animation{
