@@ -9,12 +9,25 @@
     <title>Flower-Blog - Create your Blog!</title>
 </head>
 <body>
-    <main class="pt-[5vw]">
+    <main class="pt-[5vw] flex flex-col items-center">
         <h1 class="page-title page-title-h1 text-[3vw] absolute">
-            Create!
+            Create your blog!
         </h1>
-        <div class="w-full">
-
+        <div class="mt-[11vw] bg-[hsla(351,100%,92%,0.9)] rounded-[10px] p-[1.5vw] border-2 w-[70%] min-h-[5vw] mb-[2vw] h-auto border-[rgb(255,160,176)] container-appear-animation">
+            <form id="blog-creaton-form" class="flex flex-col">
+                <label for="blog-title-input" class="cursor-pointer">
+                    Title:
+                </label>
+                <input type="text" id="blog-title-input" title="Enter your blog's title" autocomplete="off" class="text-input mb-[0.5vw]">
+                <label for="blog-desc-input" class="cursor-pointer">
+                    Description:
+                </label>
+                <textarea type="text" id="blog-desc-input" title="Enter your blog's description" autocomplete="off" class="text-input mb-[0.5vw] min-h-[4.5vw] max-h-[10vw]"></textarea>
+                <label for="blog-contents-input" class="cursor-pointer">
+                    Contents:
+                </label>
+                <textarea type="text" id="blog-contents-input" title="Enter your blog's contents" autocomplete="off" class="text-input mb-[0.5vw] min-h-[4.5vw] max-h-[10vw]"></textarea>
+            </form>
         </div>
     </main>
     <script type="module" src="./dist/global.js"></script>
