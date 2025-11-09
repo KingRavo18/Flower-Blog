@@ -111,6 +111,10 @@ body{
 
 .displayed-tag{
     background-color: white;
+    padding: 0.3vw 0.5vw;
+    border-radius: 5px;
+    border: 2px solid rgb(255, 160, 176);
+    box-shadow: 0.5px 0.5px 3px gray;
 }
 
 /* GLOBAL ANIMATIONS */

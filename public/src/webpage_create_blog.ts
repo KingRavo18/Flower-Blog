@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function create_blog(){
     const blog_creation = new Blog_Creation;
     (document.getElementById("tag-btn") as HTMLElement).addEventListener("click", () => blog_creation.collect_tags());
-    blog_creation.init();
+    (document.getElementById("blog-creaton-form") as HTMLFormElement).addEventListener("submit", (event) => blog_creation.init(event));
 }
 
 class Blog_Creation{
@@ -20,24 +20,27 @@ class Blog_Creation{
         this.tag_display = document.getElementById("tag-container") as HTMLElement;
     }
 
-    init(){
-
+    async init(event: SubmitEvent): Promise<void>{
+        await this.#create_blog(event);
     }
 
-    collect_tags(){
+    collect_tags(): void{
         if(this.tag_input.value.trim() !== ""){
             this.tags.push(this.tag_input.value);
+            this.#display_tag();
             this.tag_input.value = "";
-            this.tags.forEach(tag => {
-                const displayed_tag = document.createElement("p");
-                this.tag_display.appendChild(displayed_tag);
-            });
         }
     }
 
-    async create_blog(){
-        try{
+    #display_tag(): void{
+        const displayed_tag = document.createElement("p");
+        displayed_tag.classList.add("displayed-tag");
+        displayed_tag.textContent = this.tag_input.value;
+        this.tag_display.appendChild(displayed_tag);
+    }
 
+    async #create_blog(event: SubmitEvent): Promise<void>{
+        try{
 
             this.tags.length = 0;
         }

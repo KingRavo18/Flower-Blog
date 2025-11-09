@@ -38,7 +38,7 @@ function change_username(){
 }
 
 class Username_Change extends Title_Display{
-    async init(event: SubmitEvent){
+    async init(event: SubmitEvent): Promise<void>{
         await this.#change_username(event);
     }
 
@@ -155,7 +155,7 @@ function delete_account(){
 }
 
 class Account_Deletion{
-    async init(event: SubmitEvent){
+    async init(event: SubmitEvent): Promise<void>{
         await this.#delete_account(event);
     }
 
@@ -206,7 +206,7 @@ class Profile_Change_Popup{
         this.hide_popup_btn_id = hide_popup_btn_id;
     }
 
-    init(){
+    init(): void{
         this.#toggle_user_profile_popup();
     }
 

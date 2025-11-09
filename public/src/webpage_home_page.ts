@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 }, {once: true});
 
-async function display_blogs(){
+async function display_blogs(): Promise<void>{
     try{
 
     }

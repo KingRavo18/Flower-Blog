@@ -39,7 +39,7 @@ function sign_in(): void{
 }
 
 class User_Sign_In extends Input_Validation{
-    async init(event: SubmitEvent){
+    async init(event: SubmitEvent): Promise<void>{
         await this.#sign_in_user(event);
     }
 
@@ -76,7 +76,7 @@ function register(): void{
 }
 
 class User_Registration extends Input_Validation{
-    async init(event: SubmitEvent){
+    async init(event: SubmitEvent): Promise<void>{
         await this.register_user(event);
     }
 
@@ -154,7 +154,7 @@ class Current_Form_Switch{
         this.hidden_form_appear_anim_class = hidden_form_appear_anim_class;
     }
 
-    init(){
+    init(): void{
         this.#change_form();
     }
 
@@ -193,7 +193,7 @@ class Password_Visibility_Toggle{
         this.triggered_input_id = triggered_input_id;
     }
 
-    init(){
+    init(): void{
         this.toggle_password();
     }
 
