@@ -225,11 +225,11 @@ body{
 
 .error-message,
 .success-message{
-    position: absolute;
+    position: fixed;
     text-align: center;
     width: 100%;
     max-width: 25vw;
-    bottom: 1.25vw;
+    bottom: 1.75vw;
     z-index: 11;
     text-wrap: pretty;
     padding: 0 1.5vw;
@@ -258,11 +258,11 @@ body{
 .message-appear{ animation-name: message-appear; }
 @keyframes message-appear{
     from{ bottom: -5vw; }
-    to{ bottom: 1.25vw; }
+    to{ bottom: 1.75vw; }
 }
 
 .message-disappear{ animation-name: message-disappear; }
 @keyframes message-disappear{
-    from{ bottom: 1.25vw; }
+    from{ bottom: 1.75vw; }
     to{ bottom: -5vw; }
 }
