@@ -52,7 +52,7 @@ class Blog_Creation {
                 throw new Error(data.query_fail);
             }
             if (this.tags.length > 0) {
-                this.#submit_tags();
+                this.#submit_tags(data.blog_id);
             }
             this.#form_reset(title_input, description_area, contents_area);
             display_message("document-body", "success-message", data.query_success, "center-message");
@@ -72,12 +72,12 @@ class Blog_Creation {
             throw new Error("A blog must have at least some sort of contents.");
         }
     }
-    #submit_tags() {
+    #submit_tags(blog_id) {
         this.tags.forEach(async (tag) => {
             const response = await fetch("../backend/Blog_Managment/user_blog_submit_tag.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({ tag: tag }),
+                body: new URLSearchParams({ tag: tag, blog_id: blog_id }),
             });
             if (!response.ok) {
                 throw new Error("Could not assign tags. Please assign them in blog edit later.");
