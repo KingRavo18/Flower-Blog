@@ -44,7 +44,7 @@ class Blog_Creation extends Db_Connection{
             $this->execute_query();
         }
         catch(PDOException $e){
-            echo json_encode(["query_fail" => $e->getMessage()]);
+            echo json_encode(["query_fail" => "A problem has occured, please try again later."]);
         }
         catch(Exception $e){
             echo json_encode(["query_fail" => $e->getMessage()]);

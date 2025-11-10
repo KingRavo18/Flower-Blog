@@ -77,7 +77,7 @@ class Blog_Creation {
             const response = await fetch("../backend/Blog_Managment/user_blog_submit_tag.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({ tag: tag, blog_id: blog_id }),
+                body: new URLSearchParams({ blog_id: blog_id, tag: tag }),
             });
             if (!response.ok) {
                 throw new Error("Could not assign tags. Please assign them in blog edit later.");
@@ -93,6 +93,7 @@ class Blog_Creation {
         description_area.value = "";
         contents_area.value = "";
         this.tags.length = 0;
+        this.tag_display.innerHTML = "";
     }
 }
 //# sourceMappingURL=webpage_create_blog.js.map

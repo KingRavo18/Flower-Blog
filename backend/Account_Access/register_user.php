@@ -1,7 +1,7 @@
 <?php
 require("../DB_Connection/db_connection.php");
 
-class Register_User extends Db_Connection{
+class User_Registration extends Db_Connection{
     private $username;
     private $password;
 
@@ -72,5 +72,5 @@ class Register_User extends Db_Connection{
 
 $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
 $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
-$register_user = new Register_User($username, $password);
+$register_user = new User_Registration($username, $password);
 $register_user->register_user();
