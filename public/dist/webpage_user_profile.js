@@ -27,7 +27,7 @@ class Title_Display {
     }
 }
 function change_username() {
-    const username_change_popup = new Profile_Change_Popup("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
+    const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
     const username_change = new Username_Change;
     username_change_popup.init();
     document.getElementById("username-change-form").addEventListener("submit", (event) => username_change.init(event));
@@ -73,7 +73,7 @@ class Username_Change extends Title_Display {
     }
 }
 function change_password() {
-    const password_change_popup = new Profile_Change_Popup("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
+    const password_change_popup = new Profile_Popup_Toggle("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
     const password_change = new Password_Change;
     password_change_popup.init();
     document.getElementById("password-change-form").addEventListener("submit", (event) => password_change.init(event));
@@ -136,7 +136,7 @@ class Password_Change {
     }
 }
 function delete_account() {
-    const account_deletion_popup = new Profile_Change_Popup("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
+    const account_deletion_popup = new Profile_Popup_Toggle("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
     const account_deletion = new Account_Deletion;
     account_deletion_popup.init();
     document.getElementById("acccount-deletion-form").addEventListener("submit", (event) => account_deletion.init(event));
@@ -179,7 +179,7 @@ class Account_Deletion {
         }
     }
 }
-class Profile_Change_Popup {
+class Profile_Popup_Toggle {
     popup_id;
     show_popup_btn_id;
     hide_popup_btn_id;

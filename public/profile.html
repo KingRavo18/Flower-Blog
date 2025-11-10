@@ -10,7 +10,6 @@
 </head>
 <body>
     <main class="pt-[5vw] flex flex-col items-center">
-
         <h1 id="profile-title" class="page-title page-title-h1 text-[3vw] absolute"></h1>
 
         <!-- PROFILE DATA UPDATING CONTAINER -->
@@ -22,13 +21,9 @@
             <button id="show-password-change-popup-btn" title="Change password?" class="common-btn">Change Password</button>
             <button id="show-account-deletion-popup-btn" title="Delete your account?" class="common-btn text-[red]">Delete Account</button>
         </div>
-
         <!-- POPUPS FOR THE PREVIOUS CONTAINER -->
-         
         <div id="profile-popup-background" class="popup-window-background hide-element"></div>
-
         <!-- USERNAME CHANGE POPUP -->
-
         <div id="username-change-popup" class="popup-window hide-element">
             <div class="relative flex w-full">
                 <span id="hide-username-change-popup-btn" title="Close popup" class="material-symbols-outlined absolute 
@@ -52,9 +47,7 @@
                 <input type="submit" value="Change Username" title="Change username" class="form-btn">
             </form>
         </div> 
-
         <!-- PASSWORD CHANGE POPUP -->
-
         <div id="password-change-popup" class="popup-window hide-element">
             <div class="relative flex w-full">
                 <span id="hide-password-change-popup-btn" title="Close popup" class="material-symbols-outlined absolute 
@@ -78,9 +71,7 @@
                 <input type="submit" value="Change Password" title="Change password" class="form-btn">
             </form>
         </div>
-
         <!-- ACCOUNT DELETION POPUP -->
-
         <div id="account-deletion-popup" class="popup-window hide-element">
             <div class="relative flex w-full">
                 <span id="hide-account-deletion-popup-btn" title="Close popup" class="material-symbols-outlined absolute 
@@ -101,14 +92,22 @@
             </form>
         </div>
 
-        <!-- NEXT CONTAINER -->
+        <!-- PERSONAL BLOG DISPLAY CONTAINER -->
 
         <h2 class="page-title page-title-h2 text-[2vw]">PERSONAL BLOGS</h2>
 
-        <div id="user-blog-container" class="w-full">
-
-        </div>
-
+        <ul id="user-blog-container" class="w-full flex flex-col items-center mt-[1vw]">
+            <li>
+                <div class="blog-list-item-top-row">
+                    <h3>title</h3>
+                    <div>
+                        <button class="common-btn">Edit</button>
+                        <button class="common-btn">Delete</button>
+                    </div>
+                </div>
+                <p class="description basic-text-size"></p>
+            </li>
+        </ul>
     </main>
     <script type="module" src="./dist/global.js"></script>
     <script type="module" src="./dist/webpage_user_profile.js"></script>

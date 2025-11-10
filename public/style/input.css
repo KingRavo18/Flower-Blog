@@ -266,3 +266,27 @@ body{
     from{ bottom: 1.75vw; }
     to{ bottom: -5vw; }
 }
+
+/* List */
+li{
+    width: 70vw;
+    padding: 4px 10px;
+    border-radius: 10px;
+    background-color: rgba(255, 214, 220, 0.9);
+    border: 2px solid rgb(255, 160, 176);
+
+    h3{
+        font-size: 1.5vw;
+    }
+
+    & .blog-list-item-top-row{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    & .description{
+        color: rgb(228, 140, 155);
+        max-width: 60vw;
+    }
+}
+
