@@ -200,7 +200,7 @@ class Profile_Popup_Toggle {
         document.getElementById(this.hide_popup_btn_id).addEventListener("click", () => hide_element());
     }
 }
-// SECTION 3 - DISPLAY THE USER'S PERSONAL BLOGS 
+// SECTION 3 - DISPLAY AND MANAGE THE USER'S PERSONAL BLOGS 
 function display_blogs() {
     const blog_display = new Blog_Display;
     blog_display.init();

@@ -231,7 +231,7 @@ class Profile_Popup_Toggle{
     }
 }
 
-// SECTION 3 - DISPLAY THE USER'S PERSONAL BLOGS 
+// SECTION 3 - DISPLAY AND MANAGE THE USER'S PERSONAL BLOGS 
 
 function display_blogs(): void{
     const blog_display = new Blog_Display;
@@ -284,7 +284,7 @@ class Blog_Display{
             </div>
             <p class="description basic-text-size">${description}</p>
         `;
-        
+
         const edit_btn = blog_list_item.querySelector(".edit-blog-btn") as HTMLButtonElement;
         edit_btn.addEventListener("click", () => { 
         });
