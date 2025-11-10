@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     display_blogs();
 }, {once: true});
 
+// SECTION 1 - DISPLAY THE PROFILE PAGE'S TITLE 
+
 function display_title(){
     const title_display = new Title_Display;
     title_display.display_profile_page_title();
@@ -33,7 +35,7 @@ class Title_Display{
     }
 }
 
-// CHANGE USER DATA SECTION
+// SECTION 2 - CHANGE THE USER'S DATA
 
 function change_username(){
     const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
@@ -229,7 +231,7 @@ class Profile_Popup_Toggle{
     }
 }
 
-
+// SECTION 3 - DISPLAY THE USER'S PERSONAL BLOGS 
 
 function display_blogs(): void{
     const blog_display = new Blog_Display;
@@ -267,6 +269,6 @@ class Blog_Display{
     }
 
     #delete_blog(): void{
-        
+
     }
 }
