@@ -9,7 +9,7 @@
     <title>Flower-Blog - Profile</title>
 </head>
 <body>
-    <main class="pt-[5vw] flex flex-col items-center">
+    <main class="pt-[5vw] flex flex-col items-center pb-[3vw]">
         <h1 id="profile-title" class="page-title page-title-h1 text-[3vw] absolute"></h1>
 
         <!-- PROFILE DATA UPDATING CONTAINER -->
@@ -96,18 +96,10 @@
 
         <h2 class="page-title page-title-h2 text-[2vw]">PERSONAL BLOGS</h2>
 
-        <ul id="user-blog-container" class="blog-list-ul w-full flex flex-col items-center mt-[1vw]">
-            <li>
-                <div class="blog-list-item-top-row">
-                    <h3>title</h3>
-                    <div>
-                        <button class="common-btn">Edit</button>
-                        <button class="common-btn">Delete</button>
-                    </div>
-                </div>
-                <p class="description basic-text-size">Description</p>
-            </li>
-        </ul>
+        <ul id="user-blog-container" class="blog-list-ul w-full flex flex-col items-center mt-[1vw]"></ul>
+        <div id="delete-blog-confirmation-popup" class="popup-window hide-element">
+            <p>ascacasasdcadc</p>
+        </div>
     </main>
     <script type="module" src="./dist/global.js"></script>
     <script type="module" src="./dist/webpage_user_profile.js"></script>

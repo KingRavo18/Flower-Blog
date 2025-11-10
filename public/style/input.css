@@ -272,6 +272,7 @@ body{
     & li{
         width: 70vw;
         padding: 4px 10px;
+        margin-bottom: 0.5vw;
         border-radius: 10px;
         background-color: rgba(255, 214, 220, 0.9);
         border: 2px solid rgb(255, 160, 176);
@@ -283,6 +284,11 @@ body{
     & .blog-list-item-top-row{
         display: flex;
         justify-content: space-between;
+
+        & div{
+            display: flex;
+            gap: 0.5vw;
+        }
     }
 
     & .description{

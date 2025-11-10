@@ -9,6 +9,8 @@
       "Courier New", monospace;
     --spacing: 0.25rem;
     --font-weight-bold: 700;
+    --default-transition-duration: 150ms;
+    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
   }
@@ -380,6 +382,9 @@
   }
   .pr-\[2vw\] {
     padding-right: 2vw;
+  }
+  .pb-\[3vw\] {
+    padding-bottom: 3vw;
   }
   .pl-\[1vw\] {
     padding-left: 1vw;
@@ -823,6 +828,7 @@ body {
   & li {
     width: 70vw;
     padding: 4px 10px;
+    margin-bottom: 0.5vw;
     border-radius: 10px;
     background-color: rgba(255, 214, 220, 0.9);
     border: 2px solid rgb(255, 160, 176);
@@ -832,6 +838,10 @@ body {
     & .blog-list-item-top-row {
       display: flex;
       justify-content: space-between;
+      & div {
+        display: flex;
+        gap: 0.5vw;
+      }
     }
     & .description {
       color: rgb(228, 140, 155);

@@ -238,7 +238,19 @@ function display_blogs(): void{
     blog_display.init();
 }
 
+type Blog = {
+    id: number | string;
+    title: string;
+    description: string;
+};
+
 class Blog_Display{
+    list_container: HTMLElement;
+
+    constructor(){
+        this.list_container = document.getElementById("user-blog-container") as HTMLElement;
+    }
+
     async init(): Promise<void>{
         await this.#display_personal_blogs();
     }
@@ -253,22 +265,43 @@ class Blog_Display{
             if(data.query_fail){
                 throw new Error(data.query_fail);
             }
-            this.#create_blog();
+            (data.blogs as Blog[]).forEach((blog: Blog) => this.#create_blog_list_item(blog.id, blog.title, blog.description));
         }
         catch(error){
             display_message("document-body", "error-message", (error as Error).message, "center-message");
         }
     }
 
-    #create_blog(): void{
-    
+    #create_blog_list_item(id: string | number, title: string, description: string): void{
+        const blog_list_item = document.createElement("li");
+        blog_list_item.innerHTML = `
+            <div class="blog-list-item-top-row">
+                <h3>${title}</h3>
+                <div>
+                    <button class="common-btn edit-blog-btn">Edit</button>
+                    <button class="common-btn delete-blog-btn">Delete</button>
+                </div>
+            </div>
+            <p class="description basic-text-size">${description}</p>
+        `;
+        
+        const edit_btn = blog_list_item.querySelector(".edit-blog-btn") as HTMLButtonElement;
+        edit_btn.addEventListener("click", () => { 
+        });
+
+        const delete_btn = blog_list_item.querySelector(".delete-blog-btn") as HTMLButtonElement;
+        delete_btn.addEventListener("click", () => {
+            this.#delete_blog();
+            blog_list_item.remove();
+        });
+
+        this.list_container.appendChild(blog_list_item);
     }
 
-    #edit_blog(): void{
+    async #edit_blog(): Promise<void>{
 
     }
-
-    #delete_blog(): void{
+    async #delete_blog(): Promise<void>{
 
     }
 }

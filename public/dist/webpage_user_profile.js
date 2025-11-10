@@ -206,6 +206,10 @@ function display_blogs() {
     blog_display.init();
 }
 class Blog_Display {
+    list_container;
+    constructor() {
+        this.list_container = document.getElementById("user-blog-container");
+    }
     async init() {
         await this.#display_personal_blogs();
     }
@@ -219,17 +223,37 @@ class Blog_Display {
             if (data.query_fail) {
                 throw new Error(data.query_fail);
             }
-            this.#create_blog();
+            data.blogs.forEach((blog) => this.#create_blog_list_item(blog.id, blog.title, blog.description));
         }
         catch (error) {
             display_message("document-body", "error-message", error.message, "center-message");
         }
     }
-    #create_blog() {
+    #create_blog_list_item(id, title, description) {
+        const blog_list_item = document.createElement("li");
+        blog_list_item.innerHTML = `
+            <div class="blog-list-item-top-row">
+                <h3>${title}</h3>
+                <div>
+                    <button class="common-btn edit-blog-btn">Edit</button>
+                    <button class="common-btn delete-blog-btn">Delete</button>
+                </div>
+            </div>
+            <p class="description basic-text-size">${description}</p>
+        `;
+        const edit_btn = blog_list_item.querySelector(".edit-blog-btn");
+        edit_btn.addEventListener("click", () => {
+        });
+        const delete_btn = blog_list_item.querySelector(".delete-blog-btn");
+        delete_btn.addEventListener("click", () => {
+            this.#delete_blog();
+            blog_list_item.remove();
+        });
+        this.list_container.appendChild(blog_list_item);
     }
-    #edit_blog() {
+    async #edit_blog() {
     }
-    #delete_blog() {
+    async #delete_blog() {
     }
 }
 //# sourceMappingURL=webpage_user_profile.js.map
