@@ -3,9 +3,12 @@ import { display_message } from "./module_message_display.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     display_title();
+
     change_username();
     change_password();
     delete_account();
+
+    display_blogs();
 }, {once: true});
 
 function display_title(){
@@ -29,6 +32,8 @@ class Title_Display{
         }
     }
 }
+
+// CHANGE USER DATA SECTION
 
 function change_username(){
     const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
@@ -226,27 +231,42 @@ class Profile_Popup_Toggle{
 
 
 
-async function display_personal_blogs(): Promise<void>{
-    try{
-        const response = await fetch("../backend/Blog_Managment/user_blogs_retrive.php");
-        if(!response.ok){
-            throw new Error("Could not fetch blogs. Please try again later.");
-        }
-        const data = await response.json();
-        if(data.query_fail){
-            throw new Error(data.query_fail);
-        }
-        create_blog();
-    }
-    catch(error){
-        display_message("document-body", "error-message", (error as Error).message, "center-message");
-    }
+function display_blogs(): void{
+    const blog_display = new Blog_Display;
+    blog_display.init();
 }
 
-function create_blog(): void{
-    const blog_container = document.getElementById("user-blog-container") as HTMLElement;
-}
+class Blog_Display{
+    async init(): Promise<void>{
+        await this.#display_personal_blogs();
+    }
+    
+    async #display_personal_blogs(): Promise<void>{
+        try{
+            const response = await fetch("../backend/Blog_Managment/user_blogs_retrive.php");
+            if(!response.ok){
+                throw new Error("Could not fetch your blogs. Please try again later.");
+            }
+            const data = await response.json();
+            if(data.query_fail){
+                throw new Error(data.query_fail);
+            }
+            this.#create_blog();
+        }
+        catch(error){
+            display_message("document-body", "error-message", (error as Error).message, "center-message");
+        }
+    }
 
-class Blog_Managment{
+    #create_blog(): void{
+    
+    }
 
+    #edit_blog(): void{
+
+    }
+
+    #delete_blog(): void{
+        
+    }
 }

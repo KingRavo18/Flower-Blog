@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     change_username();
     change_password();
     delete_account();
+    display_blogs();
 }, { once: true });
 function display_title() {
     const title_display = new Title_Display;
@@ -26,6 +27,7 @@ class Title_Display {
         }
     }
 }
+// CHANGE USER DATA SECTION
 function change_username() {
     const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
     const username_change = new Username_Change;
@@ -197,25 +199,35 @@ class Profile_Popup_Toggle {
         document.getElementById(this.hide_popup_btn_id).addEventListener("click", () => hide_element());
     }
 }
-async function display_personal_blogs() {
-    try {
-        const response = await fetch("../backend/Blog_Managment/user_blogs_retrive.php");
-        if (!response.ok) {
-            throw new Error("Could not fetch blogs. Please try again later.");
-        }
-        const data = await response.json();
-        if (data.query_fail) {
-            throw new Error(data.query_fail);
-        }
-        create_blog();
-    }
-    catch (error) {
-        display_message("document-body", "error-message", error.message, "center-message");
-    }
+function display_blogs() {
+    const blog_display = new Blog_Display;
+    blog_display.init();
 }
-function create_blog() {
-    const blog_container = document.getElementById("user-blog-container");
-}
-class Blog_Managment {
+class Blog_Display {
+    async init() {
+        await this.#display_personal_blogs();
+    }
+    async #display_personal_blogs() {
+        try {
+            const response = await fetch("../backend/Blog_Managment/user_blogs_retrive.php");
+            if (!response.ok) {
+                throw new Error("Could not fetch your blogs. Please try again later.");
+            }
+            const data = await response.json();
+            if (data.query_fail) {
+                throw new Error(data.query_fail);
+            }
+            this.#create_blog();
+        }
+        catch (error) {
+            display_message("document-body", "error-message", error.message, "center-message");
+        }
+    }
+    #create_blog() {
+    }
+    #edit_blog() {
+    }
+    #delete_blog() {
+    }
 }
 //# sourceMappingURL=webpage_user_profile.js.map
