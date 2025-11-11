@@ -776,7 +776,7 @@ body {
   z-index: 11;
   text-wrap: pretty;
   padding: 0 1.5vw;
-  animation-duration: 500ms;
+  animation-duration: 300ms;
   border-radius: 5px;
   box-shadow: 0.5px 2px 5px gray;
 }
@@ -805,7 +805,7 @@ body {
 }
 @keyframes message-appear {
   from {
-    bottom: -5vw;
+    bottom: -1vw;
   }
   to {
     bottom: 1.75vw;
@@ -819,7 +819,7 @@ body {
     bottom: 1.75vw;
   }
   to {
-    bottom: -5vw;
+    bottom: -1vw;
   }
 }
 .blog-list-ul {

@@ -5,7 +5,7 @@ class Db_Connection{
     private $db_server = "localhost";
     private $db_username = "root";
     private $db_password = "";
-    private $db_name = "flower-blog";
+    private $db_name = "flower_blog";
 
     protected function conn(){
         $attribute_options = [
@@ -18,8 +18,7 @@ class Db_Connection{
             return new PDO($dsn, $this->db_username, $this->db_password, $attribute_options);
         }
         catch(PDOException $e){
-            echo json_encode(["query_fail" => "A problem has occured. Please try again later."]);
-            session_destroy();
+            throw new PDOException("Error:".$e->getMessage());
         }
     }
 }

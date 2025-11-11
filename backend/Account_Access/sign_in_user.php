@@ -47,7 +47,6 @@ class Signin_User extends Db_Connection{
         }
     }
 }
-
 $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
 $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
 $signin = new Signin_User($username, $password);
