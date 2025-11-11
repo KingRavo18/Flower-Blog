@@ -237,8 +237,16 @@ class Blog_Display {
             <div class="blog-list-item-top-row">
                 <h3>${title}</h3>
                 <div>
-                    <button class="common-btn edit-blog-btn">Edit</button>
-                    <button class="common-btn delete-blog-btn">Delete</button>
+                    <button title="Edit this blog?" 
+                            class="common-btn edit-blog-btn basic-text-size"
+                    >
+                        Edit
+                    </button>
+                    <button title="Delete this blog?" 
+                            class="common-btn delete-blog-btn basic-text-size"
+                    >
+                        Delete
+                    </button>
                 </div>
             </div>
             <p class="description basic-text-size">${description}</p>
