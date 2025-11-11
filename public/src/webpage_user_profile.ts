@@ -265,7 +265,9 @@ class Blog_Display{
             if(data.query_fail){
                 throw new Error(data.query_fail);
             }
-            (data.blogs as Blog[]).forEach((blog: Blog) => this.#create_blog_list_item(blog.id, blog.title, blog.description));
+            (data.blogs as Blog[]).forEach((blog: Blog) => {
+                this.#create_blog_list_item(blog.id, blog.title, blog.description)
+            });
         }
         catch(error){
             display_message("document-body", "error-message", (error as Error).message, "center-message");
@@ -284,17 +286,14 @@ class Blog_Display{
             </div>
             <p class="description basic-text-size">${description}</p>
         `;
-
         const edit_btn = blog_list_item.querySelector(".edit-blog-btn") as HTMLButtonElement;
         edit_btn.addEventListener("click", () => { 
         });
-
         const delete_btn = blog_list_item.querySelector(".delete-blog-btn") as HTMLButtonElement;
         delete_btn.addEventListener("click", () => {
             this.#delete_blog();
             blog_list_item.remove();
         });
-
         this.list_container.appendChild(blog_list_item);
     }
 

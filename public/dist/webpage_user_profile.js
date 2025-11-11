@@ -223,7 +223,9 @@ class Blog_Display {
             if (data.query_fail) {
                 throw new Error(data.query_fail);
             }
-            data.blogs.forEach((blog) => this.#create_blog_list_item(blog.id, blog.title, blog.description));
+            data.blogs.forEach((blog) => {
+                this.#create_blog_list_item(blog.id, blog.title, blog.description);
+            });
         }
         catch (error) {
             display_message("document-body", "error-message", error.message, "center-message");
