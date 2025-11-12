@@ -81,12 +81,12 @@ class Blog_Creation{
         }
     }
 
-    #submit_tags(blog_id: string): void{
+    #submit_tags(blog_id: string | number): void{
         this.tags.forEach(async tag => {
             const response = await fetch("../backend/Blog_Managment/user_blog_submit_tag.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({ blog_id: blog_id, tag: tag }),
+                body: new URLSearchParams({ blog_id: blog_id.toString(), tag: tag }),
             });
             if(!response.ok){
                 throw new Error("Could not assign tags. Please assign them in blog edit later.");

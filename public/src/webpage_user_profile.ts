@@ -338,7 +338,7 @@ class Blog_Deletion{
             const response = await fetch("../backend/Blog_Managment/user_blog_delete.php" , {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({ blg_id: blog_id.toString() }),
+                body: new URLSearchParams({ blog_id: blog_id.toString() }),
             });
             if(!response.ok){
                 throw new Error("Could not delete the blog. Please try again later.");
@@ -347,7 +347,7 @@ class Blog_Deletion{
             if(data.query_fail){
                 throw new Error(data.query_fail);
             }
-            display_message("profile-popup-background", "success-message", data.query_success, "center-message");
+            display_message("document-body", "success-message", data.query_success, "center-message");
             blog_list_item.remove();
             hide_blog_deletion_confirmation_popup_function();
         }
