@@ -31,8 +31,7 @@ class Input_Validation {
     }
 }
 function sign_in() {
-    const user_sign_in = new User_Sign_In;
-    document.getElementById("sign-in-form").addEventListener("submit", (event) => user_sign_in.init(event));
+    document.getElementById("sign-in-form").addEventListener("submit", (event) => new User_Sign_In().init(event));
 }
 class User_Sign_In extends Input_Validation {
     async init(event) {
@@ -65,8 +64,7 @@ class User_Sign_In extends Input_Validation {
     }
 }
 function register() {
-    const user_registration = new User_Registration;
-    document.getElementById("registration-form").addEventListener("submit", (event) => user_registration.init(event));
+    document.getElementById("registration-form").addEventListener("submit", (event) => new User_Registration().init(event));
 }
 class User_Registration extends Input_Validation {
     async init(event) {
@@ -90,8 +88,7 @@ class User_Registration extends Input_Validation {
             if (data.query_fail) {
                 throw new Error(data.query_fail);
             }
-            usernameInput.value = "";
-            passwordInput.value = "";
+            usernameInput.value = passwordInput.value = "";
             display_message("registration_container", "success-message", data.query_success, "left-message");
         }
         catch (error) {
@@ -100,8 +97,8 @@ class User_Registration extends Input_Validation {
     }
 }
 function switch_form() {
-    const switch_to_signin = new Current_Form_Switch("registration_container", "signin_container", "change-form-trigger-signin", "left-form-appear-animation", "left-form-disappear-animation", "right-form-appear-animation");
-    document.getElementById("change-form-trigger-register").addEventListener("click", () => switch_to_signin.init());
+    const switch_to_sign_in = new Current_Form_Switch("registration_container", "signin_container", "change-form-trigger-signin", "left-form-appear-animation", "left-form-disappear-animation", "right-form-appear-animation");
+    document.getElementById("change-form-trigger-register").addEventListener("click", () => switch_to_sign_in.init());
     const switch_to_registration = new Current_Form_Switch("signin_container", "registration_container", "change-form-trigger-register", "right-form-appear-animation", "right-form-disappear-animation", "left-form-appear-animation");
     document.getElementById("change-form-trigger-signin").addEventListener("click", () => switch_to_registration.init());
 }
@@ -142,8 +139,8 @@ class Current_Form_Switch {
 function toggle_password_visibility() {
     const sign_in_password_visibility = new Password_Visibility_Toggle("signin-password-visibility", "sign-in-password");
     const registration_password_visibility = new Password_Visibility_Toggle("register-password-visibility", "register-password");
-    document.getElementById("signin-password-visibility").addEventListener("click", () => sign_in_password_visibility.init());
-    document.getElementById("register-password-visibility").addEventListener("click", () => registration_password_visibility.init());
+    document.getElementById("signin-password-visibility").addEventListener("click", () => sign_in_password_visibility.toggle_password());
+    document.getElementById("register-password-visibility").addEventListener("click", () => registration_password_visibility.toggle_password());
 }
 class Password_Visibility_Toggle {
     trigger_id;
@@ -151,9 +148,6 @@ class Password_Visibility_Toggle {
     constructor(trigger_id, triggered_input_id) {
         this.trigger_id = trigger_id;
         this.triggered_input_id = triggered_input_id;
-    }
-    init() {
-        this.toggle_password();
     }
     toggle_password() {
         const trigger = document.getElementById(this.trigger_id);

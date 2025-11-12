@@ -277,24 +277,28 @@ body{
         background-color: rgba(255, 214, 220, 0.9);
         border: 2px solid rgb(255, 160, 176);
 
-    & h3{
-        font-size: 1.5vw;
-    }
+        & h3{
+            font-size: 1.5vw;
+        }
 
-    & .blog-list-item-top-row{
-        display: flex;
-        justify-content: space-between;
-
-        & div{
+        & .blog-list-item-top-row{
             display: flex;
-            gap: 0.5vw;
+            justify-content: space-between;
+
+            & div{
+                display: flex;
+                gap: 0.5vw;
+            }
+        }
+
+        & .description{
+            color: rgb(228, 140, 155);
+            max-width: 60vw;
         }
     }
 
-    & .description{
-        color: rgb(228, 140, 155);
-        max-width: 60vw;
-    }
+    & .no-blog-message{
+        margin-top: 3vw;
     }
 }
 

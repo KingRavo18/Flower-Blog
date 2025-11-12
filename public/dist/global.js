@@ -4,8 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     load_page_heading();
 }, { once: true });
 function check_session() {
-    const session_check = new Session_Check;
-    session_check.init();
+    new Session_Check().init();
 }
 class Session_Check {
     async init() {
@@ -28,8 +27,7 @@ class Session_Check {
     }
 }
 function load_page_heading() {
-    const page_navigation = new Page_Heading;
-    page_navigation.init();
+    new Page_Heading().init();
 }
 class Page_Heading {
     async init() {
@@ -39,7 +37,7 @@ class Page_Heading {
         try {
             const response = await fetch("./assets/components/nav-bar.html");
             if (!response.ok) {
-                throw new Error("Could not find the navigation bar.");
+                throw new Error("Could not find the header.");
             }
             const data = await response.text();
             const navigation_section = document.createElement("section");

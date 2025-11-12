@@ -9,8 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 }, { once: true });
 // SECTION 1 - DISPLAY THE PROFILE PAGE'S TITLE 
 function display_title() {
-    const title_display = new Title_Display;
-    title_display.display_profile_page_title();
+    new Title_Display().display_profile_page_title();
 }
 class Title_Display {
     async display_profile_page_title() {
@@ -31,9 +30,8 @@ class Title_Display {
 // SECTION 2 - CHANGE THE USER'S DATA
 function change_username() {
     const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
-    const username_change = new Username_Change;
     username_change_popup.init();
-    document.getElementById("username-change-form").addEventListener("submit", (event) => username_change.init(event));
+    document.getElementById("username-change-form").addEventListener("submit", (event) => new Username_Change().init(event));
 }
 class Username_Change extends Title_Display {
     async init(event) {
@@ -77,9 +75,8 @@ class Username_Change extends Title_Display {
 }
 function change_password() {
     const password_change_popup = new Profile_Popup_Toggle("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
-    const password_change = new Password_Change;
     password_change_popup.init();
-    document.getElementById("password-change-form").addEventListener("submit", (event) => password_change.init(event));
+    document.getElementById("password-change-form").addEventListener("submit", (event) => new Password_Change().init(event));
 }
 class Password_Change {
     async init(event) {
@@ -140,9 +137,8 @@ class Password_Change {
 }
 function delete_account() {
     const account_deletion_popup = new Profile_Popup_Toggle("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
-    const account_deletion = new Account_Deletion;
     account_deletion_popup.init();
-    document.getElementById("acccount-deletion-form").addEventListener("submit", (event) => account_deletion.init(event));
+    document.getElementById("acccount-deletion-form").addEventListener("submit", (event) => new Account_Deletion().init(event));
 }
 class Account_Deletion {
     async init(event) {
@@ -202,14 +198,9 @@ class Profile_Popup_Toggle {
 }
 // SECTION 3 - DISPLAY AND MANAGE THE USER'S PERSONAL BLOGS 
 function display_blogs() {
-    const blog_display = new Blog_Display;
-    blog_display.init();
+    new Blog_Display().init();
 }
 class Blog_Display {
-    list_container;
-    constructor() {
-        this.list_container = document.getElementById("user-blog-container");
-    }
     async init() {
         await this.#display_personal_blogs();
     }
@@ -224,7 +215,7 @@ class Blog_Display {
                 throw new Error(data.query_fail);
             }
             if (data.row_count === 0) {
-                this.#show_no_blogs_paragraph();
+                new No_Blogs_Paragraph_Display().show_no_blogs_paragraph();
             }
             else {
                 data.blogs.forEach((blog) => {
@@ -236,53 +227,50 @@ class Blog_Display {
             display_message("document-body", "error-message", error.message, "center-message");
         }
     }
-    #create_blog_list_item(id, title, description) {
+    #create_blog_list_item(blog_id, title, description) {
         const blog_list_item = document.createElement("li");
         blog_list_item.innerHTML = `
             <div class="blog-list-item-top-row">
                 <h3>${title}</h3>
                 <div>
-                    <button title="Edit this blog?" 
-                            class="common-btn edit-blog-btn basic-text-size"
-                    >
+                    <button title="Edit this blog?" class="common-btn edit-blog-btn basic-text-size">
                         Edit
                     </button>
-                    <button title="Delete this blog?" 
-                            class="common-btn delete-blog-btn basic-text-size"
-                    >
+                    <button title="Delete this blog?" class="common-btn delete-blog-btn basic-text-size">
                         Delete
                     </button>
                 </div>
             </div>
             <p class="description basic-text-size">${description}</p>
         `;
+        this.#set_blog_edit_btn(blog_list_item);
+        this.#set_blog_deletion_btn(blog_id, blog_list_item);
+        document.getElementById("user-blog-container").appendChild(blog_list_item);
+    }
+    #set_blog_edit_btn(blog_list_item) {
         const edit_btn = blog_list_item.querySelector(".edit-blog-btn");
         edit_btn.addEventListener("click", () => {
         });
+    }
+    #set_blog_deletion_btn(blog_id, blog_list_item) {
         const delete_btn = blog_list_item.querySelector(".delete-blog-btn");
         delete_btn.addEventListener("click", () => {
-            const blog_deletion = new Blog_Deletion;
-            blog_deletion.toggle_blog_deletion_confirmation_popup(id, blog_list_item);
+            new Blog_Deletion().toggle_blog_deletion_confirmation_popup(blog_id, blog_list_item);
         });
-        this.list_container.appendChild(blog_list_item);
-    }
-    async #edit_blog() {
-    }
-    #show_no_blogs_paragraph() {
     }
 }
 class Blog_Deletion {
     toggle_blog_deletion_confirmation_popup(blog_id, blog_list_item) {
         const { show_element, hide_element } = toggle_element_visibility("profile-popup-background", "show-element-block", "hide-popup-background-anim", "delete-blog-confirmation-popup", "show-element-flex", "hide-popup-anim");
         show_element();
-        document.getElementById("blog-deletion-confirmation").addEventListener("click", () => {
-            this.#delete_blog(blog_id, blog_list_item, hide_element);
-        }, { once: true });
-        document.getElementById("blog-deletion-denial").addEventListener("click", () => {
+        document.getElementById("blog-deletion-confirmation").addEventListener("click", async () => {
+            await this.#delete_blog(blog_id);
+            this.#set_new_profile_page(blog_list_item);
             hide_element();
         }, { once: true });
+        document.getElementById("blog-deletion-denial").addEventListener("click", () => hide_element(), { once: true });
     }
-    async #delete_blog(blog_id, blog_list_item, hide_blog_deletion_confirmation_popup_function) {
+    async #delete_blog(blog_id) {
         try {
             const response = await fetch("../backend/Blog_Managment/user_blog_delete.php", {
                 method: "POST",
@@ -297,12 +285,29 @@ class Blog_Deletion {
                 throw new Error(data.query_fail);
             }
             display_message("document-body", "success-message", data.query_success, "center-message");
-            blog_list_item.remove();
-            hide_blog_deletion_confirmation_popup_function();
         }
         catch (error) {
             display_message("document-body", "error-message", error.message, "center-message");
         }
+    }
+    #set_new_profile_page(blog_list_item) {
+        blog_list_item.remove();
+        const blog_count = document.querySelectorAll("#user-blog-container li").length;
+        if (blog_count === 0) {
+            new No_Blogs_Paragraph_Display().show_no_blogs_paragraph();
+        }
+    }
+}
+class No_Blogs_Paragraph_Display {
+    show_no_blogs_paragraph() {
+        const no_blogs_message = document.createElement("p");
+        no_blogs_message.classList.add("no-blog-message", "basic-text-size");
+        no_blogs_message.textContent = "You have created no blogs. Begin now!";
+        document.getElementById("user-blog-container").appendChild(no_blogs_message);
+    }
+}
+class Blog_Edit {
+    async #edit_blog() {
     }
 }
 //# sourceMappingURL=webpage_user_profile.js.map

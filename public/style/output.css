@@ -852,6 +852,9 @@ body {
       max-width: 60vw;
     }
   }
+  & .no-blog-message {
+    margin-top: 3vw;
+  }
 }
 @property --tw-translate-x {
   syntax: "*";
