@@ -256,14 +256,37 @@ class Blog_Display {
         });
         const delete_btn = blog_list_item.querySelector(".delete-blog-btn");
         delete_btn.addEventListener("click", () => {
-            this.#delete_blog();
             blog_list_item.remove();
+            this.#show_popup(id);
         });
         this.list_container.appendChild(blog_list_item);
     }
     async #edit_blog() {
     }
-    async #delete_blog() {
+    #show_popup(blog_id) {
+        const { show_element, hide_element } = toggle_element_visibility("profile-popup-background", "show-element-block", "hide-popup-background-anim", "delete-blog-confirmation-popup", "show-element-flex", "hide-popup-anim");
+        show_element();
+        document.getElementById("").addEventListener("click", () => this.#delete_blog(blog_id));
+    }
+    async #delete_blog(blog_id) {
+        try {
+            const response = await fetch("../backend/Blog_Managment/user_blog_delete.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ blg_id: blog_id.toString() }),
+            });
+            if (!response.ok) {
+                throw new Error("Could not delete the blog. Please try again later.");
+            }
+            const data = await response.json();
+            if (data.query_fail) {
+                throw new Error(data.query_fail);
+            }
+            display_message("profile-popup-background", "success-message", data.query_success, "center-message");
+        }
+        catch (error) {
+            display_message("document-body", "error-message", error.message, "center-message");
+        }
     }
 }
 //# sourceMappingURL=webpage_user_profile.js.map
