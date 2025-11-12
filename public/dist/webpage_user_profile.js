@@ -223,9 +223,14 @@ class Blog_Display {
             if (data.query_fail) {
                 throw new Error(data.query_fail);
             }
-            data.blogs.forEach((blog) => {
-                this.#create_blog_list_item(blog.id, blog.title, blog.description);
-            });
+            if (data.row_count === 0) {
+                this.#show_no_blogs_message();
+            }
+            else {
+                data.blogs.forEach((blog) => {
+                    this.#create_blog_list_item(blog.id, blog.title, blog.description);
+                });
+            }
         }
         catch (error) {
             display_message("document-body", "error-message", error.message, "center-message");
@@ -262,6 +267,8 @@ class Blog_Display {
         this.list_container.appendChild(blog_list_item);
     }
     async #edit_blog() {
+    }
+    #show_no_blogs_message() {
     }
 }
 class Blog_Deletion {

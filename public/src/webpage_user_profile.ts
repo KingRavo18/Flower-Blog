@@ -265,9 +265,15 @@ class Blog_Display{
             if(data.query_fail){
                 throw new Error(data.query_fail);
             }
-            (data.blogs as Blog[]).forEach((blog: Blog) => {
-                this.#create_blog_list_item(blog.id, blog.title, blog.description)
-            });
+            if(data.row_count === 0){
+                this.#show_no_blogs_message();
+            }
+            else{
+                (data.blogs as Blog[]).forEach((blog: Blog) => {
+                    this.#create_blog_list_item(blog.id, blog.title, blog.description)
+                });
+            }
+            
         }
         catch(error){
             display_message("document-body", "error-message", (error as Error).message, "center-message");
@@ -306,6 +312,10 @@ class Blog_Display{
     }
 
     async #edit_blog(): Promise<void>{
+
+    }
+
+    #show_no_blogs_message(): void{
 
     }
 }
