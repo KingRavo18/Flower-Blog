@@ -266,7 +266,7 @@ class Blog_Display{
                 throw new Error(data.query_fail);
             }
             if(data.row_count === 0){
-                this.#show_no_blogs_message();
+                this.#show_no_blogs_paragraph();
             }
             else{
                 (data.blogs as Blog[]).forEach((blog: Blog) => {
@@ -315,7 +315,7 @@ class Blog_Display{
 
     }
 
-    #show_no_blogs_message(): void{
+    #show_no_blogs_paragraph(): void{
 
     }
 }

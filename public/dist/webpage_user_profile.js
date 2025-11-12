@@ -224,7 +224,7 @@ class Blog_Display {
                 throw new Error(data.query_fail);
             }
             if (data.row_count === 0) {
-                this.#show_no_blogs_message();
+                this.#show_no_blogs_paragraph();
             }
             else {
                 data.blogs.forEach((blog) => {
@@ -268,7 +268,7 @@ class Blog_Display {
     }
     async #edit_blog() {
     }
-    #show_no_blogs_message() {
+    #show_no_blogs_paragraph() {
     }
 }
 class Blog_Deletion {
