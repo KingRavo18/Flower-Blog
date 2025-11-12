@@ -6,7 +6,7 @@ class Blog_Deletion extends Db_Connection{
     private $user_id;
 
     public function __construct($blog_id, $user_id){
-        $this->blog_id = (int)$blog_id;
+        $this->blog_id = $blog_id;
         $this->user_id = $user_id;
     }
 
