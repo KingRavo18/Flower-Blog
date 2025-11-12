@@ -257,14 +257,14 @@ body{
 
 .message-appear{ animation-name: message-appear; }
 @keyframes message-appear{
-    from{ bottom: -1vw; }
+    from{ bottom: -3.5vw; }
     to{ bottom: 1.75vw; }
 }
 
 .message-disappear{ animation-name: message-disappear; }
 @keyframes message-disappear{
     from{ bottom: 1.75vw; }
-    to{ bottom: -1vw; }
+    to{ bottom: -3.5vw; }
 }
 
 /* List */

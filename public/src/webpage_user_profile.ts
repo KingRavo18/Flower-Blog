@@ -299,7 +299,8 @@ class Blog_Display{
         });
         const delete_btn = blog_list_item.querySelector(".delete-blog-btn") as HTMLButtonElement;
         delete_btn.addEventListener("click", () => {
-            this.#toggle_blog_deletion_confirmation_popup(id, blog_list_item);
+            const blog_deletion = new Blog_Deletion;
+            blog_deletion.toggle_blog_deletion_confirmation_popup(id, blog_list_item);
         });
         this.list_container.appendChild(blog_list_item);
     }
@@ -307,8 +308,10 @@ class Blog_Display{
     async #edit_blog(): Promise<void>{
 
     }
+}
 
-    #toggle_blog_deletion_confirmation_popup(blog_id: string | number, blog_list_item: HTMLLIElement): void{
+class Blog_Deletion{
+    toggle_blog_deletion_confirmation_popup(blog_id: string | number, blog_list_item: HTMLLIElement): void{
         const {show_element, hide_element} = toggle_element_visibility(
             "profile-popup-background", 
             "show-element-block", 
@@ -318,7 +321,6 @@ class Blog_Display{
             "hide-popup-anim"
         );
         show_element();
-
         (document.getElementById("blog-deletion-confirmation") as HTMLElement).addEventListener("click", () => {
             this.#delete_blog(blog_id, blog_list_item, hide_element);
         }, { once: true });

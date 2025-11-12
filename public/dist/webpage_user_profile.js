@@ -256,13 +256,16 @@ class Blog_Display {
         });
         const delete_btn = blog_list_item.querySelector(".delete-blog-btn");
         delete_btn.addEventListener("click", () => {
-            this.#toggle_blog_deletion_confirmation_popup(id, blog_list_item);
+            const blog_deletion = new Blog_Deletion;
+            blog_deletion.toggle_blog_deletion_confirmation_popup(id, blog_list_item);
         });
         this.list_container.appendChild(blog_list_item);
     }
     async #edit_blog() {
     }
-    #toggle_blog_deletion_confirmation_popup(blog_id, blog_list_item) {
+}
+class Blog_Deletion {
+    toggle_blog_deletion_confirmation_popup(blog_id, blog_list_item) {
         const { show_element, hide_element } = toggle_element_visibility("profile-popup-background", "show-element-block", "hide-popup-background-anim", "delete-blog-confirmation-popup", "show-element-flex", "hide-popup-anim");
         show_element();
         document.getElementById("blog-deletion-confirmation").addEventListener("click", () => {
