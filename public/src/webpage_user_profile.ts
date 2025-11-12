@@ -299,8 +299,7 @@ class Blog_Display{
         });
         const delete_btn = blog_list_item.querySelector(".delete-blog-btn") as HTMLButtonElement;
         delete_btn.addEventListener("click", () => {
-            blog_list_item.remove();
-            this.#show_popup(id);
+            this.#toggle_blog_deletion_confirmation_popup(id, blog_list_item);
         });
         this.list_container.appendChild(blog_list_item);
     }
@@ -309,7 +308,7 @@ class Blog_Display{
 
     }
 
-    #show_popup(blog_id: string | number): void{
+    #toggle_blog_deletion_confirmation_popup(blog_id: string | number, blog_list_item: HTMLLIElement): void{
         const {show_element, hide_element} = toggle_element_visibility(
             "profile-popup-background", 
             "show-element-block", 
@@ -319,10 +318,20 @@ class Blog_Display{
             "hide-popup-anim"
         );
         show_element();
-        (document.getElementById("") as HTMLElement).addEventListener("click", () => this.#delete_blog(blog_id));
+
+        (document.getElementById("blog-deletion-confirmation") as HTMLElement).addEventListener("click", () => {
+            this.#delete_blog(blog_id, blog_list_item, hide_element);
+        }, { once: true });
+        (document.getElementById("blog-deletion-denial") as HTMLElement).addEventListener("click", () => {
+            hide_element();
+        }, { once: true });
     }
     
-    async #delete_blog(blog_id: string | number): Promise<void>{
+    async #delete_blog(
+        blog_id: string | number, 
+        blog_list_item: HTMLLIElement, 
+        hide_blog_deletion_confirmation_popup_function: () => void
+    ): Promise<void>{
         try{
             const response = await fetch("../backend/Blog_Managment/user_blog_delete.php" , {
                 method: "POST",
@@ -337,6 +346,8 @@ class Blog_Display{
                 throw new Error(data.query_fail);
             }
             display_message("profile-popup-background", "success-message", data.query_success, "center-message");
+            blog_list_item.remove();
+            hide_blog_deletion_confirmation_popup_function();
         }
         catch(error){
             display_message("document-body", "error-message", (error as Error).message, "center-message");

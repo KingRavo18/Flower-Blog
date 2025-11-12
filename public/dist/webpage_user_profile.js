@@ -256,19 +256,23 @@ class Blog_Display {
         });
         const delete_btn = blog_list_item.querySelector(".delete-blog-btn");
         delete_btn.addEventListener("click", () => {
-            blog_list_item.remove();
-            this.#show_popup(id);
+            this.#toggle_blog_deletion_confirmation_popup(id, blog_list_item);
         });
         this.list_container.appendChild(blog_list_item);
     }
     async #edit_blog() {
     }
-    #show_popup(blog_id) {
+    #toggle_blog_deletion_confirmation_popup(blog_id, blog_list_item) {
         const { show_element, hide_element } = toggle_element_visibility("profile-popup-background", "show-element-block", "hide-popup-background-anim", "delete-blog-confirmation-popup", "show-element-flex", "hide-popup-anim");
         show_element();
-        document.getElementById("").addEventListener("click", () => this.#delete_blog(blog_id));
+        document.getElementById("blog-deletion-confirmation").addEventListener("click", () => {
+            this.#delete_blog(blog_id, blog_list_item, hide_element);
+        }, { once: true });
+        document.getElementById("blog-deletion-denial").addEventListener("click", () => {
+            hide_element();
+        }, { once: true });
     }
-    async #delete_blog(blog_id) {
+    async #delete_blog(blog_id, blog_list_item, hide_blog_deletion_confirmation_popup_function) {
         try {
             const response = await fetch("../backend/Blog_Managment/user_blog_delete.php", {
                 method: "POST",
@@ -283,6 +287,8 @@ class Blog_Display {
                 throw new Error(data.query_fail);
             }
             display_message("profile-popup-background", "success-message", data.query_success, "center-message");
+            blog_list_item.remove();
+            hide_blog_deletion_confirmation_popup_function();
         }
         catch (error) {
             display_message("document-body", "error-message", error.message, "center-message");
