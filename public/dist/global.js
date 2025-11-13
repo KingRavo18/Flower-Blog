@@ -1,5 +1,6 @@
 import { toggle_element_visibility } from "./module_element_toggle.js";
 import { display_message } from "./module_message_display.js";
+import { fetch_data } from "./module_fetch_data.js";
 document.addEventListener("DOMContentLoaded", () => {
     check_session();
     load_page_heading();
@@ -13,11 +14,7 @@ class Session_Check {
     }
     async #check_session() {
         try {
-            const response = await fetch("../backend/Session_Maintanance/check_session.php");
-            if (!response.ok) {
-                throw new Error("Could not find the session check.");
-            }
-            const data = await response.json();
+            const data = await fetch_data("../backend/Session_Maintanance/check_session.php", {}, "Could not find the session check.");
             if (data.session_validation === "Failed") {
                 throw new Error("Session validation failed.");
             }

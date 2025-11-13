@@ -42,18 +42,11 @@ class Blog_Creation {
         const contents_area = document.getElementById("blog-contents-input");
         try {
             this.#validate_inputs(title_input.value, description_area.value, contents_area.value);
-            const response = await fetch("../backend/Blog_Managment/Blog_Creation/blog_submit.php", {
+            const data = await fetch_data("../backend/Blog_Managment/Blog_Creation/blog_submit.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({ title: title_input.value, description: description_area.value, contents: contents_area.value }),
-            });
-            if (!response.ok) {
-                throw new Error("Could not create blog, please try again later.");
-            }
-            const data = await response.json();
-            if (data.query_fail) {
-                throw new Error(data.query_fail);
-            }
+                body: new URLSearchParams({ title: title_input.value, description: description_area.value, contents: contents_area.value })
+            }, "Could not create blog, please try again later.");
             if (this.tags.length > 0) {
                 this.#submit_tags(data.blog_id);
             }
@@ -77,18 +70,11 @@ class Blog_Creation {
     }
     #submit_tags(blog_id) {
         this.tags.forEach(async (tag) => {
-            const response = await fetch("../backend/Blog_Managment/Blog_Creation/blog_tag_submit.php", {
+            await fetch_data("../backend/Blog_Managment/Blog_Creation/blog_tag_submit.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({ blog_id: blog_id.toString(), tag: tag }),
-            });
-            if (!response.ok) {
-                throw new Error("Could not assign tags. Please assign them in blog edit later.");
-            }
-            const data = await response.json();
-            if (data.query_fail) {
-                throw new Error(data.query_fail);
-            }
+                body: new URLSearchParams({ blog_id: blog_id.toString(), tag: tag })
+            }, "Could not assign tags. Please assign them in blog edit later.");
         });
     }
     #form_reset(title_input, description_area, contents_area) {

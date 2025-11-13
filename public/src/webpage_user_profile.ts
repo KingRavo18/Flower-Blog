@@ -22,11 +22,7 @@ class Title_Display{
     async display_profile_page_title(): Promise<void>{
         const profile_title = document.getElementById("profile-title") as HTMLElement;
         try{
-            const data = await fetch_data(
-                "../backend/Data_Display/display_username.php",
-                {},
-                "Failed to retrieve username."
-            );
+            const data = await fetch_data("../backend/Data_Display/display_username.php", {}, "Failed to retrieve username.");
             profile_title.textContent = `${data.username}'s Profile`;
         }
         catch(error){
@@ -224,11 +220,7 @@ class Blog_Display{
     
     async #display_personal_blogs(): Promise<void>{
         try{
-            const data = await fetch_data(
-                "../backend/Blog_Managment/user_blogs_retrive.php",
-                {},
-                "Could not fetch your blogs. Please try again later."
-            );
+            const data = await fetch_data("../backend/Blog_Managment/user_blogs_retrive.php", {}, "Could not fetch your blogs. Please try again later.");
             if(data.row_count === 0){
                 new No_Blogs_Paragraph_Display().show_no_blogs_paragraph();
             }
