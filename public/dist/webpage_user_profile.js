@@ -31,8 +31,8 @@ function change_username() {
     document.getElementById("username-change-form").addEventListener("submit", (event) => new Username_Change().init(event));
 }
 class Username_Change extends Title_Display {
-    async init(event) {
-        await this.#change_username(event);
+    init(event) {
+        this.#change_username(event);
     }
     async #change_username(event) {
         event.preventDefault();
@@ -68,8 +68,8 @@ function change_password() {
     document.getElementById("password-change-form").addEventListener("submit", (event) => new Password_Change().init(event));
 }
 class Password_Change {
-    async init(event) {
-        await this.#change_password(event);
+    init(event) {
+        this.#change_password(event);
     }
     async #change_password(event) {
         event.preventDefault();
@@ -122,8 +122,8 @@ function delete_account() {
     document.getElementById("acccount-deletion-form").addEventListener("submit", (event) => new Account_Deletion().init(event));
 }
 class Account_Deletion {
-    async init(event) {
-        await this.#delete_account(event);
+    init(event) {
+        this.#delete_account(event);
     }
     async #delete_account(event) {
         event.preventDefault();
@@ -172,8 +172,8 @@ function display_blogs() {
     new Blog_Display().init();
 }
 class Blog_Display {
-    async init() {
-        await this.#display_personal_blogs();
+    init() {
+        this.#display_personal_blogs();
     }
     async #display_personal_blogs() {
         try {
@@ -265,8 +265,8 @@ class No_Blogs_Paragraph_Display {
     }
 }
 class Blog_Edit {
-    async init(blog_id) {
-        await this.#transport_to_edit_page(blog_id);
+    init(blog_id) {
+        this.#transport_to_edit_page(blog_id);
     }
     async #transport_to_edit_page(blog_id) {
         try {

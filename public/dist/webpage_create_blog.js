@@ -19,8 +19,8 @@ class Blog_Creation {
         this.tag_input = document.getElementById("blog-tag-input");
         this.tag_display = document.getElementById("tag-container");
     }
-    async init(event) {
-        await this.#submit_blog(event);
+    init(event) {
+        this.#submit_blog(event);
     }
     collect_tags() {
         if (this.tag_input.value.trim() !== "") {

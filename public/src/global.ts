@@ -12,16 +12,13 @@ function check_session(){
 }
 
 class Session_Check{
-    async init(): Promise<void>{
-        await this.#check_session();
+    init(): void{
+        this.#check_session();
     }
     
     async #check_session(): Promise<void>{
         try{
             const data = await fetch_data("../backend/Session_Maintanance/check_session.php", {}, "Could not find the session check.");
-            if(data.session_validation === "Failed"){
-                throw new Error("Session validation failed.");
-            }
         }
         catch(error){
             window.location.replace("../backend/Session_Maintanance/logout.php");
@@ -34,8 +31,8 @@ function load_page_heading(){
 }
 
 class Page_Heading{
-    async init(): Promise<void>{
-        await this.#load_navbar();
+    init(): void{
+        this.#load_navbar();
     }
 
     async #load_navbar(): Promise<void>{

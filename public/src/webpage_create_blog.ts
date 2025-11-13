@@ -24,8 +24,8 @@ class Blog_Creation{
         this.tag_display = document.getElementById("tag-container") as HTMLElement;
     }
 
-    async init(event: SubmitEvent): Promise<void>{
-        await this.#submit_blog(event);
+    init(event: SubmitEvent): void{
+        this.#submit_blog(event);
     }
 
     collect_tags(): void{

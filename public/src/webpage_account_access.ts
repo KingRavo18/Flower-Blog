@@ -39,8 +39,8 @@ function sign_in(): void{
 }
 
 class User_Sign_In extends Input_Validation{
-    async init(event: SubmitEvent): Promise<void>{
-        await this.#sign_in_user(event);
+    init(event: SubmitEvent): void{
+        this.#sign_in_user(event);
     }
 
     async #sign_in_user(event: SubmitEvent): Promise<void>{
@@ -72,8 +72,8 @@ function register(): void{
 }
 
 class User_Registration extends Input_Validation{
-    async init(event: SubmitEvent): Promise<void>{
-        await this.register_user(event);
+    init(event: SubmitEvent): void{
+        this.register_user(event);
     }
 
     async register_user(event: SubmitEvent): Promise<void>{

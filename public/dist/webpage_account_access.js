@@ -35,8 +35,8 @@ function sign_in() {
     document.getElementById("sign-in-form").addEventListener("submit", (event) => new User_Sign_In().init(event));
 }
 class User_Sign_In extends Input_Validation {
-    async init(event) {
-        await this.#sign_in_user(event);
+    init(event) {
+        this.#sign_in_user(event);
     }
     async #sign_in_user(event) {
         event.preventDefault();
@@ -61,8 +61,8 @@ function register() {
     document.getElementById("registration-form").addEventListener("submit", (event) => new User_Registration().init(event));
 }
 class User_Registration extends Input_Validation {
-    async init(event) {
-        await this.register_user(event);
+    init(event) {
+        this.register_user(event);
     }
     async register_user(event) {
         event.preventDefault();

@@ -9,15 +9,12 @@ function check_session() {
     new Session_Check().init();
 }
 class Session_Check {
-    async init() {
-        await this.#check_session();
+    init() {
+        this.#check_session();
     }
     async #check_session() {
         try {
             const data = await fetch_data("../backend/Session_Maintanance/check_session.php", {}, "Could not find the session check.");
-            if (data.session_validation === "Failed") {
-                throw new Error("Session validation failed.");
-            }
         }
         catch (error) {
             window.location.replace("../backend/Session_Maintanance/logout.php");
@@ -28,8 +25,8 @@ function load_page_heading() {
     new Page_Heading().init();
 }
 class Page_Heading {
-    async init() {
-        await this.#load_navbar();
+    init() {
+        this.#load_navbar();
     }
     async #load_navbar() {
         try {

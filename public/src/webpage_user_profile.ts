@@ -40,8 +40,8 @@ function change_username(){
 }
 
 class Username_Change extends Title_Display{
-    async init(event: SubmitEvent): Promise<void>{
-        await this.#change_username(event);
+    init(event: SubmitEvent): void{
+        this.#change_username(event);
     }
 
     async #change_username(event: SubmitEvent): Promise<void>{
@@ -85,8 +85,8 @@ function change_password(){
 }
 
 class Password_Change{
-    async init(event: SubmitEvent): Promise<void>{
-        await this.#change_password(event);
+    init(event: SubmitEvent): void{
+        this.#change_password(event);
     }
 
     async #change_password(event: SubmitEvent): Promise<void>{
@@ -147,8 +147,8 @@ function delete_account(){
 }
 
 class Account_Deletion{
-    async init(event: SubmitEvent): Promise<void>{
-        await this.#delete_account(event);
+    init(event: SubmitEvent): void{
+        this.#delete_account(event);
     }
 
     async #delete_account(event: SubmitEvent): Promise<void>{
@@ -214,8 +214,8 @@ type Blog = {
 };
 
 class Blog_Display{
-    async init(): Promise<void>{
-        await this.#display_personal_blogs();
+    init(): void{
+        this.#display_personal_blogs();
     }
     
     async #display_personal_blogs(): Promise<void>{
@@ -327,8 +327,8 @@ class No_Blogs_Paragraph_Display{
 }
 
 class Blog_Edit{
-    async init(blog_id: string | number): Promise<void>{
-        await this.#transport_to_edit_page(blog_id);
+    init(blog_id: string | number): void{
+        this.#transport_to_edit_page(blog_id);
     }   
 
     async #transport_to_edit_page(blog_id: string | number): Promise<void>{
