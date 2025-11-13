@@ -1,4 +1,5 @@
 import { display_message } from "./module_message_display.js";
+import { fetch_data } from "./module_fetch_data.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     create_blog();

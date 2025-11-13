@@ -1,4 +1,5 @@
 import { display_message } from "./module_message_display.js";
+import { fetch_data } from "./module_fetch_data.js";
 document.addEventListener("DOMContentLoaded", () => {
     sign_in();
     register();
@@ -43,18 +44,11 @@ class User_Sign_In extends Input_Validation {
         const password_input = document.getElementById("sign-in-password");
         try {
             this.validate_input(username_input.value, password_input.value);
-            const response = await fetch("../backend/Account_Access/sign_in_user.php", {
+            const data = await fetch_data("../backend/Account_Access/sign_in_user.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({ username: username_input.value, password: password_input.value }),
-            });
-            if (!response.ok) {
-                throw new Error("Failed to sign in. Please try again later.");
-            }
-            const data = await response.json();
-            if (data.query_fail) {
-                throw new Error(data.query_fail);
-            }
+                body: new URLSearchParams({ username: username_input.value, password: password_input.value })
+            }, "Failed to sign in. Please try again later.");
             display_message("signin_container", "success-message", data.query_success, "right-message");
             setTimeout(() => window.location.href = "./main_page.html", 1000);
         }
@@ -72,23 +66,16 @@ class User_Registration extends Input_Validation {
     }
     async register_user(event) {
         event.preventDefault();
-        const usernameInput = document.getElementById("register-username");
-        const passwordInput = document.getElementById("register-password");
+        const username_input = document.getElementById("register-username");
+        const password_input = document.getElementById("register-password");
         try {
-            this.validate_input(usernameInput.value, passwordInput.value);
-            const response = await fetch("../backend/Account_Access/register_user.php", {
+            this.validate_input(username_input.value, password_input.value);
+            const data = await fetch_data("../backend/Account_Access/register_user.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({ username: usernameInput.value, password: passwordInput.value }),
-            });
-            if (!response.ok) {
-                throw new Error("Could not register. Please try again later.");
-            }
-            const data = await response.json();
-            if (data.query_fail) {
-                throw new Error(data.query_fail);
-            }
-            usernameInput.value = passwordInput.value = "";
+                body: new URLSearchParams({ username: username_input.value, password: password_input.value })
+            }, "Could not register. Please try again later.");
+            username_input.value = password_input.value = "";
             display_message("registration_container", "success-message", data.query_success, "left-message");
         }
         catch (error) {

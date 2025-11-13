@@ -1,5 +1,6 @@
 import { toggle_element_visibility } from "./module_element_toggle.js";
 import { display_message } from "./module_message_display.js";
+import { fetch_data } from "./module_fetch_data.js";
 document.addEventListener("DOMContentLoaded", () => {
     display_title();
     change_username();
@@ -15,11 +16,7 @@ class Title_Display {
     async display_profile_page_title() {
         const profile_title = document.getElementById("profile-title");
         try {
-            const response = await fetch("../backend/Data_Display/display_username.php");
-            if (!response.ok) {
-                throw new Error("Failed to retrieve username");
-            }
-            const data = await response.json();
+            const data = await fetch_data("../backend/Data_Display/display_username.php", {}, "Failed to retrieve username.");
             profile_title.textContent = `${data.username}'s Profile`;
         }
         catch (error) {
@@ -43,20 +40,12 @@ class Username_Change extends Title_Display {
         const new_username_input = document.getElementById("username-change-new-username-input");
         try {
             this.#validate_username_change_inputs(password_input.value, new_username_input.value);
-            const response = await fetch("../backend/Update_Profile/change_username.php", {
+            const data = await fetch_data("../backend/Update_Profile/change_username.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ password: password_input.value, new_username: new_username_input.value }),
-            });
-            if (!response.ok) {
-                throw new Error("Could not change username. Plese try again later.");
-            }
-            const data = await response.json();
-            if (data.query_fail) {
-                throw new Error(data.query_fail);
-            }
-            password_input.value = "";
-            new_username_input.value = "";
+            }, "Could not change username. Plese try again later.");
+            password_input.value = new_username_input.value = "";
             display_message("profile-popup-background", "success-message", data.query_success, "center-message");
             this.display_profile_page_title();
         }
@@ -88,20 +77,12 @@ class Password_Change {
         const new_password_input = document.getElementById("password-change-new-password-input");
         try {
             this.#validate_password_change_inputs(current_password_input.value, new_password_input.value);
-            const response = await fetch("../backend/Update_Profile/change_password.php", {
+            const data = await fetch_data("../backend/Update_Profile/change_password.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ current_password: current_password_input.value, new_password: new_password_input.value }),
-            });
-            if (!response.ok) {
-                throw new Error("Could not change password. Plese try again later.");
-            }
-            const data = await response.json();
-            if (data.query_fail) {
-                throw new Error(data.query_fail);
-            }
-            current_password_input.value = "";
-            new_password_input.value = "";
+            }, "Could not change password. Plese try again later.");
+            current_password_input.value = new_password_input.value = "";
             display_message("profile-popup-background", "success-message", data.query_success, "center-message");
         }
         catch (error) {
@@ -150,18 +131,11 @@ class Account_Deletion {
         const password_input = document.getElementById("account-deletion-password-input");
         try {
             this.#validate_account_deletion_inputs(username_input.value, password_input.value);
-            const response = await fetch("../backend/Account_Termination/delete_account.php", {
+            const data = await fetch_data("../backend/Account_Termination/delete_account.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ username: username_input.value, password: password_input.value }),
-            });
-            if (!response.ok) {
-                throw new Error("Could not delete account. Plese try again later.");
-            }
-            const data = await response.json();
-            if (data.query_fail) {
-                throw new Error(data.query_fail);
-            }
+            }, "Could not delete account. Plese try again later.");
             display_message("profile-popup-background", "success-message", data.query_success, "center-message");
             setTimeout(() => window.location.replace("../backend/Session_Maintanance/logout.php"), 1000);
         }
@@ -203,14 +177,7 @@ class Blog_Display {
     }
     async #display_personal_blogs() {
         try {
-            const response = await fetch("../backend/Blog_Managment/user_blogs_retrive.php");
-            if (!response.ok) {
-                throw new Error("Could not fetch your blogs. Please try again later.");
-            }
-            const data = await response.json();
-            if (data.query_fail) {
-                throw new Error(data.query_fail);
-            }
+            const data = await fetch_data("../backend/Blog_Managment/user_blogs_retrive.php", {}, "Could not fetch your blogs. Please try again later.");
             if (data.row_count === 0) {
                 new No_Blogs_Paragraph_Display().show_no_blogs_paragraph();
             }
@@ -270,18 +237,11 @@ class Blog_Deletion {
     }
     async #delete_blog(blog_id) {
         try {
-            const response = await fetch("../backend/Blog_Managment/Blog_Deletion/blog_deletion.php", {
+            const data = await fetch_data("../backend/Blog_Managment/Blog_Deletion/blog_deletion.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({ blog_id: blog_id.toString() }),
-            });
-            if (!response.ok) {
-                throw new Error("Could not delete the blog. Please try again later.");
-            }
-            const data = await response.json();
-            if (data.query_fail) {
-                throw new Error(data.query_fail);
-            }
+                body: new URLSearchParams({ blog_id: blog_id.toString() })
+            }, "Could not delete the blog. Please try again later.");
             display_message("document-body", "success-message", data.query_success, "center-message");
         }
         catch (error) {
@@ -310,14 +270,12 @@ class Blog_Edit {
     }
     async #transport_to_edit_page(blog_id) {
         try {
-            const response = await fetch("../backend/Blog_Managment/Blog_Editing/blog_edit_page_transfer.php", {
+            await fetch_data("../backend/Blog_Managment/Blog_Editing/blog_edit_page_transfer.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({ blog_id: blog_id.toString() }),
-            });
-            if (!response.ok) {
-                throw new Error("Could not transport user to the editing page, please try again later.");
-            }
+                body: new URLSearchParams({ blog_id: blog_id.toString() })
+            }, "Could not transport user to the editing page, please try again later.");
+            window.location.href = "./edit_blog.html";
         }
         catch (error) {
             display_message("document-body", "error-message", error.message, "center-message");

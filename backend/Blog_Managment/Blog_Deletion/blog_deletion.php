@@ -19,6 +19,10 @@ class Blog_Deletion extends Db_Connection{
     private function execute_blog_deletion(){
         $stmt = parent::conn()->prepare("DELETE FROM blogs WHERE id = ? AND user_id = ?");
         $stmt->execute([$this->blog_id, $this->user_id]);
+        $blog_count = $stmt->rowCount();
+        if($blog_count === 0){
+            throw new Exception("Unauthorised deletion attempt.");
+        }
         $stmt = null;
     }
 
@@ -29,9 +33,16 @@ class Blog_Deletion extends Db_Connection{
             echo json_encode(["query_success" => "The blog was succesfully deleted."]);
         }
         catch(PDOException $e){
-            echo json_encode(["query_fail" => $e->getMessage()]);
+            echo json_encode(["query_fail" => "A problem has occured, please try again later."]);
+        }
+        catch(Exception $e){
+            echo json_encode(["fatal_fail" => $e->getMessage()]);
         }
     } 
+}
+
+if(empty($_SESSION["id"])){
+    echo json_encode(["fatal_fail" => "A problem has occured, please try again later."]);
 }
 
 $user_id = $_SESSION["id"];
