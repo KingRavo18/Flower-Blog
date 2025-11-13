@@ -14,12 +14,10 @@ export function toggle_element_visibility(
     const element = document.getElementById(element_id) as HTMLElement;
     const attached_element = document.getElementById(attached_element_id) as HTMLElement;
     function show_element(): void{
-        element.classList.remove("hide-element");
-        element.classList.add(element_show_class);
+        element.classList.replace("hide-element", element_show_class);
         // Attached Element
         if(attached_element_id !== "none"){
-            attached_element.classList.remove("hide-element");
-            attached_element.classList.add(attached_element_show_class);
+            attached_element.classList.replace("hide-element", attached_element_show_class);
         }
     }
     function hide_element(): void{
@@ -30,13 +28,11 @@ export function toggle_element_visibility(
         }
         element.addEventListener("animationend", () => {
             element.classList.remove(hide_element_anim_class);
-            element.classList.remove(element_show_class);
-            element.classList.add("hide-element");
+            element.classList.replace(element_show_class, "hide-element");
             // Attached Element
             if(attached_element_id !== "none"){
                 attached_element.classList.remove(hide_attached_element_anim_class);
-                attached_element.classList.remove(attached_element_show_class);
-                attached_element.classList.add("hide-element");
+                attached_element.classList.replace(attached_element_show_class, "hide-element");
             }
         }, { once: true });
     }

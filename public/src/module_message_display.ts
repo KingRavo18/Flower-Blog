@@ -5,8 +5,7 @@ export function display_message(element_id: string, message_class: string, conte
     message.textContent = contents;
     element.appendChild(message);
     setTimeout(() => {
-        message.classList.remove("message-appear");
-        message.classList.add("message-disappear");
+        message.classList.replace("message-appear", "message-disappear");
         message.addEventListener("animationend", () => element.removeChild(message), {once: true});
     }, 3000);
 }

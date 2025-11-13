@@ -1,4 +1,5 @@
 import { toggle_element_visibility } from "./module_element_toggle.js";
+import { display_message } from "./module_message_display.js";
 document.addEventListener("DOMContentLoaded", () => {
     check_session();
     load_page_heading();
@@ -47,7 +48,7 @@ class Page_Heading {
             this.#toggle_logout_popup_visibility();
         }
         catch (error) {
-            console.error(error.message);
+            display_message("document-body", "error-message", error.message, "center-message");
         }
     }
     #toggle_sidebar_visibility() {

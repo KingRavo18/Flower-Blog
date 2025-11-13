@@ -5,7 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
 function create_blog() {
     const blog_creation = new Blog_Creation;
     document.getElementById("tag-btn").addEventListener("click", () => blog_creation.collect_tags());
-    document.getElementById("blog-creaton-form").addEventListener("submit", (event) => blog_creation.init(event));
+    document.getElementById("blog-creaton-form").addEventListener("submit", (event) => {
+        blog_creation.init(event);
+    });
 }
 class Blog_Creation {
     tags;
@@ -89,11 +91,8 @@ class Blog_Creation {
         });
     }
     #form_reset(title_input, description_area, contents_area) {
-        title_input.value = "";
-        description_area.value = "";
-        contents_area.value = "";
+        title_input.value = description_area.value = this.tag_input.value = this.tag_display.innerHTML = contents_area.value = "";
         this.tags.length = 0;
-        this.tag_display.innerHTML = "";
     }
 }
 //# sourceMappingURL=webpage_create_blog.js.map

@@ -30,7 +30,7 @@ class Title_Display {
 // SECTION 2 - CHANGE THE USER'S DATA
 function change_username() {
     const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
-    username_change_popup.init();
+    username_change_popup.toggle_user_profile_popup();
     document.getElementById("username-change-form").addEventListener("submit", (event) => new Username_Change().init(event));
 }
 class Username_Change extends Title_Display {
@@ -75,7 +75,7 @@ class Username_Change extends Title_Display {
 }
 function change_password() {
     const password_change_popup = new Profile_Popup_Toggle("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
-    password_change_popup.init();
+    password_change_popup.toggle_user_profile_popup();
     document.getElementById("password-change-form").addEventListener("submit", (event) => new Password_Change().init(event));
 }
 class Password_Change {
@@ -137,7 +137,7 @@ class Password_Change {
 }
 function delete_account() {
     const account_deletion_popup = new Profile_Popup_Toggle("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
-    account_deletion_popup.init();
+    account_deletion_popup.toggle_user_profile_popup();
     document.getElementById("acccount-deletion-form").addEventListener("submit", (event) => new Account_Deletion().init(event));
 }
 class Account_Deletion {
@@ -187,10 +187,7 @@ class Profile_Popup_Toggle {
         this.show_popup_btn_id = show_popup_btn_id;
         this.hide_popup_btn_id = hide_popup_btn_id;
     }
-    init() {
-        this.#toggle_user_profile_popup();
-    }
-    #toggle_user_profile_popup() {
+    toggle_user_profile_popup() {
         const { show_element, hide_element } = toggle_element_visibility("profile-popup-background", "show-element-block", "hide-popup-background-anim", this.popup_id, "show-element-flex", "hide-popup-anim");
         document.getElementById(this.show_popup_btn_id).addEventListener("click", () => show_element());
         document.getElementById(this.hide_popup_btn_id).addEventListener("click", () => hide_element());

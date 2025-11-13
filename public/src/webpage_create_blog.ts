@@ -1,4 +1,5 @@
 import { display_message } from "./module_message_display.js";
+
 document.addEventListener("DOMContentLoaded", () => {
     create_blog();
 }, {once: true});
@@ -6,7 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
 function create_blog(){
     const blog_creation = new Blog_Creation;
     (document.getElementById("tag-btn") as HTMLElement).addEventListener("click", () => blog_creation.collect_tags());
-    (document.getElementById("blog-creaton-form") as HTMLFormElement).addEventListener("submit", (event) => blog_creation.init(event));
+    (document.getElementById("blog-creaton-form") as HTMLFormElement).addEventListener("submit", (event) => {
+        blog_creation.init(event)
+    });
 }
 
 class Blog_Creation{
@@ -99,11 +102,8 @@ class Blog_Creation{
     }
 
     #form_reset(title_input: HTMLInputElement, description_area: HTMLTextAreaElement, contents_area: HTMLTextAreaElement): void{
-        title_input.value = "";
-        description_area.value = "";
-        contents_area.value = ""; 
+        title_input.value = description_area.value = this.tag_input.value = this.tag_display.innerHTML = contents_area.value = "";
         this.tags.length = 0;
-        this.tag_display.innerHTML = "";
     }
 }
 

@@ -98,9 +98,9 @@ class User_Registration extends Input_Validation {
 }
 function switch_form() {
     const switch_to_sign_in = new Current_Form_Switch("registration_container", "signin_container", "change-form-trigger-signin", "left-form-appear-animation", "left-form-disappear-animation", "right-form-appear-animation");
-    document.getElementById("change-form-trigger-register").addEventListener("click", () => switch_to_sign_in.init());
+    document.getElementById("change-form-trigger-register").addEventListener("click", () => switch_to_sign_in.change_form());
     const switch_to_registration = new Current_Form_Switch("signin_container", "registration_container", "change-form-trigger-register", "right-form-appear-animation", "right-form-disappear-animation", "left-form-appear-animation");
-    document.getElementById("change-form-trigger-signin").addEventListener("click", () => switch_to_registration.init());
+    document.getElementById("change-form-trigger-signin").addEventListener("click", () => switch_to_registration.change_form());
 }
 class Current_Form_Switch {
     shown_form_id;
@@ -117,21 +117,15 @@ class Current_Form_Switch {
         this.shown_form_disappear_anim_class = shown_form_disappear_anim_class;
         this.hidden_form_appear_anim_class = hidden_form_appear_anim_class;
     }
-    init() {
-        this.#change_form();
-    }
-    #change_form() {
+    change_form() {
         const shown_form = document.getElementById(this.shown_form_id);
         const hidden_form = document.getElementById(this.hidden_form_id);
         const hidden_form_change_trigger = document.getElementById(this.hidden_form_change_trigger_id);
-        shown_form.classList.remove(this.shown_form_appear_anim_class);
-        shown_form.classList.add(this.shown_form_disappear_anim_class);
-        hidden_form.classList.add(this.hidden_form_appear_anim_class);
-        hidden_form.style.display = "block";
+        shown_form.classList.replace(this.shown_form_appear_anim_class, this.shown_form_disappear_anim_class);
+        hidden_form.classList.replace("hide-element", this.hidden_form_appear_anim_class);
         hidden_form_change_trigger.classList.add("click-disabled");
         shown_form.addEventListener("animationend", () => {
-            shown_form.classList.remove(this.shown_form_disappear_anim_class);
-            shown_form.style.display = "none";
+            shown_form.classList.replace(this.shown_form_disappear_anim_class, "hide-element");
             hidden_form_change_trigger.classList.remove("click-disabled");
         }, { once: true });
     }

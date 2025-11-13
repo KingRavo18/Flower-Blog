@@ -114,7 +114,7 @@ function switch_form(): void{
         "left-form-disappear-animation", 
         "right-form-appear-animation"   
     );
-    (document.getElementById("change-form-trigger-register") as HTMLElement).addEventListener("click", () => switch_to_sign_in.init());
+    (document.getElementById("change-form-trigger-register") as HTMLElement).addEventListener("click", () => switch_to_sign_in.change_form());
     const switch_to_registration = new Current_Form_Switch(
         "signin_container", 
         "registration_container", 
@@ -123,51 +123,30 @@ function switch_form(): void{
         "right-form-disappear-animation", 
         "left-form-appear-animation"
     );
-    (document.getElementById("change-form-trigger-signin") as HTMLElement).addEventListener("click", () => switch_to_registration.init());
+    (document.getElementById("change-form-trigger-signin") as HTMLElement).addEventListener("click", () => switch_to_registration.change_form());
 }
 
 class Current_Form_Switch{
-    shown_form_id: string; 
-    hidden_form_id: string;
-    hidden_form_change_trigger_id: string;
-    shown_form_appear_anim_class: string; 
-    shown_form_disappear_anim_class: string;
-    hidden_form_appear_anim_class: string;
-
     constructor(
-        shown_form_id: string, 
-        hidden_form_id: string, 
-        hidden_form_change_trigger_id: string,
-        shown_form_appear_anim_class: string, 
-        shown_form_disappear_anim_class: string, 
-        hidden_form_appear_anim_class: string
-    ){
-        this.shown_form_id = shown_form_id;
-        this.hidden_form_id = hidden_form_id;
-        this.hidden_form_change_trigger_id = hidden_form_change_trigger_id;
-        this.shown_form_appear_anim_class = shown_form_appear_anim_class;
-        this.shown_form_disappear_anim_class = shown_form_disappear_anim_class;
-        this.hidden_form_appear_anim_class = hidden_form_appear_anim_class;
-    }
+        private shown_form_id: string, 
+        private hidden_form_id: string, 
+        private hidden_form_change_trigger_id: string,
+        private shown_form_appear_anim_class: string, 
+        private shown_form_disappear_anim_class: string, 
+        private hidden_form_appear_anim_class: string
+    ){}
 
-    init(): void{
-        this.#change_form();
-    }
-
-    #change_form(): void{
+    change_form(): void{
         const shown_form = document.getElementById(this.shown_form_id) as HTMLElement;
         const hidden_form = document.getElementById(this.hidden_form_id) as HTMLElement;
         const hidden_form_change_trigger = document.getElementById(this.hidden_form_change_trigger_id) as HTMLElement;
 
-        shown_form.classList.remove(this.shown_form_appear_anim_class);
-        shown_form.classList.add(this.shown_form_disappear_anim_class);
-        hidden_form.classList.add(this.hidden_form_appear_anim_class);
-        hidden_form.style.display = "block";
+        shown_form.classList.replace(this.shown_form_appear_anim_class, this.shown_form_disappear_anim_class);
+        hidden_form.classList.replace("hide-element", this.hidden_form_appear_anim_class);
         hidden_form_change_trigger.classList.add("click-disabled"); 
 
         shown_form.addEventListener("animationend", () => {
-            shown_form.classList.remove(this.shown_form_disappear_anim_class);
-            shown_form.style.display = "none";
+            shown_form.classList.replace(this.shown_form_disappear_anim_class, "hide-element");
             hidden_form_change_trigger.classList.remove("click-disabled");
         }, {once: true});
     }
@@ -181,14 +160,8 @@ function toggle_password_visibility(): void{
 }
 
 class Password_Visibility_Toggle{
-    trigger_id: string; 
-    triggered_input_id: string;
+    constructor(private trigger_id: string, private triggered_input_id: string){}
 
-    constructor(trigger_id: string, triggered_input_id: string){
-        this.trigger_id = trigger_id;
-        this.triggered_input_id = triggered_input_id;
-    }
-    
     toggle_password(): void{
         const trigger = document.getElementById(this.trigger_id) as HTMLElement;
         const triggeredInput = document.getElementById(this.triggered_input_id) as HTMLInputElement;

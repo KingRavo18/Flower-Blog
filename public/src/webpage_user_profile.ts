@@ -38,7 +38,7 @@ class Title_Display{
 
 function change_username(){
     const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
-    username_change_popup.init();
+    username_change_popup.toggle_user_profile_popup();
     (document.getElementById("username-change-form") as HTMLFormElement).addEventListener("submit", (event) => new Username_Change().init(event));
 }
 
@@ -87,7 +87,7 @@ class Username_Change extends Title_Display{
 
 function change_password(){
     const password_change_popup = new Profile_Popup_Toggle("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
-    password_change_popup.init();
+    password_change_popup.toggle_user_profile_popup();
     (document.getElementById("password-change-form") as HTMLFormElement).addEventListener("submit", (event) => new Password_Change().init(event));
 }
 
@@ -153,7 +153,7 @@ class Password_Change{
 
 function delete_account(){
     const account_deletion_popup = new Profile_Popup_Toggle("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
-    account_deletion_popup.init();
+    account_deletion_popup.toggle_user_profile_popup();
     (document.getElementById("acccount-deletion-form") as HTMLFormElement).addEventListener("submit", (event) => new Account_Deletion().init(event));
 }
 
@@ -199,21 +199,9 @@ class Account_Deletion{
 }
 
 class Profile_Popup_Toggle{
-    popup_id: string;
-    show_popup_btn_id: string;
-    hide_popup_btn_id: string;
+    constructor(private popup_id: string, private show_popup_btn_id: string, private hide_popup_btn_id: string){}
 
-    constructor(popup_id: string, show_popup_btn_id: string, hide_popup_btn_id: string){
-        this.popup_id = popup_id;
-        this.show_popup_btn_id = show_popup_btn_id;
-        this.hide_popup_btn_id = hide_popup_btn_id;
-    }
-
-    init(): void{
-        this.#toggle_user_profile_popup();
-    }
-
-    #toggle_user_profile_popup(): void{
+    toggle_user_profile_popup(): void{
         const {show_element, hide_element} = toggle_element_visibility(
             "profile-popup-background", 
             "show-element-block", 
