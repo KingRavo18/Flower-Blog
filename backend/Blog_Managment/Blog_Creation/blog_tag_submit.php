@@ -1,5 +1,5 @@
 <?php
-require("../DB_Connection/db_connection.php");
+require("../../DB_Connection/db_connection.php");
 
 class Blog_Tag_Submit extends Db_Connection{
     private $blog_id;

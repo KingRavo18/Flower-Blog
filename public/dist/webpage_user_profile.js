@@ -240,13 +240,14 @@ class Blog_Display {
             </div>
             <p class="description basic-text-size">${description}</p>
         `;
-        this.#set_blog_edit_btn(blog_list_item);
+        this.#set_blog_edit_btn(blog_id, blog_list_item);
         this.#set_blog_deletion_btn(blog_id, blog_list_item);
         document.getElementById("user-blog-container").appendChild(blog_list_item);
     }
-    #set_blog_edit_btn(blog_list_item) {
+    #set_blog_edit_btn(blog_id, blog_list_item) {
         const edit_btn = blog_list_item.querySelector(".edit-blog-btn");
         edit_btn.addEventListener("click", () => {
+            new Blog_Edit().init(blog_id);
         });
     }
     #set_blog_deletion_btn(blog_id, blog_list_item) {
@@ -269,7 +270,7 @@ class Blog_Deletion {
     }
     async #delete_blog(blog_id) {
         try {
-            const response = await fetch("../backend/Blog_Managment/user_blog_delete.php", {
+            const response = await fetch("../backend/Blog_Managment/Blog_Deletion/blog_deletion.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ blog_id: blog_id.toString() }),
@@ -304,7 +305,23 @@ class No_Blogs_Paragraph_Display {
     }
 }
 class Blog_Edit {
-    async #edit_blog() {
+    async init(blog_id) {
+        await this.#transport_to_edit_page(blog_id);
+    }
+    async #transport_to_edit_page(blog_id) {
+        try {
+            const response = await fetch("../backend/Blog_Managment/Blog_Editing/blog_edit_page_transfer.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ blog_id: blog_id.toString() }),
+            });
+            if (!response.ok) {
+                throw new Error("Could not transport user to the editing page, please try again later.");
+            }
+        }
+        catch (error) {
+            display_message("document-body", "error-message", error.message, "center-message");
+        }
     }
 }
 //# sourceMappingURL=webpage_user_profile.js.map

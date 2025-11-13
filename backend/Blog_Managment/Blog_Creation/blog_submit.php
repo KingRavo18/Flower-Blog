@@ -1,5 +1,5 @@
 <?php
-require("../DB_Connection/db_connection.php");
+require("../../DB_Connection/db_connection.php");
 
 class Blog_Creation extends Db_Connection{
     private $user_id;

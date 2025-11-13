@@ -19,7 +19,7 @@ class Blog_Creation {
         this.tag_display = document.getElementById("tag-container");
     }
     async init(event) {
-        await this.#create_blog(event);
+        await this.#submit_blog(event);
     }
     collect_tags() {
         if (this.tag_input.value.trim() !== "") {
@@ -34,14 +34,14 @@ class Blog_Creation {
         displayed_tag.textContent = this.tag_input.value;
         this.tag_display.appendChild(displayed_tag);
     }
-    async #create_blog(event) {
+    async #submit_blog(event) {
         event.preventDefault();
         const title_input = document.getElementById("blog-title-input");
         const description_area = document.getElementById("blog-desc-input");
         const contents_area = document.getElementById("blog-contents-input");
         try {
             this.#validate_inputs(title_input.value, description_area.value, contents_area.value);
-            const response = await fetch("../backend/Blog_Managment/user_blog_submit.php", {
+            const response = await fetch("../backend/Blog_Managment/Blog_Creation/blog_submit.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ title: title_input.value, description: description_area.value, contents: contents_area.value }),
@@ -76,7 +76,7 @@ class Blog_Creation {
     }
     #submit_tags(blog_id) {
         this.tags.forEach(async (tag) => {
-            const response = await fetch("../backend/Blog_Managment/user_blog_submit_tag.php", {
+            const response = await fetch("../backend/Blog_Managment/Blog_Creation/blog_tag_submit.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ blog_id: blog_id.toString(), tag: tag }),
