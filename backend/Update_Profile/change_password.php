@@ -45,14 +45,12 @@ class Password_Change extends Db_Connection{
         if(!password_verify($this->current_password, $user->password)){
             throw new Exception("You have entered an incorrect password.");
         }
-        $stmt = null;
     }
 
     private function execute_query(){
         $new_password_hash = password_hash($this->new_password, PASSWORD_DEFAULT);
         $stmt = parent::conn()->prepare("UPDATE users SET password = ? WHERE username = ?");
         $stmt->execute([$new_password_hash, $_SESSION["username"]]);
-        $stmt = null;
     }
 
     public function change_password(){

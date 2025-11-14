@@ -29,13 +29,11 @@ class Account_Deletion extends Db_Connection{
         if(!password_verify($this->password, $user->password)){
             throw new Exception("You have entered an incorrect username or password.");
         }
-        $stmt = null;
     }
 
     private function execute_query(){
         $stmt = parent::conn()->prepare("DELETE from users WHERE username = ?");
         $stmt->execute([$this->username]);
-        $stmt = null;
     }
 
     public function delete_account(){

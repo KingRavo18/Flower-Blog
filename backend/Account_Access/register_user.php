@@ -41,14 +41,12 @@ class User_Registration extends Db_Connection{
         if($user_count > 0){
             throw new Exception("This username has already been taken");
         }
-        $stmt = null;
     }
 
     private function execute_query(){
         $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
         $stmt = parent::conn()->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
         $stmt->execute(["username" => $this->username, "password" => $password_hash]);
-        $stmt = null;
     }
 
     public function register_user(){

@@ -35,7 +35,6 @@ class Blog_Creation extends Db_Connection{
             "blog_id" => $blog_id,
             "query_success" => "Blog creation was successful."
         ]);
-        $stmt = null;
     }
 
     public function create_blog(){

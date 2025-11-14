@@ -19,7 +19,6 @@ class Blog_Tag_Submit extends Db_Connection{
     private function execute_query(){
         $stmt = parent::conn() -> prepare("INSERT INTO blog_tags (blog_id, tag) VALUES (?, ?)");
         $stmt->execute([$this->blog_id, $this->tag]);
-        $stmt = null;
     }
 
     public function submit_blog_tag(){

@@ -6,14 +6,46 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=close,menu" />
     <link rel="stylesheet" href="./style/output.css">
     <link rel="icon" href="assets/icons/flower-icon.jpg"/>
-    <title>Flower-Blog - Profile</title>
+    <title>Flower-Blog - Blog Edit</title>
 </head>
 <body id="document-body">
     <main class="pt-[5vw] flex flex-col items-center pb-[3vw]">
-        <h1 class="page-title page-title-h1 text-[1.5vw] absolute">Edit</h1>
-        <div></div>
-        
+        <h1 class="page-title page-title-h1 text-[1.5vw] absolute">
+            Edit
+        </h1>
+
+        <div class="mt-[8vw] bg-[hsla(351,100%,92%,0.9)] rounded-[10px] p-[1.5vw] border-2 w-[70%] min-h-[5vw] mb-[3vw] h-auto border-[rgb(255,160,176)] container-appear-animation">
+            <form id="blog-update-form" class="flex flex-col basic-text-size">
+                <label for="blog-edit-title-input" class="cursor-pointer">
+                    Title:
+                </label>
+                <input type="text" id="blog-edit-title-input" title="Enter your blog's title" 
+                autocomplete="off" name="blog-title" class="text-input mb-[0.5vw]">
+
+                <label for="blog-edit-desc-input" class="cursor-pointer">
+                    Description:
+                </label>
+                <textarea type="text" id="blog-edit-desc-input" title="Enter your blog's description"
+                autocomplete="off" name="blog-description" class="text-input mb-[0.5vw] min-h-[4.5vw] max-h-[10vw]"></textarea>
+                    
+                <label for="blog-edit-tag-input" class="cursor-pointer">
+                    Tags:
+                </label>
+                <input type="text" id="blog-edit-tag-input" autocomplete="off" title="Enter a tag for your blog" name="blog-tags" class="text-input mb-[0.5vw]"> 
+                <button type="button" id="tag-btn" title="Add tag" class="form-btn w-[7vw] mb-[0.5vw]">Add tag</button>
+                <div id="tag-container" class="flex gap-[0.5vw]"></div>
+
+                <label for="blog-edit-contents-input" class="cursor-pointer mt-[0.5vw]">
+                    Contents:
+                </label>
+                <textarea type="text" id="blog-edit-contents-input" title="Enter your blog's contents"
+                autocomplete="off" name="blog-contents" class="text-input mb-[0.5vw] min-h-[10vw]"></textarea>
+
+                <input type="submit" value="Update" title="Update blog" class="form-btn w-[5vw]">
+            </form>
+        </div>
     </main>
     <script type="module" src="./dist/Global/global.js"></script>
+    <script type="module" src="./dist/Webpage_Scripts/edit_blog.js"></script>
 </body>
 </html>

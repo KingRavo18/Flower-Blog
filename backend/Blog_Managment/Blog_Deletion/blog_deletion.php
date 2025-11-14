@@ -13,7 +13,6 @@ class Blog_Deletion extends Db_Connection{
     private function execute_tag_deletion(){
         $stmt = parent::conn()->prepare("DELETE FROM blog_tags WHERE blog_id = ?");
         $stmt->execute([$this->blog_id]);
-        $stmt = null;
     }
 
     private function execute_blog_deletion(){
@@ -23,7 +22,6 @@ class Blog_Deletion extends Db_Connection{
         if($blog_count === 0){
             throw new Exception("Unauthorised deletion attempt.");
         }
-        $stmt = null;
     }
 
     public function delete_blog(){

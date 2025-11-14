@@ -17,7 +17,6 @@ class Edit_Page_Blog_Id_Transfer extends Db_Connection{
         if($owner_id->user_id !== $this->user_id){
             throw new Exception("The current user does not own this blog.");
         }
-        $stmt = null;
     }
 
     public function transfer_data(){
@@ -30,7 +29,7 @@ class Edit_Page_Blog_Id_Transfer extends Db_Connection{
             echo json_encode(["query_fail" => "A problem has occured, please try again later."]);
         }
         catch(Exception $e){
-            echo json_encode(["query_fail" => $e->getMessage()]);
+            echo json_encode(["fatal_fail" => $e->getMessage()]);
         }
     }
 }

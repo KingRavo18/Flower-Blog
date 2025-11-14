@@ -30,13 +30,11 @@ class Username_Change extends Db_Connection{
         if(!password_verify($this->password, $user->password)){
             throw new Exception("You have entered an incorrect password.");
         }
-        $stmt = null;
     }
 
     private function execute_query(){
         $stmt = parent::conn()->prepare("UPDATE users SET username = ? WHERE username = ?");
         $stmt->execute([$this->new_username, $_SESSION["username"]]);
-        $stmt = null;
         $_SESSION["username"] = $this->new_username;
     }
 

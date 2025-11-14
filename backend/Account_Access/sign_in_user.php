@@ -28,7 +28,6 @@ class Signin_User extends Db_Connection{
         }
         $_SESSION["id"] = $user->id;
         $_SESSION["username"] = $this->username;
-        $stmt = null;
     }
 
     public function sign_in_user(){
