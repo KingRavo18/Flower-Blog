@@ -1,7 +1,7 @@
 <?php
-require ("../DB_Connection/db_connection.php");
+session_start();
 
-class Display_Username extends Db_Connection{
+class Display_Username{
     public function retrieve_username(){
         echo json_encode(["username" => $_SESSION["username"]]);
     }

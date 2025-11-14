@@ -2,13 +2,10 @@
 require ("../DB_Connection/db_connection.php");
 
 class Account_Deletion extends Db_Connection{
-    private $username;
-    private $password;
-
-    public function __construct($username, $password){
-        $this->username = $username;
-        $this->password = $password;
-    }
+    public function __construct(
+        private $username, 
+        private $password
+    ){}
 
     private function validate_input(){
         if(empty(trim($this->username))){

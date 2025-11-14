@@ -2,13 +2,10 @@
 require("../../DB_Connection/db_connection.php");
 
 class Blog_Deletion extends Db_Connection{
-    private $blog_id;
-    private $user_id;
-
-    public function __construct($blog_id, $user_id){
-        $this->blog_id = $blog_id;
-        $this->user_id = $user_id;
-    }
+    public function __construct(
+        private $blog_id, 
+        private $user_id
+    ){}
 
     private function execute_tag_deletion(){
         $stmt = parent::conn()->prepare("DELETE FROM blog_tags WHERE blog_id = ?");
@@ -44,6 +41,6 @@ if(empty($_SESSION["id"])){
 }
 
 $user_id = $_SESSION["id"];
-$blog_id = filter_input(INPUT_POST, "blog_id", FILTER_SANITIZE_SPECIAL_CHARS);
+$blog_id = filter_input(INPUT_POST, "blog_id", FILTER_SANITIZE_NUMBER_INT);
 $blog_deletion = new Blog_Deletion($blog_id, $user_id);
 $blog_deletion->delete_blog();

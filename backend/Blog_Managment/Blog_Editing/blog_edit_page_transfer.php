@@ -2,13 +2,10 @@
 require("../../DB_Connection/db_connection.php");
 
 class Edit_Page_Blog_Id_Transfer extends Db_Connection{
-    private $user_id;
-    private $blog_id;
-
-    public function __construct($user_id, $blog_id){
-        $this->user_id = (int)$user_id;
-        $this->blog_id = $blog_id;
-    }
+    public function __construct(
+        private $user_id, 
+        private $blog_id
+    ){}
 
     private function check_ownership(){
         $stmt = parent::conn()->prepare("SELECT user_id FROM blogs WHERE id = ?");
@@ -35,6 +32,6 @@ class Edit_Page_Blog_Id_Transfer extends Db_Connection{
 }
 
 $user_id = $_SESSION["id"];
-$blog_id = filter_input(INPUT_POST, "blog_id", FILTER_SANITIZE_SPECIAL_CHARS);
+$blog_id = filter_input(INPUT_POST, "blog_id", FILTER_SANITIZE_NUMBER_INT);
 $blog_deletion = new Edit_Page_Blog_Id_Transfer($user_id, $blog_id);
 $blog_deletion->transfer_data();

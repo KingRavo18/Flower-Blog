@@ -1,7 +1,6 @@
 <?php
 session_start();
-if(empty($_SESSION["id"]) || empty($_SESSION["username"])){
+if(empty($_SESSION["id"])){
     echo json_encode(["fatal_fail" => "Failed"]);
-}else{
-    echo json_encode(["session_validation" => "Your session is valid"]);
 }
+echo json_encode(["session_validation" => "Your session is valid"]);

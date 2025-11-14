@@ -2,17 +2,12 @@
 require("../../DB_Connection/db_connection.php");
 
 class Blog_Creation extends Db_Connection{
-    private $user_id;
-    private $title;
-    private $description;
-    private $contents;
-
-    public function __construct($user_id, $title, $description, $contents){
-        $this->user_id = $user_id;
-        $this->title = $title;
-        $this->description = $description;
-        $this->contents = $contents;
-    }
+    public function __construct(
+        private $user_id, 
+        private $title, 
+        private $description, 
+        private $contents
+    ){}
 
     private function validate_inputs(){
         if(empty(trim($this->title))){

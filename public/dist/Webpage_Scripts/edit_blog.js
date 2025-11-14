@@ -16,12 +16,13 @@ class Blog_Data_Retrieval {
         const contents_area = document.getElementById("blog-edit-contents-input");
         try {
             const data = await fetch_data("../backend/Blog_Managment/Blog_Editing/blog_data_retrieval.php", {}, "Failed to retrieve the blog's data, please try again later.");
-            title_input.value = data.title;
-            description_area.value = data.description;
-            contents_area.value = data.contents;
+            console.log(data.blog);
+            title_input.value = data.blog.title;
+            description_area.value = data.blog.description;
+            contents_area.value = data.blog.contents;
         }
         catch (error) {
-            display_message("signin_container", "error-message", error.message, "right-message");
+            display_message("document-body", "error-message", error.message, "center-message");
         }
     }
     async retrieve_blog_tags() {

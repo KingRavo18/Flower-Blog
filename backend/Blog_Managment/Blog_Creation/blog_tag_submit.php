@@ -2,13 +2,10 @@
 require("../../DB_Connection/db_connection.php");
 
 class Blog_Tag_Submit extends Db_Connection{
-    private $blog_id;
-    private $tag;
-
-    public function __construct($blog_id, $tag){
-        $this->blog_id = (int)$blog_id;
-        $this->tag = $tag;
-    }
+    public function __construct(
+        private $blog_id, 
+        private $tag
+    ){}
 
     private function validate_data(){
         if($this->blog_id === 0){
@@ -36,7 +33,7 @@ class Blog_Tag_Submit extends Db_Connection{
     }
 }
 
-$blog_id = filter_input(INPUT_POST, "blog_id", FILTER_SANITIZE_SPECIAL_CHARS);
+$blog_id = filter_input(INPUT_POST, "blog_id", FILTER_SANITIZE_NUMBER_INT);
 $tag = filter_input(INPUT_POST, "tag", FILTER_SANITIZE_SPECIAL_CHARS);
 $submit_tag = new Blog_Tag_Submit($blog_id, $tag);
 $submit_tag->submit_blog_tag();

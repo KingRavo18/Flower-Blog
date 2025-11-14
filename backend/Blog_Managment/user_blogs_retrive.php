@@ -2,11 +2,7 @@
 require("../DB_Connection/db_connection.php");
 
 class Personal_Blog_Retrieve extends Db_Connection{
-    private $user_id;
-
-    public function __construct($user_id){
-        $this->user_id = $user_id;
-    }
+    public function __construct(private $user_id){}
 
     private function execute_query(){
         $stmt = parent::conn()->prepare("SELECT * FROM blogs WHERE user_id = ?");

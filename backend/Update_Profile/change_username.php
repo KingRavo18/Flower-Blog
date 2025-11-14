@@ -2,13 +2,10 @@
 require ("../DB_Connection/db_connection.php");
 
 class Username_Change extends Db_Connection{
-    private $password;
-    private $new_username;
-
-    public function __construct($password, $new_username){
-        $this->password = $password;
-        $this->new_username = $new_username;
-    }
+    public function __construct(
+        private $password, 
+        private $new_username
+    ){}
 
     private function validate_inputs(){
         if(empty(trim($this->password))){
