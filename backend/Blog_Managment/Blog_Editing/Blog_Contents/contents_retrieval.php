@@ -1,7 +1,7 @@
 <?php 
-require("../../DB_Connection/db_connection.php");
+require("../../../DB_Connection/db_connection.php");
 
-class Blog_Data_Retrieval extends Db_Connection{
+class Blog_Contents_Retrieval extends Db_Connection{
     public function __construct(
         private $blog_id, 
         private $user_id
@@ -20,7 +20,7 @@ class Blog_Data_Retrieval extends Db_Connection{
         ]);
     }
 
-    public function retrieve_blog_data(){
+    public function retrieve_blog_contents(){
         try{
             $this->execute_query();
         }
@@ -35,5 +35,5 @@ class Blog_Data_Retrieval extends Db_Connection{
 
 $blog_id = $_SESSION["blog_id"];
 $user_id = $_SESSION["id"];
-$blog_data_retrieval = new Blog_Data_Retrieval($blog_id, $user_id);
-$blog_data_retrieval->retrieve_blog_data();
+$blog_data_retrieval = new Blog_Contents_Retrieval($blog_id, $user_id);
+$blog_data_retrieval->retrieve_blog_contents();

@@ -259,7 +259,7 @@ class Blog_Display{
     #set_blog_edit_btn(blog_id: string | number, blog_list_item: HTMLLIElement){
         const edit_btn = blog_list_item.querySelector(".edit-blog-btn") as HTMLButtonElement;
         edit_btn.addEventListener("click", () => { 
-            new Blog_Edit().init(blog_id);
+            new Blog_Id_Transfer().init(blog_id);
         });
     }
 
@@ -326,7 +326,7 @@ class No_Blogs_Paragraph_Display{
     }
 }
 
-class Blog_Edit{
+class Blog_Id_Transfer{
     init(blog_id: string | number): void{
         this.#transport_to_edit_page(blog_id);
     }   
@@ -334,7 +334,7 @@ class Blog_Edit{
     async #transport_to_edit_page(blog_id: string | number): Promise<void>{
         try{
             await fetch_data(
-                "../backend/Blog_Managment/Blog_Editing/blog_edit_page_transfer.php",
+                "../backend/Blog_Managment/Blog_Editing/Blog_Id_Transfer/blog_id_transfer.php",
                 { 
                     method: "POST", 
                     headers: { "Content-Type": "application/x-www-form-urlencoded" }, 

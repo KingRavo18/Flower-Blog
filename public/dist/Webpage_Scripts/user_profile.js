@@ -214,7 +214,7 @@ class Blog_Display {
     #set_blog_edit_btn(blog_id, blog_list_item) {
         const edit_btn = blog_list_item.querySelector(".edit-blog-btn");
         edit_btn.addEventListener("click", () => {
-            new Blog_Edit().init(blog_id);
+            new Blog_Id_Transfer().init(blog_id);
         });
     }
     #set_blog_deletion_btn(blog_id, blog_list_item) {
@@ -264,13 +264,13 @@ class No_Blogs_Paragraph_Display {
         document.getElementById("user-blog-container").appendChild(no_blogs_message);
     }
 }
-class Blog_Edit {
+class Blog_Id_Transfer {
     init(blog_id) {
         this.#transport_to_edit_page(blog_id);
     }
     async #transport_to_edit_page(blog_id) {
         try {
-            await fetch_data("../backend/Blog_Managment/Blog_Editing/blog_edit_page_transfer.php", {
+            await fetch_data("../backend/Blog_Managment/Blog_Editing/Blog_Id_Transfer/blog_id_transfer.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ blog_id: blog_id.toString() })

@@ -1,17 +1,37 @@
+import { toggle_element_visibility } from "../Modules/element_toggle.js";
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
+import { Blog_Creation } from "../Modules/Blog_Creation.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     retrieve_blog_data();
 }, {once: true})
 
 function retrieve_blog_data(){
-    new Blog_Data_Retrieval().init();
+    new Blog_Contents_Retrieval().init();
+    (document.getElementById("reset-inputs-btn") as HTMLButtonElement).addEventListener("click", () => new Blog_Contents_Retrieval().undo_changes());
 }
 
-class Blog_Data_Retrieval{
+class Blog_Contents_Retrieval{
     init(): void{
         this.#retrieve_blog_data();
+    }
+
+    undo_changes(): void{
+        const {show_element, hide_element} = toggle_element_visibility(
+            "profile-popup-background", 
+            "show-element-block", 
+            "hide-popup-background-anim",
+            "undo-changes-confirmation-popup",
+            "show-element-flex", 
+            "hide-popup-anim"
+        );
+        show_element();
+        (document.getElementById("change-undo-confirmation") as HTMLElement).addEventListener("click", async () => {
+            this.init();
+            hide_element();
+        }, { once: true });
+        (document.getElementById("change-undo-denial") as HTMLElement).addEventListener("click", () => hide_element(), { once: true });
     }
 
     async #retrieve_blog_data(): Promise<void>{
@@ -20,7 +40,7 @@ class Blog_Data_Retrieval{
         const contents_area = document.getElementById("blog-edit-contents-input") as HTMLTextAreaElement;
         try{
             const data = await fetch_data(
-                "../backend/Blog_Managment/Blog_Editing/blog_data_retrieval.php", {}, "Failed to retrieve the blog's data, please try again later."
+                "../backend/Blog_Managment/Blog_Editing/Blog_Contents/contents_retrieval.php", {}, "Failed to retrieve the blog's data, please try again later."
             );
             console.log(data.blog);
             title_input.value = data.blog.title;
@@ -37,12 +57,5 @@ class Blog_Data_Retrieval{
     }
 }
 
-function update_blog(){
-    new Blog_Update().init();
-}
-
-class Blog_Update{
-    init(): void{
-
-    }
+function update_blog_contents(){
 }

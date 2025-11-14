@@ -10,11 +10,26 @@
 </head>
 <body id="document-body">
     <main class="pt-[5vw] flex flex-col items-center pb-[3vw]">
-        <h1 class="page-title page-title-h1 text-[1.5vw] absolute">
+        <h1 class="page-title page-title-h1 text-[2vw] absolute">
             Edit
         </h1>
 
-        <div class="mt-[8vw] bg-[hsla(351,100%,92%,0.9)] rounded-[10px] p-[1.5vw] border-2 w-[70%] min-h-[5vw] mb-[3vw] h-auto border-[rgb(255,160,176)] container-appear-animation">
+        <form class="mt-[9vw] bg-[hsla(351,100%,92%,0.9)] rounded-[10px] p-[1.5vw] border-2 w-[70%] min-h-[5vw] 
+                    h-auto border-[rgb(255,160,176)] container-appear-animation flex flex-col basic-text-size"
+        >
+            <h2 class="font-bold text-[1.5vw] mb-[1vw]">Change Tags:</h2>
+            <input type="text" id="blog-edit-tag-input" autocomplee="off" title="Enter a tag for your blog" name="blog-tags" class="text-input mb-[0.5vw]"> 
+            <div id="tag-container" class="flex gap-[0.5vw]"></div>
+            <div class="flex justify-between">
+                <button id="create-tag-btn" title="Add tag" class="common-btn w-[7vw]">Add tag</button>
+                <button type="button" id="reset-tags-btn" title="Undo all changes?" class="common-btn w-[5vw]">Reset</button>
+            </div>
+        </form>
+
+        <div class="mt-[1vw] bg-[hsla(351,100%,92%,0.9)] rounded-[10px] p-[1.5vw] border-2 w-[70%] min-h-[5vw] 
+                    mb-[3vw] h-auto border-[rgb(255,160,176)] container-appear-animation"
+        >
+            <h2 class="font-bold text-[1.5vw] mb-[1w]">Change Contents:</h2>
             <form id="blog-update-form" class="flex flex-col basic-text-size">
                 <label for="blog-edit-title-input" class="cursor-pointer">
                     Title:
@@ -27,13 +42,6 @@
                 </label>
                 <textarea type="text" id="blog-edit-desc-input" title="Enter your blog's description"
                 autocomplete="off" name="blog-description" class="text-input mb-[0.5vw] min-h-[4.5vw] max-h-[10vw]"></textarea>
-                    
-                <label for="blog-edit-tag-input" class="cursor-pointer">
-                    Tags:
-                </label>
-                <input type="text" id="blog-edit-tag-input" autocomplete="off" title="Enter a tag for your blog" name="blog-tags" class="text-input mb-[0.5vw]"> 
-                <button type="button" id="tag-btn" title="Add tag" class="form-btn w-[7vw] mb-[0.5vw]">Add tag</button>
-                <div id="tag-container" class="flex gap-[0.5vw]"></div>
 
                 <label for="blog-edit-contents-input" class="cursor-pointer mt-[0.5vw]">
                     Contents:
@@ -41,9 +49,25 @@
                 <textarea type="text" id="blog-edit-contents-input" title="Enter your blog's contents"
                 autocomplete="off" name="blog-contents" class="text-input mb-[0.5vw] min-h-[10vw]"></textarea>
 
-                <input type="submit" value="Save" title="Save changes" class="form-btn w-[5vw]">
+                <div class="flex justify-between">
+                    <input type="submit" value="Save" title="Save changes" class="form-btn w-[5vw]">
+                    <button type="button" id="reset-inputs-btn" title="Undo all changes?" class="common-btn w-[5vw]">Reset</button>
+                </div>
             </form>
         </div>
+
+        <!-- UNDO CHANGES CONFIRMATION POPUP -->
+
+        <div id="profile-popup-background" class="popup-window-background hide-element"></div>
+
+        <div id="undo-changes-confirmation-popup" class="popup-window hide-element basic-text-size">
+            <p class="max-w-[10vw] text-center">Are you sure you want to <b>undo</b> your changes?</p>
+            <div class="flex justify-center gap-[1vw]">
+                <button title="Undo all changes" id="change-undo-confirmation" class="common-btn">Yes</button>
+                <button title="Don't undo changes" id="change-undo-denial" class="common-btn">No</button>
+            </div>
+        </div>
+
     </main>
     <script type="module" src="./dist/Global/global.js"></script>
     <script type="module" src="./dist/Webpage_Scripts/edit_blog.js"></script>
