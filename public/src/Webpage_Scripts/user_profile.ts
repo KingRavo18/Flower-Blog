@@ -251,21 +251,30 @@ class Blog_Display{
             </div>
             <p class="description basic-text-size">${description}</p>
         `;
+        this.#set_blog_click_event(blog_id, blog_list_item);
         this.#set_blog_edit_btn(blog_id, blog_list_item);
         this.#set_blog_deletion_btn(blog_id, blog_list_item);
         (document.getElementById("user-blog-container") as HTMLElement).appendChild(blog_list_item);
     }
 
+    #set_blog_click_event(blog_id: string | number, blog_list_item: HTMLLIElement){
+        blog_list_item.addEventListener("click", () => {
+            new Blog_Id_Transfer("./read_blog.html").init(blog_id);
+        });
+    }
+
     #set_blog_edit_btn(blog_id: string | number, blog_list_item: HTMLLIElement){
         const edit_btn = blog_list_item.querySelector(".edit-blog-btn") as HTMLButtonElement;
-        edit_btn.addEventListener("click", () => { 
-            new Blog_Id_Transfer().init(blog_id);
+        edit_btn.addEventListener("click", (event) => { 
+            event.stopPropagation();
+            new Blog_Id_Transfer("./edit_blog.html").init(blog_id);
         });
     }
 
     #set_blog_deletion_btn(blog_id: string | number, blog_list_item: HTMLLIElement){
         const delete_btn = blog_list_item.querySelector(".delete-blog-btn") as HTMLButtonElement;
-        delete_btn.addEventListener("click", () => {
+        delete_btn.addEventListener("click", (event) => {
+            event.stopPropagation();
             new Blog_Deletion().toggle_blog_deletion_confirmation_popup(blog_id, blog_list_item);
         });
     }
@@ -327,6 +336,8 @@ class No_Blogs_Paragraph_Display{
 }
 
 class Blog_Id_Transfer{
+    constructor(private transfer_destination: string){}
+
     init(blog_id: string | number): void{
         this.#transport_to_edit_page(blog_id);
     }   
@@ -342,7 +353,7 @@ class Blog_Id_Transfer{
                 },
                 "Could not transport user to the editing page, please try again later."
             );
-            window.location.href = "./edit_blog.html";
+            window.location.href = this.transfer_destination;
         }
         catch(error){
             display_message("document-body", "error-message", (error as Error).message, "center-message");

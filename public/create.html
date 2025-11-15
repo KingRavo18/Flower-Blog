@@ -15,31 +15,28 @@
         </h1>
 
         <div class="mt-[11vw] bg-[hsla(351,100%,92%,0.9)] rounded-[10px] p-[1.5vw] border-2 w-[70%] min-h-[5vw] mb-[3vw] h-auto border-[rgb(255,160,176)] container-appear-animation">
-            <form id="blog-creaton-form" class="flex flex-col basic-text-size">
+            <form id="blog-creation-form" class="flex flex-col basic-text-size">
                 <label for="blog-title-input" class="cursor-pointer">
                     Title:
                 </label>
-                <input type="text" id="blog-title-input" title="Enter your blog's title" 
-                autocomplete="off" name="blog-title" class="text-input mb-[0.5vw]">
+                <input type="text" id="blog-title-input" title="Enter your blog's title" autocomplete="off" class="text-input mb-[0.5vw]">
 
                 <label for="blog-desc-input" class="cursor-pointer">
                     Description:
                 </label>
-                <textarea type="text" id="blog-desc-input" title="Enter your blog's description"
-                autocomplete="off" name="blog-description" class="text-input mb-[0.5vw] min-h-[4.5vw] max-h-[10vw]"></textarea>
+                <textarea type="text" id="blog-desc-input" title="Enter your blog's description" autocomplete="off" class="text-input mb-[0.5vw] min-h-[4.5vw] max-h-[10vw]"></textarea>
                 
                 <label for="blog-tag-input" class="cursor-pointer">
                     Tags:
                 </label>
-                <input type="text" id="blog-tag-input" autocomplete="off" title="Enter a tag for your blog" name="blog-tags" class="text-input mb-[0.5vw]"> 
+                <input type="text" id="blog-tag-input" autocomplete="off" title="Enter a tag for your blog" class="text-input mb-[0.5vw]"> 
                 <button type="button" id="tag-btn" title="Add tag" class="form-btn w-[7vw] mb-[0.5vw]">Add tag</button>
                 <div id="tag-container" class="flex gap-[0.5vw]"></div>
 
                 <label for="blog-contents-input" class="cursor-pointer mt-[0.5vw]">
                     Contents:
                 </label>
-                <textarea type="text" id="blog-contents-input" title="Enter your blog's contents"
-                autocomplete="off" name="blog-contents" class="text-input mb-[0.5vw] min-h-[10vw]"></textarea>
+                <textarea type="text" id="blog-contents-input" title="Enter your blog's contents" autocomplete="off" class="text-input mb-[0.5vw] min-h-[10vw]"></textarea>
 
                 <input type="submit" value="Post" title="Post blog" class="form-btn w-[4vw]">
             </form>

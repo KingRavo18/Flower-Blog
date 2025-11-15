@@ -6,7 +6,7 @@ export class Blog_Creation{
     tag_input: HTMLInputElement;
     tag_display: HTMLElement;
 
-    constructor(private submit_url: string){
+    constructor(private submit_url: string, private is_blog_update: boolean){
         this.tags = [];
         this.tag_input = document.getElementById("blog-tag-input") as HTMLInputElement;
         this.tag_display = document.getElementById("tag-container") as HTMLElement;
@@ -50,7 +50,9 @@ export class Blog_Creation{
             if(this.tags.length > 0){
                 this.#submit_tags(data.blog_id);
             }
-            this.#form_reset(title_input, description_area, contents_area);
+            if(!this.is_blog_update){
+                this.#form_reset(title_input, description_area, contents_area);
+            }   
             display_message("document-body", "success-message", data.query_success, "center-message");
         }
         catch(error){

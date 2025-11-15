@@ -25,9 +25,6 @@ class Blog_Contents_Update extends Db_Connection{
     private function execute_query(){
         $stmt = parent::conn()->prepare("UPDATE blogs SET title = ?, description = ?, contents = ? WHERE id = ? AND user_id = ?");
         $stmt->execute([$this->title, $this->description, $this->contents, $this->blog_id, $this->user_id]);
-        if($stmt->rowCount() === 0){
-            echo json_encode(["fatal_fail" => "This blog was not found."]);
-        }
     }
 
     public function update_blog_contents(){

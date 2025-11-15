@@ -41,10 +41,10 @@ class Blog_Contents_Retrieval {
     }
 }
 function update_blog_contents() {
-    const blog_update = new Blog_Creation("../backend/Blog_Managment/Blog_Editing/Blog_Contents/contents_update.php");
+    const blog_update = new Blog_Creation("../backend/Blog_Managment/Blog_Editing/Blog_Contents/contents_update.php", true);
     document.getElementById("blog-update-form").addEventListener("submit", (event) => {
         blog_update.init(event);
-        //setTimeout(() => window.location.replace("./profile.html"), 1000);
+        setTimeout(() => window.location.replace("./profile.html"), 1000);
     });
 }
 //# sourceMappingURL=edit_blog.js.map

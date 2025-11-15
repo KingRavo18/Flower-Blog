@@ -2,11 +2,13 @@ import { display_message } from "./message_display.js";
 import { fetch_data } from "./fetch_data.js";
 export class Blog_Creation {
     submit_url;
+    is_blog_update;
     tags;
     tag_input;
     tag_display;
-    constructor(submit_url) {
+    constructor(submit_url, is_blog_update) {
         this.submit_url = submit_url;
+        this.is_blog_update = is_blog_update;
         this.tags = [];
         this.tag_input = document.getElementById("blog-tag-input");
         this.tag_display = document.getElementById("tag-container");
@@ -42,7 +44,9 @@ export class Blog_Creation {
             if (this.tags.length > 0) {
                 this.#submit_tags(data.blog_id);
             }
-            this.#form_reset(title_input, description_area, contents_area);
+            if (!this.is_blog_update) {
+                this.#form_reset(title_input, description_area, contents_area);
+            }
             display_message("document-body", "success-message", data.query_success, "center-message");
         }
         catch (error) {
