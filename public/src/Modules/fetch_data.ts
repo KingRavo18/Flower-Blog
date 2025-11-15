@@ -1,4 +1,4 @@
-export async function fetch_data(fetch_url: string, options: {}, response_fail_message: string): Promise<any>{
+export async function fetch_data(fetch_url: string, options: RequestInit, response_fail_message: string): Promise<any>{
     const response = await fetch(fetch_url, options);
     if(!response.ok){
         throw new Error(response_fail_message);

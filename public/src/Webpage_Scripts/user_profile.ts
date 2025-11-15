@@ -100,7 +100,7 @@ class Password_Change{
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: new URLSearchParams({ current_password: current_password_input.value, new_password: new_password_input.value }),
+                    body: new URLSearchParams({ current_password: current_password_input.value, new_password: new_password_input.value })
                 },
                 "Could not change password. Plese try again later."
             );

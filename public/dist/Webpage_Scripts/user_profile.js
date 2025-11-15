@@ -80,7 +80,7 @@ class Password_Change {
             const data = await fetch_data("../backend/Update_Profile/change_password.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({ current_password: current_password_input.value, new_password: new_password_input.value }),
+                body: new URLSearchParams({ current_password: current_password_input.value, new_password: new_password_input.value })
             }, "Could not change password. Plese try again later.");
             current_password_input.value = new_password_input.value = "";
             display_message("profile-popup-background", "success-message", data.query_success, "center-message");

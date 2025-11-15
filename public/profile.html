@@ -10,6 +10,7 @@
 </head>
 <body id="document-body">
     <main class="pt-[5vw] flex flex-col items-center pb-[3vw]">
+        
         <h1 id="profile-title" class="page-title page-title-h1 text-[3vw] absolute"></h1>
 
         <!-- PROFILE DATA UPDATING CONTAINER -->
@@ -21,9 +22,13 @@
             <button id="show-password-change-popup-btn" title="Change password?" class="common-btn">Change Password</button>
             <button id="show-account-deletion-popup-btn" title="Delete your account?" class="common-btn text-[red]">Delete Account</button>
         </div>
+
         <!-- POPUPS FOR THE PREVIOUS CONTAINER -->
+
         <div id="profile-popup-background" class="popup-window-background hide-element"></div>
+
         <!-- USERNAME CHANGE POPUP -->
+
         <div id="username-change-popup" class="popup-window hide-element">
             <div class="relative flex w-full">
                 <span id="hide-username-change-popup-btn" title="Close popup" class="material-symbols-outlined absolute 
@@ -47,7 +52,9 @@
                 <input type="submit" value="Change Username" title="Change username" class="form-btn">
             </form>
         </div> 
+
         <!-- PASSWORD CHANGE POPUP -->
+
         <div id="password-change-popup" class="popup-window hide-element">
             <div class="relative flex w-full">
                 <span id="hide-password-change-popup-btn" title="Close popup" class="material-symbols-outlined absolute 
@@ -71,7 +78,9 @@
                 <input type="submit" value="Change Password" title="Change password" class="form-btn">
             </form>
         </div>
+
         <!-- ACCOUNT DELETION POPUP -->
+
         <div id="account-deletion-popup" class="popup-window hide-element">
             <div class="relative flex w-full">
                 <span id="hide-account-deletion-popup-btn" title="Close popup" class="material-symbols-outlined absolute 
@@ -105,6 +114,7 @@
                 <button title="Don't delete this blog" id="blog-deletion-denial" class="common-btn">No</button>
             </div>
         </div>
+
     </main>
     <script type="module" src="./dist/Global/global.js"></script>
     <script type="module" src="./dist/Webpage_Scripts/user_profile.js"></script>

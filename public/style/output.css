@@ -7,8 +7,11 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-white: #fff;
     --spacing: 0.25rem;
     --font-weight-bold: 700;
+    --default-transition-duration: 150ms;
+    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
   }
@@ -356,6 +359,9 @@
   }
   .bg-\[rgba\(255\,214\,220\,0\.85\)\] {
     background-color: rgba(255,214,220,0.85);
+  }
+  .bg-white {
+    background-color: var(--color-white);
   }
   .bg-\[url\(\'\.\.\/assets\/images\/flower-background\.jpg\'\)\] {
     background-image: url('../assets/images/flower-background.jpg');
@@ -840,7 +846,7 @@ body {
     cursor: pointer;
     padding: 4px 10px;
     margin-bottom: 0.5vw;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: rgba(255, 214, 220, 0.9);
     border: 2px solid rgb(255, 160, 176);
     & h3 {
