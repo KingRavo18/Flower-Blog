@@ -8,7 +8,12 @@ document.addEventListener("DOMContentLoaded", () => {
     toggle_password_visibility();
 }, {once: true});
 
-class Input_Validation{
+
+interface Input_Validation_Types{
+    validate_input: (username: string, password: string) => void;
+}
+
+class Input_Validation implements Input_Validation_Types{
     validate_input(username: string, password: string): void{
         if(username.trim() === ""){
             throw new Error("Please input a username");
@@ -34,11 +39,16 @@ class Input_Validation{
     }
 }
 
+
 function sign_in(): void{
     (document.getElementById("sign-in-form") as HTMLFormElement).addEventListener("submit", (event) => new User_Sign_In().init(event));
 }
 
-class User_Sign_In extends Input_Validation{
+interface User_Sign_In_Types{
+    init: (event: SubmitEvent) => void;
+}
+
+class User_Sign_In extends Input_Validation implements User_Sign_In_Types{
     init(event: SubmitEvent): void{
         this.#sign_in_user(event);
     }
@@ -67,11 +77,16 @@ class User_Sign_In extends Input_Validation{
     }
 }
 
+
 function register(): void{
     (document.getElementById("registration-form") as HTMLFormElement).addEventListener("submit", (event) => new User_Registration().init(event));
 }
 
-class User_Registration extends Input_Validation{
+interface User_Registration_Types{
+    init: (event: SubmitEvent) => void;
+}
+
+class User_Registration extends Input_Validation implements User_Registration_Types{
     init(event: SubmitEvent): void{
         this.register_user(event);
     }
@@ -100,6 +115,7 @@ class User_Registration extends Input_Validation{
     }
 }
 
+
 function switch_form(): void{
     const switch_to_sign_in = new Current_Form_Switch(
         "registration_container", 
@@ -121,7 +137,11 @@ function switch_form(): void{
     (document.getElementById("change-form-trigger-signin") as HTMLElement).addEventListener("click", () => switch_to_registration.change_form());
 }
 
-class Current_Form_Switch{
+interface Current_Form_Switch_Types{
+    change_form: () => void;
+}
+
+class Current_Form_Switch implements Current_Form_Switch_Types{
     constructor(
         private shown_form_id: string, 
         private hidden_form_id: string, 
@@ -147,6 +167,7 @@ class Current_Form_Switch{
     }
 }
 
+
 function toggle_password_visibility(): void{
     const sign_in_password_visibility = new Password_Visibility_Toggle("signin-password-visibility", "sign-in-password");
     const registration_password_visibility = new Password_Visibility_Toggle("register-password-visibility", "register-password");
@@ -154,7 +175,11 @@ function toggle_password_visibility(): void{
     (document.getElementById("register-password-visibility") as HTMLElement).addEventListener("click", () => registration_password_visibility.toggle_password());
 }
 
-class Password_Visibility_Toggle{
+interface Password_Visibility_Toggle_Types{
+    toggle_password: () => void;
+}
+
+class Password_Visibility_Toggle implements Password_Visibility_Toggle_Types{
     constructor(private trigger_id: string, private triggered_input_id: string){}
 
     toggle_password(): void{

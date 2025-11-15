@@ -1,6 +1,7 @@
-import { Blog_Creation } from "../Modules/Blog_Creation.js";
+import { Blog_Creation, allow_tab_indentation } from "../Modules/Blog_Creation.js";
 document.addEventListener("DOMContentLoaded", () => {
     create_blog();
+    allow_tab_indentation();
 }, { once: true });
 function create_blog() {
     const blog_creation = new Blog_Creation("../backend/Blog_Managment/Blog_Creation/blog_submit.php", false);
@@ -8,6 +9,5 @@ function create_blog() {
     document.getElementById("blog-creation-form").addEventListener("submit", (event) => {
         blog_creation.init(event);
     });
-    blog_creation.textarea_tab_indentation();
 }
 //# sourceMappingURL=create_blog.js.map

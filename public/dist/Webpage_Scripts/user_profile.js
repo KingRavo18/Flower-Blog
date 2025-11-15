@@ -24,7 +24,7 @@ class Title_Display {
         }
     }
 }
-// SECTION 2 - CHANGE THE USER'S DATA
+// SECTION 2 - UPDATE THE USER'S PROFILE
 function change_username() {
     const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
     username_change_popup.toggle_user_profile_popup();
@@ -197,11 +197,15 @@ class Blog_Display {
             <div class="blog-list-item-top-row">
                 <h3>${title}</h3>
                 <div>
-                    <button title="Edit this blog?" class="common-btn edit-blog-btn basic-text-size">
-                        Edit
+                    <button title="Edit this blog?" class="common-btn edit-blog-btn basic-text-size flex justify-center items-center">
+                        <span class="material-symbols-outlined">
+                            edit
+                        </span>
                     </button>
-                    <button title="Delete this blog?" class="common-btn delete-blog-btn basic-text-size">
-                        Delete
+                    <button title="Delete this blog?" class="common-btn delete-blog-btn basic-text-size flex justify-center items-center">
+                        <span class="material-symbols-outlined">
+                            delete
+                        </span>
                     </button>
                 </div>
             </div>

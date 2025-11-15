@@ -12,7 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
     display_blogs();
 }, {once: true});
 
+
 // SECTION 1 - DISPLAY THE PROFILE PAGE'S TITLE 
+
 
 function display_title(){
     new Title_Display().display_profile_page_title();
@@ -31,7 +33,9 @@ class Title_Display{
     }
 }
 
-// SECTION 2 - CHANGE THE USER'S DATA
+
+// SECTION 2 - UPDATE THE USER'S PROFILE
+
 
 function change_username(){
     const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
@@ -77,6 +81,7 @@ class Username_Change extends Title_Display{
         }   
     }
 }
+
 
 function change_password(){
     const password_change_popup = new Profile_Popup_Toggle("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
@@ -140,6 +145,7 @@ class Password_Change{
     }
 }
 
+
 function delete_account(){
     const account_deletion_popup = new Profile_Popup_Toggle("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
     account_deletion_popup.toggle_user_profile_popup();
@@ -184,6 +190,7 @@ class Account_Deletion{
     }
 }
 
+
 class Profile_Popup_Toggle{
     constructor(private popup_id: string, private show_popup_btn_id: string, private hide_popup_btn_id: string){}
 
@@ -201,7 +208,9 @@ class Profile_Popup_Toggle{
     }
 }
 
+
 // SECTION 3 - DISPLAY AND MANAGE THE USER'S PERSONAL BLOGS 
+
 
 function display_blogs(): void{
     new Blog_Display().init();
@@ -241,11 +250,15 @@ class Blog_Display{
             <div class="blog-list-item-top-row">
                 <h3>${title}</h3>
                 <div>
-                    <button title="Edit this blog?" class="common-btn edit-blog-btn basic-text-size">
-                        Edit
+                    <button title="Edit this blog?" class="common-btn edit-blog-btn basic-text-size flex justify-center items-center">
+                        <span class="material-symbols-outlined">
+                            edit
+                        </span>
                     </button>
-                    <button title="Delete this blog?" class="common-btn delete-blog-btn basic-text-size">
-                        Delete
+                    <button title="Delete this blog?" class="common-btn delete-blog-btn basic-text-size flex justify-center items-center">
+                        <span class="material-symbols-outlined">
+                            delete
+                        </span>
                     </button>
                 </div>
             </div>

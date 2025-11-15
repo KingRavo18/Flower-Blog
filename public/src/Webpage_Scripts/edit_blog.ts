@@ -1,12 +1,14 @@
 import { toggle_element_visibility } from "../Modules/element_toggle.js";
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
-import { Blog_Creation } from "../Modules/Blog_Creation.js";
+import { Blog_Creation, allow_tab_indentation } from "../Modules/Blog_Creation.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     retrieve_blog_data();
     update_blog_contents();
+    allow_tab_indentation();
 }, {once: true})
+
 
 function retrieve_blog_data(){
     new Blog_Contents_Retrieval().init();
@@ -57,11 +59,10 @@ class Blog_Contents_Retrieval{
     }
 }
 
-function update_blog_contents(){
+function update_blog_contents(): void{
     const blog_update = new Blog_Creation("../backend/Blog_Managment/Blog_Editing/Blog_Contents/contents_update.php", true);
     (document.getElementById("blog-update-form") as HTMLFormElement).addEventListener("submit", (event) => {
         blog_update.init(event)
         setTimeout(() => window.location.replace("./profile.html"), 1000);
     });
-    blog_update.textarea_tab_indentation();
 }

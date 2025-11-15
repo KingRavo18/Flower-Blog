@@ -1,7 +1,12 @@
 import { display_message } from "./message_display.js";
 import { fetch_data } from "./fetch_data.js";
 
-export class Blog_Creation{
+interface Blog_Creation_Types{
+    init: (event: SubmitEvent) => void;
+    collect_tags: () => void;
+}
+
+export class Blog_Creation implements Blog_Creation_Types{
     tags: string[];
     tag_input: HTMLInputElement;
     tag_display: HTMLElement;
@@ -23,26 +28,6 @@ export class Blog_Creation{
             this.tag_input.value = "";
         }
     }
-
-    textarea_tab_indentation(): void{
-        const text_area_ids = ["blog-desc-input", "blog-contents-input"];
-        for(let i = 0; i < text_area_ids.length; i++){
-            const textarea_id = text_area_ids[i];
-            if(textarea_id === undefined){
-                return;
-            }
-            const textarea = document.getElementById(textarea_id) as HTMLTextAreaElement;
-            textarea.addEventListener('keydown', (event) => {
-                if(event.key === "Tab"){
-                    event.preventDefault();
-                    const start = textarea.selectionStart;
-                    const end = textarea.selectionEnd;
-                    textarea.value = textarea.value.substring(0, start) + "\t" + textarea.value.substring(end);
-                    textarea.selectionStart = textarea.selectionEnd = start + 1;
-                }
-            });
-        }
-    }   
 
     #display_tag(): void{
         const displayed_tag = document.createElement("p");
@@ -111,3 +96,23 @@ export class Blog_Creation{
         this.tags.length = 0;
     }
 }
+
+export function allow_tab_indentation(): void{
+    const text_area_ids = ["blog-desc-input", "blog-contents-input"];
+    for(let i = 0; i < text_area_ids.length; i++){
+        const textarea_id = text_area_ids[i];
+        if(textarea_id === undefined){
+            return;
+        }
+        const textarea = document.getElementById(textarea_id) as HTMLTextAreaElement;
+        textarea.addEventListener('keydown', (event) => {
+            if(event.key === "Tab"){
+                event.preventDefault();
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
+                textarea.value = textarea.value.substring(0, start) + "\t" + textarea.value.substring(end);
+                textarea.selectionStart = textarea.selectionEnd = start + 1;
+            }
+        });
+    }
+}  
