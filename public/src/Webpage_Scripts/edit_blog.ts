@@ -5,6 +5,7 @@ import { Blog_Creation } from "../Modules/Blog_Creation.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     retrieve_blog_data();
+    update_blog_contents();
 }, {once: true})
 
 function retrieve_blog_data(){
@@ -35,14 +36,13 @@ class Blog_Contents_Retrieval{
     }
 
     async #retrieve_blog_data(): Promise<void>{
-        const title_input = document.getElementById("blog-edit-title-input") as HTMLInputElement;
-        const description_area = document.getElementById("blog-edit-desc-input") as HTMLTextAreaElement;
-        const contents_area = document.getElementById("blog-edit-contents-input") as HTMLTextAreaElement;
+        const title_input = document.getElementById("blog-title-input") as HTMLInputElement;
+        const description_area = document.getElementById("blog-desc-input") as HTMLTextAreaElement;
+        const contents_area = document.getElementById("blog-contents-input") as HTMLTextAreaElement;
         try{
             const data = await fetch_data(
                 "../backend/Blog_Managment/Blog_Editing/Blog_Contents/contents_retrieval.php", {}, "Failed to retrieve the blog's data, please try again later."
             );
-            console.log(data.blog);
             title_input.value = data.blog.title;
             description_area.value = data.blog.description;
             contents_area.value = data.blog.contents;
@@ -58,4 +58,9 @@ class Blog_Contents_Retrieval{
 }
 
 function update_blog_contents(){
+    const blog_update = new Blog_Creation("../backend/Blog_Managment/Blog_Editing/Blog_Contents/contents_update.php");
+    (document.getElementById("blog-update-form") as HTMLFormElement).addEventListener("submit", (event) => {
+        blog_update.init(event)
+        //setTimeout(() => window.location.replace("./profile.html"), 1000);
+    });
 }
