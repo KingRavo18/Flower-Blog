@@ -8,5 +8,6 @@ export declare class Blog_Creation {
     constructor(submit_url: string, is_blog_update: boolean);
     init(event: SubmitEvent): void;
     collect_tags(): void;
+    textarea_tab_indentation(): void;
 }
 //# sourceMappingURL=Blog_Creation.d.ts.map

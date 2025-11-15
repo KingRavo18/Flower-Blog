@@ -21,6 +21,12 @@ class Blog_Creation extends Db_Connection{
         }
     }
 
+    private function char_replace(){
+        $this->title = str_replace(['&#9;', '&#10;'], ["\t", "\n"], $this->title);
+        $this->description = str_replace(['&#9;', '&#10;'], ["\t", "\n"], $this->description);
+        $this->contents = str_replace(['&#9;', '&#10;'], ["\t", "\n"], $this->contents);
+    }
+
     private function execute_query(){
         $conn = parent::conn();
         $stmt = $conn->prepare("INSERT INTO blogs (user_id, title, description, contents) VALUES (?, ?, ?, ?)");
@@ -35,6 +41,7 @@ class Blog_Creation extends Db_Connection{
     public function create_blog(){
         try{
             $this->validate_inputs();
+            $this->char_replace();
             $this->execute_query();
         }
         catch(PDOException $e){

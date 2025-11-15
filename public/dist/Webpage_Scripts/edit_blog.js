@@ -46,5 +46,6 @@ function update_blog_contents() {
         blog_update.init(event);
         setTimeout(() => window.location.replace("./profile.html"), 1000);
     });
+    blog_update.textarea_tab_indentation();
 }
 //# sourceMappingURL=edit_blog.js.map

@@ -24,6 +24,26 @@ export class Blog_Creation{
         }
     }
 
+    textarea_tab_indentation(): void{
+        const text_area_ids = ["blog-desc-input", "blog-contents-input"];
+        for(let i = 0; i < text_area_ids.length; i++){
+            const textarea_id = text_area_ids[i];
+            if(textarea_id === undefined){
+                return;
+            }
+            const textarea = document.getElementById(textarea_id) as HTMLTextAreaElement;
+            textarea.addEventListener('keydown', (event) => {
+                if(event.key === "Tab"){
+                    event.preventDefault();
+                    const start = textarea.selectionStart;
+                    const end = textarea.selectionEnd;
+                    textarea.value = textarea.value.substring(0, start) + "\t" + textarea.value.substring(end);
+                    textarea.selectionStart = textarea.selectionEnd = start + 1;
+                }
+            });
+        }
+    }   
+
     #display_tag(): void{
         const displayed_tag = document.createElement("p");
         displayed_tag.classList.add("displayed-tag");

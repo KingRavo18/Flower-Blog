@@ -10,4 +10,5 @@ function create_blog(){
     (document.getElementById("blog-creation-form") as HTMLFormElement).addEventListener("submit", (event) => {
         blog_creation.init(event)
     });
+    blog_creation.textarea_tab_indentation();
 }

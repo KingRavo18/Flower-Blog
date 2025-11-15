@@ -22,6 +22,12 @@ class Blog_Contents_Update extends Db_Connection{
         }
     }
 
+    private function char_replace(){
+        $this->title = str_replace(['&#9;', '&#10;'], ["\t", "\n"], $this->title);
+        $this->description = str_replace(['&#9;', '&#10;'], ["\t", "\n"], $this->description);
+        $this->contents = str_replace(['&#9;', '&#10;'], ["\t", "\n"], $this->contents);
+    }
+
     private function execute_query(){
         $stmt = parent::conn()->prepare("UPDATE blogs SET title = ?, description = ?, contents = ? WHERE id = ? AND user_id = ?");
         $stmt->execute([$this->title, $this->description, $this->contents, $this->blog_id, $this->user_id]);
@@ -30,6 +36,7 @@ class Blog_Contents_Update extends Db_Connection{
     public function update_blog_contents(){
         try{
             $this->validate_inputs();
+            $this->char_replace();
             $this->execute_query();
             echo json_encode(["query_success" => "Your blog has been updated."]);
         }

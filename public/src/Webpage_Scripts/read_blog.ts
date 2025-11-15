@@ -21,7 +21,6 @@ function display_contents(): void{
     new Blog_Title_Display("read-blog-content", "contents").display_blog_content();
 }
 
-
 interface Blog_Title_Display_Types {
    display_blog_content: () => Promise<void>
 }
