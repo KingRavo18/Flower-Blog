@@ -16,8 +16,14 @@ class User_Registration extends Db_Connection{
         if(empty(trim($this->username))){
             throw new Exception("Please input a username.");
         }
+        if(strlen($this->username) > 20){
+            throw new Exception("A username cannot be longer than 20 characters.");
+        }
         if(empty(trim($this->password))){
             throw new Exception("Please input a password.");
+        }
+        if(strlen($this->password) > 255){
+            throw new Exception("A password cannot be longer than 255 characters.");
         }
         if(strlen($this->password) < 8){
             throw new Exception("A password must contain at least 8 characters.");

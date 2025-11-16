@@ -1,4 +1,5 @@
 import { display_message } from "../Modules/message_display.js";
+
 document.addEventListener("DOMContentLoaded", () => {
 
 }, {once: true});

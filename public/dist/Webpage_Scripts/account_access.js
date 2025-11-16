@@ -6,28 +6,35 @@ document.addEventListener("DOMContentLoaded", () => {
     switch_form();
     toggle_password_visibility();
 }, { once: true });
+// SECTION 1 - SIGN IN
 class Input_Validation {
     validate_input(username, password) {
         if (username.trim() === "") {
-            throw new Error("Please input a username");
+            throw new Error("Please input a username.");
+        }
+        if (username.length > 20) {
+            throw new Error("A username cannot be longer than 20 characters.");
         }
         if (password.trim() === "") {
-            throw new Error("Please input a password");
+            throw new Error("Please input a password.");
+        }
+        if (password.length > 255) {
+            throw new Error("A password cannot be longer than 255 characters.");
         }
         if (password.length < 8) {
-            throw new Error("A password must be at least 8 symbols long");
+            throw new Error("A password must be at least 8 symbols long.");
         }
         if (!Boolean(password.match(/[a-z]/))) {
-            throw new Error("A password must contain a non-capital letter");
+            throw new Error("A password must contain a non-capital letter.");
         }
         if (!Boolean(password.match(/[A-Z]/))) {
-            throw new Error("A password must contain a capital letter");
+            throw new Error("A password must contain a capital letter.");
         }
         if (!Boolean(password.match(/[0-9]/))) {
-            throw new Error("A password must contain a number");
+            throw new Error("A password must contain a number.");
         }
         if (!Boolean(password.match(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/))) {
-            throw new Error("A password must contain a special character");
+            throw new Error("A password must contain a special character.");
         }
     }
 }
@@ -57,6 +64,7 @@ class User_Sign_In extends Input_Validation {
         }
     }
 }
+// SECTION 2 - REGISTRATION
 function register() {
     document.getElementById("registration-form").addEventListener("submit", (event) => new User_Registration().init(event));
 }
@@ -83,6 +91,7 @@ class User_Registration extends Input_Validation {
         }
     }
 }
+// SECTION 3 - UI CONTROL
 function switch_form() {
     const switch_to_sign_in = new Current_Form_Switch("registration_container", "signin_container", "change-form-trigger-signin", "left-form-appear-animation", "left-form-disappear-animation", "right-form-appear-animation");
     document.getElementById("change-form-trigger-register").addEventListener("click", () => switch_to_sign_in.init());

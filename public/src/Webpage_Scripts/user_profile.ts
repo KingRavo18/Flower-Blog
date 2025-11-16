@@ -243,7 +243,7 @@ class Blog_Display implements Retrieve_Class_Types{
             }
             else{
                 (data.blogs as Blog[]).forEach((blog: Blog) => {
-                    this.#create_blog_list_item(blog.id, blog.title, blog.description)
+                    this.#create_blog_list_item(blog.id, blog.title, blog.description);
                 });
             }
         }
