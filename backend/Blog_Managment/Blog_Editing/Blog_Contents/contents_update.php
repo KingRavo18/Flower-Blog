@@ -1,5 +1,6 @@
 <?php 
 require("../../../DB_Connection/db_connection.php");
+require ("../../../Session_Maintanance/global_session_check.php");
 
 class Blog_Contents_Update extends Db_Connection{
     public function __construct(
@@ -9,6 +10,12 @@ class Blog_Contents_Update extends Db_Connection{
         private $blog_id, 
         private $user_id
     ){}
+
+    private function char_replace(){
+        $this->title = html_entity_decode($this->title, ENT_QUOTES);
+        $this->description = html_entity_decode($this->description, ENT_QUOTES);
+        $this->contents = html_entity_decode($this->contents, ENT_QUOTES);
+    }
 
     private function validate_inputs(){
         if(empty(trim($this->title))){
@@ -22,12 +29,6 @@ class Blog_Contents_Update extends Db_Connection{
         }
     }
 
-    private function char_replace(){
-        $this->title = str_replace(['&#9;', '&#10;'], ["\t", "\n"], $this->title);
-        $this->description = str_replace(['&#9;', '&#10;'], ["\t", "\n"], $this->description);
-        $this->contents = str_replace(['&#9;', '&#10;'], ["\t", "\n"], $this->contents);
-    }
-
     private function execute_query(){
         $stmt = parent::conn()->prepare("UPDATE blogs SET title = ?, description = ?, contents = ? WHERE id = ? AND user_id = ?");
         $stmt->execute([$this->title, $this->description, $this->contents, $this->blog_id, $this->user_id]);
@@ -35,8 +36,8 @@ class Blog_Contents_Update extends Db_Connection{
 
     public function update_blog_contents(){
         try{
-            $this->validate_inputs();
             $this->char_replace();
+            $this->validate_inputs();
             $this->execute_query();
             echo json_encode(["query_success" => "Your blog has been updated."]);
         }

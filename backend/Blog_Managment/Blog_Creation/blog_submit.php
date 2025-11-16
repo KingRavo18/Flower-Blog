@@ -1,5 +1,6 @@
 <?php
 require("../../DB_Connection/db_connection.php");
+require ("../../Session_Maintanance/global_session_check.php");
 
 class Blog_Creation extends Db_Connection{
     public function __construct(
@@ -8,6 +9,12 @@ class Blog_Creation extends Db_Connection{
         private $description, 
         private $contents
     ){}
+
+    private function char_decode(){
+        $this->title = html_entity_decode($this->title, ENT_QUOTES);
+        $this->description = html_entity_decode($this->description, ENT_QUOTES);
+        $this->contents = html_entity_decode($this->contents, ENT_QUOTES);
+    }
 
     private function validate_inputs(){
         if(empty(trim($this->title))){
@@ -19,12 +26,6 @@ class Blog_Creation extends Db_Connection{
         if(empty(trim($this->contents))){
             throw new Exception("A blog must have at least some sort of contents.");
         }
-    }
-
-    private function char_replace(){
-        $this->title = str_replace(['&#9;', '&#10;'], ["\t", "\n"], $this->title);
-        $this->description = str_replace(['&#9;', '&#10;'], ["\t", "\n"], $this->description);
-        $this->contents = str_replace(['&#9;', '&#10;'], ["\t", "\n"], $this->contents);
     }
 
     private function execute_query(){
@@ -40,8 +41,8 @@ class Blog_Creation extends Db_Connection{
 
     public function create_blog(){
         try{
+            $this->char_decode();
             $this->validate_inputs();
-            $this->char_replace();
             $this->execute_query();
         }
         catch(PDOException $e){

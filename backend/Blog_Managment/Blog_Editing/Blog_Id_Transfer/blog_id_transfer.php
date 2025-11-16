@@ -1,5 +1,6 @@
 <?php 
-require("../../../DB_Connection/db_connection.php");
+require ("../../../DB_Connection/db_connection.php");
+require ("../../../Session_Maintanance/global_session_check.php");
 
 class Edit_Page_Blog_Id_Transfer extends Db_Connection{
     public function __construct(

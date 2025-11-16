@@ -7,6 +7,11 @@ class User_Registration extends Db_Connection{
         private $password
     ){}
 
+    private function char_decode(){
+        $this->username = html_entity_decode($this->username, ENT_QUOTES);
+        $this->password = html_entity_decode($this->password, ENT_QUOTES);
+    }
+
     private function validate_input(){
         if(empty(trim($this->username))){
             throw new Exception("Please input a username.");
@@ -48,6 +53,7 @@ class User_Registration extends Db_Connection{
 
     public function register_user(){
         try{
+            $this->char_decode();
             $this->validate_input();
             $this->check_username_existance();
             $this->execute_query();

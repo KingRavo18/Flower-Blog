@@ -1,5 +1,6 @@
 <?php 
 require ("../DB_Connection/db_connection.php");
+require ("../Session_Maintanance/global_session_check.php");
 
 class Blog_Title_Display extends Db_Connection{
     public function __construct(private $blog_id){}

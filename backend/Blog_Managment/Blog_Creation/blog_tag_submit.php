@@ -1,5 +1,6 @@
 <?php
 require("../../DB_Connection/db_connection.php");
+require ("../../Session_Maintanance/global_session_check.php");
 
 class Blog_Tag_Submit extends Db_Connection{
     public function __construct(
@@ -7,8 +8,15 @@ class Blog_Tag_Submit extends Db_Connection{
         private $tag
     ){}
 
+    private function char_decode(){
+        $this->tag = html_entity_decode($this->tag, ENT_QUOTES);
+    }
+
     private function validate_data(){
         if($this->blog_id === 0){
+            throw new Exception();
+        }
+        if(empty(trim($this->tag)) === ""){
             throw new Exception();
         }
     }
@@ -20,6 +28,7 @@ class Blog_Tag_Submit extends Db_Connection{
 
     public function submit_blog_tag(){
         try{
+            $this->char_decode();
             $this->validate_data();
             $this->execute_query();
             echo json_encode(["query_success" => "Tags were successfully added."]);

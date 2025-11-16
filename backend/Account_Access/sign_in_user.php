@@ -7,6 +7,11 @@ class Signin_User extends Db_Connection{
         private $password
     ){}
 
+    private function char_decode(){
+        $this->username = html_entity_decode($this->username, ENT_QUOTES);
+        $this->password = html_entity_decode($this->password, ENT_QUOTES);
+    }
+
     private function validate_input(){
         if(empty(trim($this->username))){
             throw new Exception("Please input a username.");
@@ -29,6 +34,7 @@ class Signin_User extends Db_Connection{
 
     public function sign_in_user(){
         try{
+            $this->char_decode();
             $this->validate_input();
             $this->execute_query();
             echo json_encode(["query_success" => "You have successfully signed in."]);

@@ -278,6 +278,10 @@ body{
         background-color: rgba(255, 214, 220, 0.9);
         border: 2px solid rgb(255, 160, 176);
 
+        &:hover{
+            border: 3px solid rgb(255, 160, 176);
+        }
+
         & h3{
             font-size: 1.5vw;
         }

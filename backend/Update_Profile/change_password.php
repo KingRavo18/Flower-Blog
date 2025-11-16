@@ -1,5 +1,6 @@
 <?php
 require ("../DB_Connection/db_connection.php");
+require ("../Session_Maintanance/global_session_check.php");
 
 class Password_Change extends Db_Connection{
     public function __construct(
@@ -7,6 +8,11 @@ class Password_Change extends Db_Connection{
         private $current_password, 
         private $new_password
     ){}
+
+    private function char_decode(){
+        $this->current_password = html_entity_decode($this->current_password, ENT_QUOTES);
+        $this->new_password = html_entity_decode($this->new_password, ENT_QUOTES);
+    }
 
     private function validate_inputs(){
         if(empty(trim($this->current_password))){
@@ -52,6 +58,7 @@ class Password_Change extends Db_Connection{
 
     public function change_password(){
         try{
+            $this->char_decode();
             $this->validate_inputs();
             $this->verify_password();
             $this->execute_query();

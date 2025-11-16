@@ -1,5 +1,5 @@
 <?php
-session_start();
+require ("../Session_Maintanance/global_session_check.php");
 
 class Display_Username{
     public function retrieve_username(){

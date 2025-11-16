@@ -1,5 +1,6 @@
 <?php
-require("../../DB_Connection/db_connection.php");
+require ("../../DB_Connection/db_connection.php");
+require ("../../Session_Maintanance/global_session_check.php");
 
 class Blog_Deletion extends Db_Connection{
     public function __construct(
@@ -34,10 +35,6 @@ class Blog_Deletion extends Db_Connection{
             echo json_encode(["fatal_fail" => $e->getMessage()]);
         }
     } 
-}
-
-if(empty($_SESSION["id"])){
-    echo json_encode(["fatal_fail" => "A problem has occured, please try again later."]);
 }
 
 $user_id = $_SESSION["id"];

@@ -1,5 +1,6 @@
 <?php
-require("../DB_Connection/db_connection.php");
+require ("../DB_Connection/db_connection.php");
+require ("../Session_Maintanance/global_session_check.php");
 
 class Personal_Blog_Retrieve extends Db_Connection{
     public function __construct(private $user_id){}
@@ -7,23 +8,20 @@ class Personal_Blog_Retrieve extends Db_Connection{
     private function execute_query(){
         $stmt = parent::conn()->prepare("SELECT * FROM blogs WHERE user_id = ?");
         $stmt->execute([$this->user_id]);
-        $count = $stmt->rowCount();
         $query_success = "Your blogs were retrieved successfully.";
-        if($count > 0){
-            $blogs = $stmt->fetchAll();
+        if($stmt->rowCount() === 0){
             echo json_encode([
-                "row_count" => $count,
-                "blogs" => $blogs,
+                "row_count" => $stmt->rowCount(),
                 "query_success" => $query_success
             ]);
+            exit;
         }
-        else{
-            echo json_encode([
-                "row_count" => $count,
-                "query_success" => $query_success
-            ]);
-        }
-        $stmt = null;
+        $blogs = $stmt->fetchAll();
+        echo json_encode([
+            "row_count" => $stmt->rowCount(),
+            "blogs" => $blogs,
+            "query_success" => $query_success
+        ]);
     }
     
     public function retrieve_blogs(){
