@@ -15,7 +15,12 @@ function retrieve_blog_data(){
     (document.getElementById("reset-inputs-btn") as HTMLButtonElement).addEventListener("click", () => new Blog_Contents_Retrieval().undo_changes());
 }
 
-class Blog_Contents_Retrieval{
+interface Blog_Contents_Retrieval_Types{
+    init: () => void;
+    undo_changes: () => void;
+}
+
+class Blog_Contents_Retrieval implements Blog_Contents_Retrieval_Types{
     init(): void{
         this.#retrieve_blog_data();
     }

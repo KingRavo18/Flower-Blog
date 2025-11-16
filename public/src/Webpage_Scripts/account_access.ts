@@ -1,5 +1,6 @@
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
+import type { Ui_Change_Types, Submit_Class_Types } from "../Modules/interface_for_init_classes.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     sign_in();
@@ -9,12 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
 }, {once: true});
 
 
-interface Input_Validation_Types{
-    validate_input: (username: string, password: string) => void;
-}
-
-class Input_Validation implements Input_Validation_Types{
-    validate_input(username: string, password: string): void{
+class Input_Validation{
+    protected validate_input(username: string, password: string): void{
         if(username.trim() === ""){
             throw new Error("Please input a username");
         }
@@ -39,16 +36,11 @@ class Input_Validation implements Input_Validation_Types{
     }
 }
 
-
 function sign_in(): void{
     (document.getElementById("sign-in-form") as HTMLFormElement).addEventListener("submit", (event) => new User_Sign_In().init(event));
 }
 
-interface User_Sign_In_Types{
-    init: (event: SubmitEvent) => void;
-}
-
-class User_Sign_In extends Input_Validation implements User_Sign_In_Types{
+class User_Sign_In extends Input_Validation implements Submit_Class_Types{
     init(event: SubmitEvent): void{
         this.#sign_in_user(event);
     }
@@ -82,11 +74,7 @@ function register(): void{
     (document.getElementById("registration-form") as HTMLFormElement).addEventListener("submit", (event) => new User_Registration().init(event));
 }
 
-interface User_Registration_Types{
-    init: (event: SubmitEvent) => void;
-}
-
-class User_Registration extends Input_Validation implements User_Registration_Types{
+class User_Registration extends Input_Validation implements Submit_Class_Types{
     init(event: SubmitEvent): void{
         this.register_user(event);
     }
@@ -125,7 +113,7 @@ function switch_form(): void{
         "left-form-disappear-animation", 
         "right-form-appear-animation"   
     );
-    (document.getElementById("change-form-trigger-register") as HTMLElement).addEventListener("click", () => switch_to_sign_in.change_form());
+    (document.getElementById("change-form-trigger-register") as HTMLElement).addEventListener("click", () => switch_to_sign_in.init());
     const switch_to_registration = new Current_Form_Switch(
         "signin_container", 
         "registration_container", 
@@ -134,14 +122,10 @@ function switch_form(): void{
         "right-form-disappear-animation", 
         "left-form-appear-animation"
     );
-    (document.getElementById("change-form-trigger-signin") as HTMLElement).addEventListener("click", () => switch_to_registration.change_form());
+    (document.getElementById("change-form-trigger-signin") as HTMLElement).addEventListener("click", () => switch_to_registration.init());
 }
 
-interface Current_Form_Switch_Types{
-    change_form: () => void;
-}
-
-class Current_Form_Switch implements Current_Form_Switch_Types{
+class Current_Form_Switch implements Ui_Change_Types{
     constructor(
         private shown_form_id: string, 
         private hidden_form_id: string, 
@@ -151,7 +135,7 @@ class Current_Form_Switch implements Current_Form_Switch_Types{
         private hidden_form_appear_anim_class: string
     ){}
 
-    change_form(): void{
+    init(): void{
         const shown_form = document.getElementById(this.shown_form_id) as HTMLElement;
         const hidden_form = document.getElementById(this.hidden_form_id) as HTMLElement;
         const hidden_form_change_trigger = document.getElementById(this.hidden_form_change_trigger_id) as HTMLElement;
@@ -171,18 +155,14 @@ class Current_Form_Switch implements Current_Form_Switch_Types{
 function toggle_password_visibility(): void{
     const sign_in_password_visibility = new Password_Visibility_Toggle("signin-password-visibility", "sign-in-password");
     const registration_password_visibility = new Password_Visibility_Toggle("register-password-visibility", "register-password");
-    (document.getElementById("signin-password-visibility") as HTMLElement).addEventListener("click", () => sign_in_password_visibility.toggle_password());
-    (document.getElementById("register-password-visibility") as HTMLElement).addEventListener("click", () => registration_password_visibility.toggle_password());
+    (document.getElementById("signin-password-visibility") as HTMLElement).addEventListener("click", () => sign_in_password_visibility.init());
+    (document.getElementById("register-password-visibility") as HTMLElement).addEventListener("click", () => registration_password_visibility.init());
 }
 
-interface Password_Visibility_Toggle_Types{
-    toggle_password: () => void;
-}
-
-class Password_Visibility_Toggle implements Password_Visibility_Toggle_Types{
+class Password_Visibility_Toggle implements Ui_Change_Types{
     constructor(private trigger_id: string, private triggered_input_id: string){}
 
-    toggle_password(): void{
+    init(): void{
         const trigger = document.getElementById(this.trigger_id) as HTMLElement;
         const triggeredInput = document.getElementById(this.triggered_input_id) as HTMLInputElement;
         trigger.textContent = trigger.textContent === "visibility_off" ? "visibility" : "visibility_off";

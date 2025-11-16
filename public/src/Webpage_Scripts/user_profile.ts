@@ -1,6 +1,7 @@
 import { toggle_element_visibility } from "../Modules/element_toggle.js";
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
+import type { Retrieve_Class_Types, Ui_Change_Types, Submit_Class_Types } from "../Modules/interface_for_init_classes.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     display_title();
@@ -20,7 +21,11 @@ function display_title(){
     new Title_Display().display_profile_page_title();
 }
 
-class Title_Display{
+interface Title_Display_Types{
+    display_profile_page_title: () => Promise<void>;
+}
+
+class Title_Display implements Title_Display_Types{
     async display_profile_page_title(): Promise<void>{
         const profile_title = document.getElementById("profile-title") as HTMLElement;
         try{
@@ -39,11 +44,11 @@ class Title_Display{
 
 function change_username(){
     const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
-    username_change_popup.toggle_user_profile_popup();
+    username_change_popup.init();
     (document.getElementById("username-change-form") as HTMLFormElement).addEventListener("submit", (event) => new Username_Change().init(event));
 }
 
-class Username_Change extends Title_Display{
+class Username_Change extends Title_Display implements Submit_Class_Types{
     init(event: SubmitEvent): void{
         this.#change_username(event);
     }
@@ -85,11 +90,11 @@ class Username_Change extends Title_Display{
 
 function change_password(){
     const password_change_popup = new Profile_Popup_Toggle("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
-    password_change_popup.toggle_user_profile_popup();
+    password_change_popup.init();
     (document.getElementById("password-change-form") as HTMLFormElement).addEventListener("submit", (event) => new Password_Change().init(event));
 }
 
-class Password_Change{
+class Password_Change implements Submit_Class_Types{
     init(event: SubmitEvent): void{
         this.#change_password(event);
     }
@@ -148,11 +153,11 @@ class Password_Change{
 
 function delete_account(){
     const account_deletion_popup = new Profile_Popup_Toggle("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
-    account_deletion_popup.toggle_user_profile_popup();
+    account_deletion_popup.init();
     (document.getElementById("acccount-deletion-form") as HTMLFormElement).addEventListener("submit", (event) => new Account_Deletion().init(event));
 }
 
-class Account_Deletion{
+class Account_Deletion implements Submit_Class_Types{
     init(event: SubmitEvent): void{
         this.#delete_account(event);
     }
@@ -190,11 +195,14 @@ class Account_Deletion{
     }
 }
 
-
-class Profile_Popup_Toggle{
+class Profile_Popup_Toggle implements Ui_Change_Types{
     constructor(private popup_id: string, private show_popup_btn_id: string, private hide_popup_btn_id: string){}
 
-    toggle_user_profile_popup(): void{
+    init(): void{
+        this.#toggle_user_profile_popup();
+    }
+
+    #toggle_user_profile_popup(): void{
         const {show_element, hide_element} = toggle_element_visibility(
             "profile-popup-background", 
             "show-element-block", 
@@ -222,7 +230,7 @@ type Blog = {
     description: string;
 };
 
-class Blog_Display{
+class Blog_Display implements Retrieve_Class_Types{
     init(): void{
         this.#display_personal_blogs();
     }
@@ -231,7 +239,7 @@ class Blog_Display{
         try{
             const data = await fetch_data("../backend/Blog_Managment/user_blogs_retrive.php", {}, "Could not fetch your blogs. Please try again later.");
             if(data.row_count === 0){
-                new No_Blogs_Paragraph_Display().show_no_blogs_paragraph();
+                new No_Blogs_Paragraph_Display().init();
             }
             else{
                 (data.blogs as Blog[]).forEach((blog: Blog) => {
@@ -293,7 +301,12 @@ class Blog_Display{
     }
 }
 
-class Blog_Deletion{
+
+interface Blog_Deletion_Types{
+    toggle_blog_deletion_confirmation_popup: (blog_id: string | number, blog_list_item: HTMLLIElement) => void;
+}
+
+class Blog_Deletion implements Blog_Deletion_Types{
     toggle_blog_deletion_confirmation_popup(blog_id: string | number, blog_list_item: HTMLLIElement): void{
         const {show_element, hide_element} = toggle_element_visibility(
             "profile-popup-background", 
@@ -334,13 +347,14 @@ class Blog_Deletion{
         blog_list_item.remove();
         const blog_count = document.querySelectorAll("#user-blog-container li").length;
         if(blog_count === 0){
-            new No_Blogs_Paragraph_Display().show_no_blogs_paragraph();
+            new No_Blogs_Paragraph_Display().init();
         }
     }
 }
 
-class No_Blogs_Paragraph_Display{
-    show_no_blogs_paragraph(): void{
+
+class No_Blogs_Paragraph_Display implements Ui_Change_Types{
+    init(): void{
         const no_blogs_message = document.createElement("p");
         no_blogs_message.classList.add("no-blog-message", "basic-text-size");
         no_blogs_message.textContent = "You have created no blogs. Begin now!";
@@ -348,7 +362,12 @@ class No_Blogs_Paragraph_Display{
     }
 }
 
-class Blog_Id_Transfer{
+
+interface Blog_Id_Transfer_Types{
+    init: (blog_id: string | number) => void;
+}
+
+class Blog_Id_Transfer implements Blog_Id_Transfer_Types{
     constructor(private transfer_destination: string){}
 
     init(blog_id: string | number): void{

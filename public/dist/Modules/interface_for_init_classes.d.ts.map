@@ -1,0 +1,1 @@
+{"version":3,"file":"interface_for_init_classes.d.ts","sourceRoot":"","sources":["../../src/Modules/interface_for_init_classes.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,oBAAoB;IACjC,IAAI,EAAE,MAAM,IAAI,CAAC;CACpB;AACD,MAAM,WAAW,eAAgB,SAAQ,oBAAoB;CAAE;AAE/D,MAAM,WAAW,kBAAkB;IAC/B,IAAI,EAAE,CAAC,KAAK,EAAE,WAAW,KAAK,IAAI,CAAC;CACtC"}

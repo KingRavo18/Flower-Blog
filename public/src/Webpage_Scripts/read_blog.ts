@@ -1,5 +1,6 @@
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
+import type { Retrieve_Class_Types, Ui_Change_Types, Submit_Class_Types } from "../Modules/interface_for_init_classes.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     display_title();
@@ -21,13 +22,9 @@ function display_contents(): void{
     new Blog_Title_Display("read-blog-content", "contents").init();
 }
 
-interface Blog_Title_Display_Types{
-    init: () => void;
-}
-
 type content_type = "title" | "description" | "contents";
 
-class Blog_Title_Display implements Blog_Title_Display_Types{
+class Blog_Title_Display implements Retrieve_Class_Types{
     constructor(
         private display_id: string, 
         private content_type: content_type

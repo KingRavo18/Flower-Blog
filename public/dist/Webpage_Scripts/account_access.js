@@ -85,9 +85,9 @@ class User_Registration extends Input_Validation {
 }
 function switch_form() {
     const switch_to_sign_in = new Current_Form_Switch("registration_container", "signin_container", "change-form-trigger-signin", "left-form-appear-animation", "left-form-disappear-animation", "right-form-appear-animation");
-    document.getElementById("change-form-trigger-register").addEventListener("click", () => switch_to_sign_in.change_form());
+    document.getElementById("change-form-trigger-register").addEventListener("click", () => switch_to_sign_in.init());
     const switch_to_registration = new Current_Form_Switch("signin_container", "registration_container", "change-form-trigger-register", "right-form-appear-animation", "right-form-disappear-animation", "left-form-appear-animation");
-    document.getElementById("change-form-trigger-signin").addEventListener("click", () => switch_to_registration.change_form());
+    document.getElementById("change-form-trigger-signin").addEventListener("click", () => switch_to_registration.init());
 }
 class Current_Form_Switch {
     shown_form_id;
@@ -104,7 +104,7 @@ class Current_Form_Switch {
         this.shown_form_disappear_anim_class = shown_form_disappear_anim_class;
         this.hidden_form_appear_anim_class = hidden_form_appear_anim_class;
     }
-    change_form() {
+    init() {
         const shown_form = document.getElementById(this.shown_form_id);
         const hidden_form = document.getElementById(this.hidden_form_id);
         const hidden_form_change_trigger = document.getElementById(this.hidden_form_change_trigger_id);
@@ -120,8 +120,8 @@ class Current_Form_Switch {
 function toggle_password_visibility() {
     const sign_in_password_visibility = new Password_Visibility_Toggle("signin-password-visibility", "sign-in-password");
     const registration_password_visibility = new Password_Visibility_Toggle("register-password-visibility", "register-password");
-    document.getElementById("signin-password-visibility").addEventListener("click", () => sign_in_password_visibility.toggle_password());
-    document.getElementById("register-password-visibility").addEventListener("click", () => registration_password_visibility.toggle_password());
+    document.getElementById("signin-password-visibility").addEventListener("click", () => sign_in_password_visibility.init());
+    document.getElementById("register-password-visibility").addEventListener("click", () => registration_password_visibility.init());
 }
 class Password_Visibility_Toggle {
     trigger_id;
@@ -130,7 +130,7 @@ class Password_Visibility_Toggle {
         this.trigger_id = trigger_id;
         this.triggered_input_id = triggered_input_id;
     }
-    toggle_password() {
+    init() {
         const trigger = document.getElementById(this.trigger_id);
         const triggeredInput = document.getElementById(this.triggered_input_id);
         trigger.textContent = trigger.textContent === "visibility_off" ? "visibility" : "visibility_off";
