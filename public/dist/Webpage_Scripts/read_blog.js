@@ -1,27 +1,23 @@
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
 document.addEventListener("DOMContentLoaded", () => {
-    display_title();
-    display_description();
-    display_contents();
+    display_content("read-blog-title", "title");
+    display_content("read-blog-author", "username");
+    display_content("read-blog-description", "description");
+    display_content("read-blog-contents", "contents");
     display_comments();
 }, { once: true });
-// SECTION 1 - DISPLAY THE BLOG'S CONTENT
-function display_title() {
-    new Blog_Title_Display("read-blog-title", "title").init();
+function display_content(element_id, content_type) {
+    new Blog_Content_Display(element_id, content_type).init();
 }
-function display_description() {
-    new Blog_Title_Display("read-blog-description", "description").init();
-}
-function display_contents() {
-    new Blog_Title_Display("read-blog-content", "contents").init();
-}
-class Blog_Title_Display {
+class Blog_Content_Display {
     display_id;
     content_type;
+    #fetch_url;
     constructor(display_id, content_type) {
         this.display_id = display_id;
         this.content_type = content_type;
+        this.#fetch_url = content_type === "username" ? "../backend/Data_Display/display_blog_author.php" : "../backend/Data_Display/display_blog_content.php";
     }
     init() {
         this.#display_blog_content();
@@ -29,8 +25,8 @@ class Blog_Title_Display {
     async #display_blog_content() {
         const blog_contents_display = document.getElementById(this.display_id);
         try {
-            const data = await fetch_data("../backend/Data_Display/display_blog_contents.php", {}, "Failed to load the content's of this blog.");
-            blog_contents_display.textContent = data.content[this.content_type];
+            const data = await fetch_data(this.#fetch_url, {}, "Failed to load the contents of this blog.");
+            blog_contents_display.textContent = this.content_type === "username" ? `By ${data.content[this.content_type]}` : data.content[this.content_type];
             if (this.content_type === "title") {
                 document.title = data.content.title;
             }
