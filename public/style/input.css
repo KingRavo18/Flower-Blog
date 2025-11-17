@@ -147,19 +147,6 @@ body{
     to{ top: 0 }
 }
 .toggleable-sidebar{
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 2;
-    flex-direction: column;
-    align-items: center;
-    width: auto;
-    height: 100vh;
-    background-color: rgb(255, 214, 220);
-    border-right: 2px solid rgb(255, 160, 176);
-    animation-name: sidebarAppear;
-    animation-duration: 500ms;
-
     & li{
         cursor: pointer;
         padding: 0.5vw 1.5vw;
@@ -300,10 +287,6 @@ body{
             color: rgb(228, 140, 155);
             max-width: 60vw;
         }
-    }
-
-    & .no-blog-message{
-        margin-top: 3vw;
     }
 }
 

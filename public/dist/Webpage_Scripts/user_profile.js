@@ -1,6 +1,7 @@
 import { toggle_element_visibility } from "../Modules/element_toggle.js";
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
+import { No_Data_Paragraph_Display } from "../Modules/No_Data_Paragraph_Display.js";
 document.addEventListener("DOMContentLoaded", () => {
     display_title();
     change_username();
@@ -182,7 +183,7 @@ class Blog_Display {
         try {
             const data = await fetch_data("../backend/Blog_Managment/user_blogs_retrive.php", {}, "Could not fetch your blogs. Please try again later.");
             if (data.row_count === 0) {
-                new No_Blogs_Paragraph_Display().init();
+                new No_Data_Paragraph_Display("You have created no blogs. Begin now!", "user-blog-container").init();
             }
             else {
                 data.blogs.forEach((blog) => {
@@ -267,16 +268,8 @@ class Blog_Deletion {
         blog_list_item.remove();
         const blog_count = document.querySelectorAll("#user-blog-container li").length;
         if (blog_count === 0) {
-            new No_Blogs_Paragraph_Display().init();
+            new No_Data_Paragraph_Display("You have created no blogs. Begin now!", "user-blog-container").init();
         }
-    }
-}
-class No_Blogs_Paragraph_Display {
-    init() {
-        const no_blogs_message = document.createElement("p");
-        no_blogs_message.classList.add("no-blog-message", "basic-text-size");
-        no_blogs_message.textContent = "You have created no blogs. Begin now!";
-        document.getElementById("user-blog-container").appendChild(no_blogs_message);
     }
 }
 class Blog_Id_Transfer {

@@ -1,7 +1,8 @@
-interface toggleElementReturnTypes {
+interface toggle_element_return_types {
     show_element: () => void;
     hide_element: () => void;
 }
+
 export function toggle_element_visibility(
     element_id: string, 
     element_show_class: string, 
@@ -10,7 +11,7 @@ export function toggle_element_visibility(
     attached_element_id: string, 
     attached_element_show_class: string,
     hide_attached_element_anim_class: string
-): toggleElementReturnTypes{
+): toggle_element_return_types{
     const element = document.getElementById(element_id) as HTMLElement;
     const attached_element = document.getElementById(attached_element_id) as HTMLElement;
     function show_element(): void{

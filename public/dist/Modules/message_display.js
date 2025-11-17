@@ -1,7 +1,7 @@
-export function display_message(element_id, message_class, contents, message_position) {
-    const element = document.getElementById(element_id);
+export function display_message(parent_id, message_status_class, contents, message_position) {
+    const element = document.getElementById(parent_id);
     const message = document.createElement("p");
-    message.classList.add(message_class, "message-appear", message_position);
+    message.classList.add(message_status_class, "message-appear", message_position);
     message.textContent = contents;
     element.appendChild(message);
     setTimeout(() => {

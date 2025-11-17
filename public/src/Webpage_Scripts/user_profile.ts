@@ -1,6 +1,7 @@
 import { toggle_element_visibility } from "../Modules/element_toggle.js";
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
+import { No_Data_Paragraph_Display } from "../Modules/No_Data_Paragraph_Display.js";
 import type { Retrieve_Class_Types, Ui_Change_Types, Submit_Class_Types } from "../Modules/interface_for_init_classes.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -239,7 +240,7 @@ class Blog_Display implements Retrieve_Class_Types{
         try{
             const data = await fetch_data("../backend/Blog_Managment/user_blogs_retrive.php", {}, "Could not fetch your blogs. Please try again later.");
             if(data.row_count === 0){
-                new No_Blogs_Paragraph_Display().init();
+                new No_Data_Paragraph_Display("You have created no blogs. Begin now!", "user-blog-container").init();
             }
             else{
                 (data.blogs as Blog[]).forEach((blog: Blog) => {
@@ -347,18 +348,8 @@ class Blog_Deletion implements Blog_Deletion_Types{
         blog_list_item.remove();
         const blog_count = document.querySelectorAll("#user-blog-container li").length;
         if(blog_count === 0){
-            new No_Blogs_Paragraph_Display().init();
+            new No_Data_Paragraph_Display("You have created no blogs. Begin now!", "user-blog-container").init();
         }
-    }
-}
-
-
-class No_Blogs_Paragraph_Display implements Ui_Change_Types{
-    init(): void{
-        const no_blogs_message = document.createElement("p");
-        no_blogs_message.classList.add("no-blog-message", "basic-text-size");
-        no_blogs_message.textContent = "You have created no blogs. Begin now!";
-        (document.getElementById("user-blog-container") as HTMLElement).appendChild(no_blogs_message);
     }
 }
 

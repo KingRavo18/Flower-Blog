@@ -1,0 +1,1 @@
+{"version":3,"file":"No_Data_Paragraph_Display.d.ts","sourceRoot":"","sources":["../../src/Modules/No_Data_Paragraph_Display.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,iCAAiC,CAAC;AAEvE,qBAAa,yBAA0B,YAAW,eAAe;IAEzD,OAAO,CAAC,oBAAoB;IAC5B,OAAO,CAAC,mBAAmB;gBADnB,oBAAoB,EAAE,MAAM,EAC5B,mBAAmB,EAAE,MAAM;IAGvC,IAAI,IAAI,IAAI;CAMf"}

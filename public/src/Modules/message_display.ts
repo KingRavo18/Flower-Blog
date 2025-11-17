@@ -1,7 +1,10 @@
-export function display_message(element_id: string, message_class: string, contents: string, message_position: string): void{
-    const element = document.getElementById(element_id) as HTMLElement;
+type Message_Class = "error-message" | "success-message";
+type Message_Position = "left-message" | "right-message" | "center-message";
+
+export function display_message(parent_id: string, message_status_class: Message_Class, contents: string, message_position: Message_Position): void{
+    const element = document.getElementById(parent_id) as HTMLElement;
     const message = document.createElement("p");
-    message.classList.add(message_class, "message-appear", message_position);
+    message.classList.add(message_status_class, "message-appear", message_position);
     message.textContent = contents;
     element.appendChild(message);
     setTimeout(() => {
