@@ -6,7 +6,7 @@ class Blog_Tag_Retrieval extends Db_Connection{
     public function __construct(private $blog_id){}
 
     private function execute_query(){
-        $stmt = parent::conn()->prepare("SELECT tag FROM blog_tags WHERE blog_id = ?");
+        $stmt = parent::conn()->prepare("SELECT id, tag FROM blog_tags WHERE blog_id = ?");
         $stmt->execute([$this->blog_id]);
         $query_success = "The tags were retrieved successfully.";
         if($stmt->rowCount() === 0){

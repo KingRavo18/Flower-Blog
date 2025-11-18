@@ -536,10 +536,25 @@
   .\[animation-name\:signin-page-description-rise\] {
     animation-name: signin-page-description-rise;
   }
+  .hover\:bg-\[rgb\(255\,51\,85\)\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: rgb(255,51,85);
+      }
+    }
+  }
   .hover\:bg-\[rgb\(255\,160\,176\)\] {
     &:hover {
       @media (hover: hover) {
         background-color: rgb(255,160,176);
+      }
+    }
+  }
+  .hover\:font-bold {
+    &:hover {
+      @media (hover: hover) {
+        --tw-font-weight: var(--font-weight-bold);
+        font-weight: var(--font-weight-bold);
       }
     }
   }
@@ -704,6 +719,9 @@ body {
   border-radius: 5px;
   border: 2px solid rgb(255, 160, 176);
   box-shadow: 0.5px 0.5px 3px gray;
+  & .material-symbols-outlined {
+    font-size: 1.25vw;
+  }
 }
 .container-appear-animation {
   animation-name: container-appear-animation;

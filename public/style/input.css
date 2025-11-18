@@ -115,6 +115,10 @@ body{
     border-radius: 5px;
     border: 2px solid rgb(255, 160, 176);
     box-shadow: 0.5px 0.5px 3px gray;
+
+    & .material-symbols-outlined{
+        font-size: 1.25vw;
+    }
 }
 
 /* GLOBAL ANIMATIONS */
