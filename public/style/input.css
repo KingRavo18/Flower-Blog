@@ -152,13 +152,17 @@ body{
 }
 .toggleable-sidebar{
     & li{
-        cursor: pointer;
-        padding: 0.5vw 1.5vw;
-        text-decoration: none;
+        padding: 0.6vw 0;
         transition: 200ms;
 
         &:hover{ background-color: rgb(255, 160, 176); }
         &:active{ background-color: rgb(228, 140, 155); }
+
+        & a{
+            cursor: pointer;
+            padding: 1vw 1.5vw;
+            text-decoration: none;
+        }
     }
 }
 
