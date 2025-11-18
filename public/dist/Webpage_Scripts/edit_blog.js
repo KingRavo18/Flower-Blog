@@ -4,36 +4,15 @@ import { fetch_data } from "../Modules/fetch_data.js";
 import { No_Data_Paragraph_Display } from "../Modules/No_Data_Paragraph_Display.js";
 import { Blog_Creation, allow_tab_indentation } from "../Modules/Blog_Creation.js";
 document.addEventListener("DOMContentLoaded", () => {
-    retrieve_deletable_tags();
-    retrieve_blog_data();
-    update_blog_contents();
+    display_deletable_tags();
+    submit_new_tag();
+    display_blog_content();
+    update_blog_content();
     allow_tab_indentation();
 }, { once: true });
-// SECTION 2 - TAG EDIT
-function retrieve_deletable_tags() {
-    new Editable_Tag_Retrieval().init();
-}
-class Editable_Tag_Retrieval {
-    init() {
-        this.#display_editable_tags();
-    }
-    async #display_editable_tags() {
-        try {
-            const data = await fetch_data("../backend/Data_Display/display_blog_tags.php", {}, "Failed to load tags for this blog.");
-            if (data.row_count === 0) {
-                new No_Data_Paragraph_Display("There are no tags for this blog.", "read-blog-tags").init();
-            }
-            else {
-                data.tags.forEach((tag) => {
-                    this.#create_deletable_tags(tag.id, tag.tag);
-                });
-            }
-        }
-        catch (error) {
-            display_message("document-body", "error-message", error.message, "center-message");
-        }
-    }
-    #create_deletable_tags(tag_id, tag) {
+// SECTION 1 - TAG EDIT
+class Deletable_Tag_Div_Creation {
+    create_deletable_tags(tag_id, tag) {
         const displayed_tag = document.createElement("div");
         displayed_tag.innerHTML = `
             <div class="flex items-center displayed-tag gap-[1vw]">
@@ -53,22 +32,17 @@ class Editable_Tag_Retrieval {
     #set_tag_delete_btn(tag_id, displayed_tag) {
         const delete_tag_btn = displayed_tag.querySelector(".delete-tag-btn");
         delete_tag_btn.addEventListener("click", () => {
-            new Blog_Tag_Deletion().init(tag_id, displayed_tag);
+            this.#delete_blog_tag(tag_id, displayed_tag);
         });
     }
-}
-class Blog_Tag_Deletion {
-    async init(tag_id, display_tag) {
-        await this.#delete_blog_tag(tag_id);
-        display_tag.remove();
-    }
-    async #delete_blog_tag(tag_id) {
+    async #delete_blog_tag(tag_id, displayed_tag) {
         try {
             const data = await fetch_data("../backend/Blog_Managment/Blog_Editing/Blog_Tags/tag_deletion.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ tag_id: tag_id.toString() })
             }, "Failed to delete this tag. Please try again later.");
+            displayed_tag.remove();
             display_message("document-body", "success-message", data.query_success, "center-message");
         }
         catch (error) {
@@ -76,12 +50,62 @@ class Blog_Tag_Deletion {
         }
     }
 }
-function add_new_blog_tag() {
+function display_deletable_tags() {
+    new Editable_Tag_Retrieval().init();
 }
-class New_Blog_Tag_Addition {
+class Editable_Tag_Retrieval extends Deletable_Tag_Div_Creation {
+    init() {
+        this.#display_editable_tags();
+    }
+    async #display_editable_tags() {
+        try {
+            const data = await fetch_data("../backend/Data_Display/display_blog_tags.php", {}, "Failed to load tags for this blog.");
+            if (data.row_count === 0) {
+                new No_Data_Paragraph_Display("There are no tags for this blog.", "read-blog-tags").init();
+            }
+            else {
+                data.tags.forEach((tag) => {
+                    this.create_deletable_tags(tag.id, tag.tag);
+                });
+            }
+        }
+        catch (error) {
+            display_message("document-body", "error-message", error.message, "center-message");
+        }
+    }
+}
+function submit_new_tag() {
+    document.getElementById("add-tag-form").addEventListener("submit", (event) => {
+        new New_Blog_Tag_Addition().init(event);
+    });
+}
+class New_Blog_Tag_Addition extends Deletable_Tag_Div_Creation {
+    init(event) {
+        event.preventDefault();
+        this.#add_new_tag();
+    }
+    async #add_new_tag() {
+        const add_tag_input = document.getElementById("blog-edit-tag-input");
+        if (add_tag_input.value.trim() === "") {
+            return;
+        }
+        try {
+            const data = await fetch_data("../backend/Blog_Managment/Blog_Creation/blog_tag_submit.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ tag: add_tag_input.value })
+            }, "Failed to add a new tag. Please try again later.");
+            this.create_deletable_tags(data.tag_id, add_tag_input.value);
+            add_tag_input.value = "";
+            display_message("document-body", "success-message", data.query_success, "center-message");
+        }
+        catch (error) {
+            display_message("document-body", "error-message", error.message, "center-message");
+        }
+    }
 }
 // SECTION 2 - MAIN CONTENT EDIT 
-function retrieve_blog_data() {
+function display_blog_content() {
     new Editable_Blog_Content_Retrieval().init();
     document.getElementById("reset-inputs-btn").addEventListener("click", () => new Editable_Blog_Content_Retrieval().undo_changes());
 }
@@ -115,7 +139,7 @@ class Editable_Blog_Content_Retrieval {
     async retrieve_blog_tags() {
     }
 }
-function update_blog_contents() {
+function update_blog_content() {
     const blog_update = new Blog_Creation("../backend/Blog_Managment/Blog_Editing/Blog_Contents/contents_update.php", true);
     document.getElementById("blog-update-form").addEventListener("submit", (event) => {
         blog_update.init(event);

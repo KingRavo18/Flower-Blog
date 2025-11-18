@@ -22,8 +22,14 @@ class Blog_Tag_Submit extends Db_Connection{
     }
 
     private function execute_query(){
-        $stmt = parent::conn() -> prepare("INSERT INTO blog_tags (blog_id, tag) VALUES (?, ?)");
+        $conn = parent::conn();
+        $stmt = $conn->prepare("INSERT INTO blog_tags (blog_id, tag) VALUES (?, ?)");
         $stmt->execute([$this->blog_id, $this->tag]);
+        $tag_id = $conn->lastInsertId();
+        echo json_encode([
+            "tag_id" => $tag_id,
+            "query_success" => "The tag was succesfully added."
+        ]);
     }
 
     public function submit_blog_tag(){
@@ -31,7 +37,6 @@ class Blog_Tag_Submit extends Db_Connection{
             $this->char_decode();
             $this->validate_data();
             $this->execute_query();
-            echo json_encode(["query_success" => "Tags were successfully added."]);
         }
         catch(PDOException $e){
             echo json_encode(["query_fail" => "Could not assign tags. Please assign them in blog edit later."]);
@@ -43,6 +48,13 @@ class Blog_Tag_Submit extends Db_Connection{
 }
 
 $blog_id = filter_input(INPUT_POST, "blog_id", FILTER_SANITIZE_NUMBER_INT);
+
+if(!$blog_id){
+    $blog_id = $_SESSION["blog_id"];
+} else {
+    echo json_encode(["fatal_fail" => "A problem has occured."]);
+}
+
 $tag = filter_input(INPUT_POST, "tag", FILTER_SANITIZE_SPECIAL_CHARS);
 $submit_tag = new Blog_Tag_Submit($blog_id, $tag);
 $submit_tag->submit_blog_tag();
