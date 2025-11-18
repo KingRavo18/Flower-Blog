@@ -1,7 +1,6 @@
 import { toggle_element_visibility } from "../Modules/element_toggle.js";
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
-import { No_Data_Paragraph_Display } from "../Modules/No_Data_Paragraph_Display.js";
 import { Blog_Creation, allow_tab_indentation } from "../Modules/Blog_Creation.js";
 import type { Retrieve_Class_Types, Submit_Class_Types } from "../Modules/interface_for_init_classes.js";
 
@@ -84,10 +83,7 @@ class Editable_Tag_Retrieval extends Deletable_Tag_Div_Creation implements Retri
             const data = await fetch_data(
                 "../backend/Data_Display/display_blog_tags.php", {}, "Failed to load tags for this blog."
             );
-            if(data.row_count === 0){
-                new No_Data_Paragraph_Display("There are no tags for this blog.", "read-blog-tags").init();
-            }
-            else{
+            if(data.row_count > 0){
                 (data.tags as Deletable_Tag[]).forEach((tag: Deletable_Tag) => {
                     this.create_deletable_tags(tag.id, tag.tag);
                 });

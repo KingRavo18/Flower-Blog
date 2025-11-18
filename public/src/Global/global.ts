@@ -2,11 +2,11 @@ import { toggle_element_visibility } from "../Modules/element_toggle.js";
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
 
-
 document.addEventListener("DOMContentLoaded", () => {
     check_session();
     load_page_heading();
 }, {once: true});
+
 
 function check_session(){
     new Session_Check().init();
