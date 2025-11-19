@@ -1,6 +1,6 @@
 import { display_message } from "./message_display.js";
 import { fetch_data } from "./fetch_data.js";
-export class Blog_Creation {
+export class Blog_Data_Submission {
     submit_url;
     is_blog_update;
     tags;

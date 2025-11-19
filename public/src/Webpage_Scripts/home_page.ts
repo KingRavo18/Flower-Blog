@@ -1,14 +1,13 @@
 import { display_message } from "../Modules/message_display.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-
+    display_blogs();
 }, {once: true});
 
-async function display_blogs(): Promise<void>{
-    try{
+function display_blogs(): void{
 
-    }
-    catch(error){
-        display_message("document-body", "error-message", (error as Error).message, "center-message");
-    }
+}
+
+class Blog_Retrieval{
+
 }

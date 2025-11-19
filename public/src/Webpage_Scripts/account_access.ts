@@ -3,8 +3,8 @@ import { fetch_data } from "../Modules/fetch_data.js";
 import type { Ui_Change_Types, Submit_Class_Types } from "../Modules/interface_for_init_classes.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    sign_in();
-    register();
+    sign_into_account();
+    register_account();
     switch_form();
     toggle_password_visibility();
 }, {once: true});
@@ -45,11 +45,11 @@ class Input_Validation{
     }
 }
 
-function sign_in(): void{
-    (document.getElementById("sign-in-form") as HTMLFormElement).addEventListener("submit", (event) => new User_Sign_In().init(event));
+function sign_into_account(): void{
+    (document.getElementById("sign-in-form") as HTMLFormElement).addEventListener("submit", (event) => new Account_Sign_In().init(event));
 }
 
-class User_Sign_In extends Input_Validation implements Submit_Class_Types{
+class Account_Sign_In extends Input_Validation implements Submit_Class_Types{
     init(event: SubmitEvent): void{
         this.#sign_in_user(event);
     }
@@ -82,11 +82,11 @@ class User_Sign_In extends Input_Validation implements Submit_Class_Types{
 // SECTION 2 - REGISTRATION
 
 
-function register(): void{
-    (document.getElementById("registration-form") as HTMLFormElement).addEventListener("submit", (event) => new User_Registration().init(event));
+function register_account(): void{
+    (document.getElementById("registration-form") as HTMLFormElement).addEventListener("submit", (event) => new Account_Registration().init(event));
 }
 
-class User_Registration extends Input_Validation implements Submit_Class_Types{
+class Account_Registration extends Input_Validation implements Submit_Class_Types{
     init(event: SubmitEvent): void{
         this.register_user(event);
     }

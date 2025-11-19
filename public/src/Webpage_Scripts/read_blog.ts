@@ -1,14 +1,16 @@
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
 import { No_Data_Paragraph_Display } from "../Modules/No_Data_Paragraph_Display.js";
-import type { Retrieve_Class_Types } from "../Modules/interface_for_init_classes.js";
+import type { Retrieve_Class_Types, Submit_Class_Types } from "../Modules/interface_for_init_classes.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    display_content("read-blog-title", "title");
-    display_content("read-blog-author", "username");
-    display_content("read-blog-description", "description");
-    display_content("read-blog-contents", "contents");
-    display_tags();
+    display_blog_content("read-blog-title", "title");
+    display_blog_content("read-blog-author", "username");
+    display_blog_content("read-blog-description", "description");
+    display_blog_content("read-blog-contents", "contents");
+    display_blog_tags();
+
+    submit_comment();
     display_comments();
 }, {once: true});
 
@@ -16,11 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 type content_type = "title" | "username" | "description" | "contents";
 
-function display_content(element_id: string, content_type: content_type): void{
-    new Blog_Content_Display(element_id, content_type).init();
+function display_blog_content(element_id: string, content_type: content_type): void{
+    new Blog_Content_Retrieval(element_id, content_type).init();
 }
 
-class Blog_Content_Display implements Retrieve_Class_Types{
+class Blog_Content_Retrieval implements Retrieve_Class_Types{
     #fetch_url: string;
 
     constructor(
@@ -31,10 +33,10 @@ class Blog_Content_Display implements Retrieve_Class_Types{
     }
 
     init(): void{
-        this.#display_blog_content();
+        this.#retrieve_blog_content();
     }
 
-    async #display_blog_content(): Promise<void>{
+    async #retrieve_blog_content(): Promise<void>{
         const blog_contents_display = document.getElementById(this.display_id) as HTMLElement;
         try{
             const data = await fetch_data(
@@ -55,20 +57,20 @@ class Blog_Content_Display implements Retrieve_Class_Types{
 // SECTION 2 - DISPLAY TAGS
 
 
-function display_tags(): void{
-    new Tags_Display().init();
+function display_blog_tags(): void{
+    new Tags_Retrieval().init();
 }
 
 type Tag = {
     tag: string;
 };
 
-class Tags_Display implements Retrieve_Class_Types{
+class Tags_Retrieval implements Retrieve_Class_Types{
     init(): void{
-        this.#display_tags();
+        this.#retrieve_tags();
     }
 
-    async #display_tags(): Promise<void>{
+    async #retrieve_tags(): Promise<void>{
         try{
             const data = await fetch_data(
                 "../backend/Data_Display/display_blog_tags.php", {}, "Failed to load tags for this blog."
@@ -96,11 +98,40 @@ class Tags_Display implements Retrieve_Class_Types{
 }
 
 
-// SECTION 3 - DISPLAY COMMENTS FOR THIS BLOG
+// SECTION 3 - COMMENT MANAGMENT
+
+class Comment_Creation{
+    protected create_comment(comment_id: number | string, user_id: number | string, blog_id: number | string, comment: string): void{
+
+    }
+}
+
+
+function submit_comment(): void{
+    (document.getElementById("blog-comment-addition-form") as HTMLFormElement).addEventListener("submit", (event) => {
+        new Comment_Submission().init(event);
+    });
+}
+
+class Comment_Submission extends Comment_Creation implements Submit_Class_Types{
+    init(event: SubmitEvent): void{
+        this.#submit_comment();
+    }
+
+    async #submit_comment(): Promise<void>{
+        try{
+
+
+        }
+        catch(error){
+
+        }
+    }
+}
 
 
 function display_comments(): void{
-    new Comments_Display().init();
+    new Comment_Retrieval().init();
 }
 
 type Comment = {
@@ -110,12 +141,12 @@ type Comment = {
     comment: string;
 };
 
-class Comments_Display implements Retrieve_Class_Types{
+class Comment_Retrieval extends Comment_Creation implements Retrieve_Class_Types{
     init(): void{
-        this.#display_comments();
+        this.#retrieve_comments();
     }
 
-    async #display_comments(): Promise<void>{
+    async #retrieve_comments(): Promise<void>{
         try{
             const data = await fetch_data(
                 "../backend/Comment_Managment/Comment_Display/comments_retrieve.php", {}, "Failed to load comments for this blog."
@@ -125,16 +156,12 @@ class Comments_Display implements Retrieve_Class_Types{
             }
             else{
                 (data.comments as Comment[]).forEach((comment: Comment) => {
-                    this.#create_comment(comment.id, comment.user_id, comment.blog_id, comment.comment);
+                    this.create_comment(comment.id, comment.user_id, comment.blog_id, comment.comment);
                 });
             }
         }
         catch(error){
             display_message("document-body", "error-message", (error as Error).message, "center-message"); 
         }
-    }
-
-    #create_comment(comment_id: number | string, user_id: number | string, blog_id: number | string, comment: string): void{
-
     }
 }

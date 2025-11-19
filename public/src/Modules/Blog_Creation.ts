@@ -1,12 +1,12 @@
 import { display_message } from "./message_display.js";
 import { fetch_data } from "./fetch_data.js";
 
-interface Blog_Creation_Types{
+interface Blog_Data_Submission_Types{
     init: (event: SubmitEvent) => void;
     collect_tags: () => void;
 }
 
-export class Blog_Creation implements Blog_Creation_Types{
+export class Blog_Data_Submission implements Blog_Data_Submission_Types{
     tags: string[];
     tag_input: HTMLInputElement;
     tag_display: HTMLElement;

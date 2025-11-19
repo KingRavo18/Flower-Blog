@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     change_password();
     delete_account();
 
+    find_blog_by_title();
     display_blogs();
 }, {once: true});
 
@@ -19,14 +20,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 function display_title(){
-    new Title_Display().display_profile_page_title();
+    new Title_Retrieval().display_profile_page_title();
 }
 
-interface Title_Display_Types{
+interface Title_Retrieval_Types{
     display_profile_page_title: () => Promise<void>;
 }
 
-class Title_Display implements Title_Display_Types{
+class Title_Retrieval implements Title_Retrieval_Types{
     async display_profile_page_title(): Promise<void>{
         const profile_title = document.getElementById("profile-title") as HTMLElement;
         try{
@@ -46,15 +47,15 @@ class Title_Display implements Title_Display_Types{
 function change_username(){
     const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
     username_change_popup.init();
-    (document.getElementById("username-change-form") as HTMLFormElement).addEventListener("submit", (event) => new Username_Change().init(event));
+    (document.getElementById("username-change-form") as HTMLFormElement).addEventListener("submit", (event) => new Username_Update().init(event));
 }
 
-class Username_Change extends Title_Display implements Submit_Class_Types{
+class Username_Update extends Title_Retrieval implements Submit_Class_Types{
     init(event: SubmitEvent): void{
-        this.#change_username(event);
+        this.#update_username(event);
     }
 
-    async #change_username(event: SubmitEvent): Promise<void>{
+    async #update_username(event: SubmitEvent): Promise<void>{
         event.preventDefault();
         const password_input = document.getElementById("username-change-password-input") as HTMLInputElement;
         const new_username_input = document.getElementById("username-change-new-username-input") as HTMLInputElement;
@@ -218,11 +219,39 @@ class Profile_Popup_Toggle implements Ui_Change_Types{
 }
 
 
-// SECTION 3 - DISPLAY AND MANAGE THE USER'S PERSONAL BLOGS 
+// SECTION 3 - SORT/FIND THE DISPLAYED BLOGS
+
+
+function find_blog_by_title(): void{
+    (document.getElementById("find-by-title-input") as HTMLInputElement).addEventListener("input", () => {
+        new Find_Blog_By_Title().init();
+    });
+}
+
+class Find_Blog_By_Title implements Ui_Change_Types{
+    init(): void{
+        const title_input = document.getElementById("find-by-title-input") as HTMLInputElement;
+        const title = title_input.value.trim().toLowerCase();
+        const blog_parent = document.getElementById("user-blog-container") as HTMLUListElement;
+        const all_blogs = blog_parent.querySelectorAll(".blog-list-item") as NodeListOf<HTMLLIElement>;
+        all_blogs.forEach(blog => {
+            const blog_title = (blog.querySelector(".blog-title") as HTMLElement).textContent.trim().toLowerCase();
+            if(!blog_title.includes(title)){
+                blog.classList.remove("show-element-block");
+                blog.classList.add("hide-element");
+            }else{
+                blog.classList.replace("hide-element", "show-element-block");
+            }
+        });
+    }
+}
+
+
+// SECTION 4 - DISPLAY AND MANAGE THE USER'S PERSONAL BLOGS 
 
 
 function display_blogs(): void{
-    new Blog_Display().init();
+    new Blog_Data_Retrieval().init();
 }
 
 type Blog = {
@@ -231,12 +260,12 @@ type Blog = {
     description: string;
 };
 
-class Blog_Display implements Retrieve_Class_Types{
+class Blog_Data_Retrieval implements Retrieve_Class_Types{
     init(): void{
-        this.#display_personal_blogs();
+        this.#retrieve_personal_blogs();
     }
     
-    async #display_personal_blogs(): Promise<void>{
+    async #retrieve_personal_blogs(): Promise<void>{
         try{
             const data = await fetch_data("../backend/Blog_Managment/user_blogs_retrive.php", {}, "Could not fetch your blogs. Please try again later.");
             if(data.row_count === 0){
@@ -255,9 +284,10 @@ class Blog_Display implements Retrieve_Class_Types{
 
     #create_blog_list_item(blog_id: string | number, title: string, description: string): void{
         const blog_list_item = document.createElement("li");
+        blog_list_item.classList.add("blog-list-item");
         blog_list_item.innerHTML = `
             <div class="blog-list-item-top-row">
-                <h3>${title}</h3>
+                <h3 class="blog-title">${title}</h3>
                 <div>
                     <button title="Edit this blog?" class="common-btn edit-blog-btn basic-text-size flex justify-center items-center">
                         <span class="material-symbols-outlined">
@@ -362,10 +392,10 @@ class Blog_Id_Transfer implements Blog_Id_Transfer_Types{
     constructor(private transfer_destination: string){}
 
     init(blog_id: string | number): void{
-        this.#transport_to_edit_page(blog_id);
+        this.#transfer(blog_id);
     }   
 
-    async #transport_to_edit_page(blog_id: string | number): Promise<void>{
+    async #transfer(blog_id: string | number): Promise<void>{
         try{
             await fetch_data(
                 "../backend/Blog_Managment/Blog_Editing/Blog_Id_Transfer/blog_id_transfer.php",

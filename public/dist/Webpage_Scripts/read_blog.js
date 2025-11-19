@@ -2,17 +2,18 @@ import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
 import { No_Data_Paragraph_Display } from "../Modules/No_Data_Paragraph_Display.js";
 document.addEventListener("DOMContentLoaded", () => {
-    display_content("read-blog-title", "title");
-    display_content("read-blog-author", "username");
-    display_content("read-blog-description", "description");
-    display_content("read-blog-contents", "contents");
-    display_tags();
+    display_blog_content("read-blog-title", "title");
+    display_blog_content("read-blog-author", "username");
+    display_blog_content("read-blog-description", "description");
+    display_blog_content("read-blog-contents", "contents");
+    display_blog_tags();
+    submit_comment();
     display_comments();
 }, { once: true });
-function display_content(element_id, content_type) {
-    new Blog_Content_Display(element_id, content_type).init();
+function display_blog_content(element_id, content_type) {
+    new Blog_Content_Retrieval(element_id, content_type).init();
 }
-class Blog_Content_Display {
+class Blog_Content_Retrieval {
     display_id;
     content_type;
     #fetch_url;
@@ -22,9 +23,9 @@ class Blog_Content_Display {
         this.#fetch_url = content_type === "username" ? "../backend/Data_Display/display_blog_author.php" : "../backend/Data_Display/display_blog_content.php";
     }
     init() {
-        this.#display_blog_content();
+        this.#retrieve_blog_content();
     }
-    async #display_blog_content() {
+    async #retrieve_blog_content() {
         const blog_contents_display = document.getElementById(this.display_id);
         try {
             const data = await fetch_data(this.#fetch_url, {}, "Failed to load the contents of this blog.");
@@ -39,14 +40,14 @@ class Blog_Content_Display {
     }
 }
 // SECTION 2 - DISPLAY TAGS
-function display_tags() {
-    new Tags_Display().init();
+function display_blog_tags() {
+    new Tags_Retrieval().init();
 }
-class Tags_Display {
+class Tags_Retrieval {
     init() {
-        this.#display_tags();
+        this.#retrieve_tags();
     }
-    async #display_tags() {
+    async #retrieve_tags() {
         try {
             const data = await fetch_data("../backend/Data_Display/display_blog_tags.php", {}, "Failed to load tags for this blog.");
             if (data.row_count === 0) {
@@ -69,15 +70,35 @@ class Tags_Display {
         document.getElementById("read-blog-tags").appendChild(displayed_tag);
     }
 }
-// SECTION 3 - DISPLAY COMMENTS FOR THIS BLOG
-function display_comments() {
-    new Comments_Display().init();
-}
-class Comments_Display {
-    init() {
-        this.#display_comments();
+// SECTION 3 - COMMENT MANAGMENT
+class Comment_Creation {
+    create_comment(comment_id, user_id, blog_id, comment) {
     }
-    async #display_comments() {
+}
+function submit_comment() {
+    document.getElementById("blog-comment-addition-form").addEventListener("submit", (event) => {
+        new Comment_Submission().init(event);
+    });
+}
+class Comment_Submission extends Comment_Creation {
+    init(event) {
+        this.#submit_comment();
+    }
+    async #submit_comment() {
+        try {
+        }
+        catch (error) {
+        }
+    }
+}
+function display_comments() {
+    new Comment_Retrieval().init();
+}
+class Comment_Retrieval extends Comment_Creation {
+    init() {
+        this.#retrieve_comments();
+    }
+    async #retrieve_comments() {
         try {
             const data = await fetch_data("../backend/Comment_Managment/Comment_Display/comments_retrieve.php", {}, "Failed to load comments for this blog.");
             if (data.row_count === 0) {
@@ -85,15 +106,13 @@ class Comments_Display {
             }
             else {
                 data.comments.forEach((comment) => {
-                    this.#create_comment(comment.id, comment.user_id, comment.blog_id, comment.comment);
+                    this.create_comment(comment.id, comment.user_id, comment.blog_id, comment.comment);
                 });
             }
         }
         catch (error) {
             display_message("document-body", "error-message", error.message, "center-message");
         }
-    }
-    #create_comment(comment_id, user_id, blog_id, comment) {
     }
 }
 //# sourceMappingURL=read_blog.js.map

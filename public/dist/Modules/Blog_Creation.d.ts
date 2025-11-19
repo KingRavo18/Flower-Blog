@@ -1,8 +1,8 @@
-interface Blog_Creation_Types {
+interface Blog_Data_Submission_Types {
     init: (event: SubmitEvent) => void;
     collect_tags: () => void;
 }
-export declare class Blog_Creation implements Blog_Creation_Types {
+export declare class Blog_Data_Submission implements Blog_Data_Submission_Types {
     #private;
     private submit_url;
     private is_blog_update;

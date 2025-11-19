@@ -1,11 +1,9 @@
 import { display_message } from "../Modules/message_display.js";
 document.addEventListener("DOMContentLoaded", () => {
+    display_blogs();
 }, { once: true });
-async function display_blogs() {
-    try {
-    }
-    catch (error) {
-        display_message("document-body", "error-message", error.message, "center-message");
-    }
+function display_blogs() {
+}
+class Blog_Retrieval {
 }
 //# sourceMappingURL=home_page.js.map

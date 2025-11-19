@@ -1,16 +1,16 @@
 import { toggle_element_visibility } from "../Modules/element_toggle.js";
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
-import { Blog_Creation, allow_tab_indentation } from "../Modules/Blog_Creation.js";
+import { Blog_Data_Submission, allow_tab_indentation } from "../Modules/Blog_Creation.js";
 document.addEventListener("DOMContentLoaded", () => {
     display_deletable_tags();
-    submit_new_tag();
+    submit_tag();
     display_blog_content();
     update_blog_content();
     allow_tab_indentation();
 }, { once: true });
 // SECTION 1 - TAG EDIT
-class Deletable_Tag_Div_Creation {
+class Deletable_Tag_Creation {
     create_deletable_tags(tag_id, tag) {
         const displayed_tag = document.createElement("div");
         displayed_tag.innerHTML = `
@@ -52,7 +52,7 @@ class Deletable_Tag_Div_Creation {
 function display_deletable_tags() {
     new Editable_Tag_Retrieval().init();
 }
-class Editable_Tag_Retrieval extends Deletable_Tag_Div_Creation {
+class Editable_Tag_Retrieval extends Deletable_Tag_Creation {
     init() {
         this.#display_editable_tags();
     }
@@ -70,17 +70,17 @@ class Editable_Tag_Retrieval extends Deletable_Tag_Div_Creation {
         }
     }
 }
-function submit_new_tag() {
+function submit_tag() {
     document.getElementById("add-tag-form").addEventListener("submit", (event) => {
-        new New_Blog_Tag_Addition().init(event);
+        new Blog_Tag_Submission().init(event);
     });
 }
-class New_Blog_Tag_Addition extends Deletable_Tag_Div_Creation {
+class Blog_Tag_Submission extends Deletable_Tag_Creation {
     init(event) {
         event.preventDefault();
-        this.#add_new_tag();
+        this.#submit_tag();
     }
-    async #add_new_tag() {
+    async #submit_tag() {
         const add_tag_input = document.getElementById("blog-edit-tag-input");
         if (add_tag_input.value.trim() === "") {
             return;
@@ -132,11 +132,9 @@ class Editable_Blog_Content_Retrieval {
             display_message("document-body", "error-message", error.message, "center-message");
         }
     }
-    async retrieve_blog_tags() {
-    }
 }
 function update_blog_content() {
-    const blog_update = new Blog_Creation("../backend/Blog_Managment/Blog_Editing/Blog_Contents/contents_update.php", true);
+    const blog_update = new Blog_Data_Submission("../backend/Blog_Managment/Blog_Editing/Blog_Contents/contents_update.php", true);
     document.getElementById("blog-update-form").addEventListener("submit", (event) => {
         blog_update.init(event);
         setTimeout(() => window.location.replace("./profile.html"), 1000);

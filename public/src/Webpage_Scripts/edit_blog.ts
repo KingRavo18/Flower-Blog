@@ -1,12 +1,12 @@
 import { toggle_element_visibility } from "../Modules/element_toggle.js";
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
-import { Blog_Creation, allow_tab_indentation } from "../Modules/Blog_Creation.js";
+import { Blog_Data_Submission, allow_tab_indentation } from "../Modules/Blog_Creation.js";
 import type { Retrieve_Class_Types, Submit_Class_Types } from "../Modules/interface_for_init_classes.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     display_deletable_tags();
-    submit_new_tag();
+    submit_tag();
 
     display_blog_content();
     update_blog_content();
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // SECTION 1 - TAG EDIT
 
 
-class Deletable_Tag_Div_Creation{
+class Deletable_Tag_Creation{
     protected create_deletable_tags(tag_id: string | number, tag: string): void{
         const displayed_tag = document.createElement("div");
         displayed_tag.innerHTML = `
@@ -73,7 +73,7 @@ type Deletable_Tag = {
     tag: string;
 };
 
-class Editable_Tag_Retrieval extends Deletable_Tag_Div_Creation implements Retrieve_Class_Types{
+class Editable_Tag_Retrieval extends Deletable_Tag_Creation implements Retrieve_Class_Types{
     init(): void{
         this.#display_editable_tags();
     }
@@ -96,19 +96,19 @@ class Editable_Tag_Retrieval extends Deletable_Tag_Div_Creation implements Retri
 }
 
 
-function submit_new_tag(): void{
+function submit_tag(): void{
     (document.getElementById("add-tag-form") as HTMLFormElement).addEventListener("submit", (event) => {
-        new New_Blog_Tag_Addition().init(event);
+        new Blog_Tag_Submission().init(event);
     });
 }
 
-class New_Blog_Tag_Addition extends Deletable_Tag_Div_Creation implements Submit_Class_Types{
+class Blog_Tag_Submission extends Deletable_Tag_Creation implements Submit_Class_Types{
     init(event: SubmitEvent): void{
         event.preventDefault();
-        this.#add_new_tag();
+        this.#submit_tag();
     }
 
-    async #add_new_tag(): Promise<void>{
+    async #submit_tag(): Promise<void>{
         const add_tag_input = document.getElementById("blog-edit-tag-input") as HTMLInputElement;
         if(add_tag_input.value.trim() === ""){
             return;
@@ -185,14 +185,10 @@ class Editable_Blog_Content_Retrieval implements Blog_Content_Retrieval_Types{
             display_message("document-body", "error-message", (error as Error).message, "center-message"); 
         }
     }
-
-    async retrieve_blog_tags(): Promise<void>{
-
-    }
 }
 
 function update_blog_content(): void{
-    const blog_update = new Blog_Creation("../backend/Blog_Managment/Blog_Editing/Blog_Contents/contents_update.php", true);
+    const blog_update = new Blog_Data_Submission("../backend/Blog_Managment/Blog_Editing/Blog_Contents/contents_update.php", true);
     (document.getElementById("blog-update-form") as HTMLFormElement).addEventListener("submit", (event) => {
         blog_update.init(event)
         setTimeout(() => window.location.replace("./profile.html"), 1000);

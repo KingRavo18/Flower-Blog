@@ -7,13 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
     change_username();
     change_password();
     delete_account();
+    find_blog_by_title();
     display_blogs();
 }, { once: true });
 // SECTION 1 - DISPLAY THE PROFILE PAGE'S TITLE 
 function display_title() {
-    new Title_Display().display_profile_page_title();
+    new Title_Retrieval().display_profile_page_title();
 }
-class Title_Display {
+class Title_Retrieval {
     async display_profile_page_title() {
         const profile_title = document.getElementById("profile-title");
         try {
@@ -29,13 +30,13 @@ class Title_Display {
 function change_username() {
     const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
     username_change_popup.init();
-    document.getElementById("username-change-form").addEventListener("submit", (event) => new Username_Change().init(event));
+    document.getElementById("username-change-form").addEventListener("submit", (event) => new Username_Update().init(event));
 }
-class Username_Change extends Title_Display {
+class Username_Update extends Title_Retrieval {
     init(event) {
-        this.#change_username(event);
+        this.#update_username(event);
     }
-    async #change_username(event) {
+    async #update_username(event) {
         event.preventDefault();
         const password_input = document.getElementById("username-change-password-input");
         const new_username_input = document.getElementById("username-change-new-username-input");
@@ -171,15 +172,39 @@ class Profile_Popup_Toggle {
         document.getElementById(this.hide_popup_btn_id).addEventListener("click", () => hide_element());
     }
 }
-// SECTION 3 - DISPLAY AND MANAGE THE USER'S PERSONAL BLOGS 
-function display_blogs() {
-    new Blog_Display().init();
+// SECTION 3 - SORT/FIND THE DISPLAYED BLOGS
+function find_blog_by_title() {
+    document.getElementById("find-by-title-input").addEventListener("input", () => {
+        new Find_Blog_By_Title().init();
+    });
 }
-class Blog_Display {
+class Find_Blog_By_Title {
     init() {
-        this.#display_personal_blogs();
+        const title_input = document.getElementById("find-by-title-input");
+        const title = title_input.value.trim().toLowerCase();
+        const blog_parent = document.getElementById("user-blog-container");
+        const all_blogs = blog_parent.querySelectorAll(".blog-list-item");
+        all_blogs.forEach(blog => {
+            const blog_title = blog.querySelector(".blog-title").textContent.trim().toLowerCase();
+            if (!blog_title.includes(title)) {
+                blog.classList.remove("show-element-block");
+                blog.classList.add("hide-element");
+            }
+            else {
+                blog.classList.replace("hide-element", "show-element-block");
+            }
+        });
     }
-    async #display_personal_blogs() {
+}
+// SECTION 4 - DISPLAY AND MANAGE THE USER'S PERSONAL BLOGS 
+function display_blogs() {
+    new Blog_Data_Retrieval().init();
+}
+class Blog_Data_Retrieval {
+    init() {
+        this.#retrieve_personal_blogs();
+    }
+    async #retrieve_personal_blogs() {
         try {
             const data = await fetch_data("../backend/Blog_Managment/user_blogs_retrive.php", {}, "Could not fetch your blogs. Please try again later.");
             if (data.row_count === 0) {
@@ -197,9 +222,10 @@ class Blog_Display {
     }
     #create_blog_list_item(blog_id, title, description) {
         const blog_list_item = document.createElement("li");
+        blog_list_item.classList.add("blog-list-item");
         blog_list_item.innerHTML = `
             <div class="blog-list-item-top-row">
-                <h3>${title}</h3>
+                <h3 class="blog-title">${title}</h3>
                 <div>
                     <button title="Edit this blog?" class="common-btn edit-blog-btn basic-text-size flex justify-center items-center">
                         <span class="material-symbols-outlined">
@@ -278,9 +304,9 @@ class Blog_Id_Transfer {
         this.transfer_destination = transfer_destination;
     }
     init(blog_id) {
-        this.#transport_to_edit_page(blog_id);
+        this.#transfer(blog_id);
     }
-    async #transport_to_edit_page(blog_id) {
+    async #transfer(blog_id) {
         try {
             await fetch_data("../backend/Blog_Managment/Blog_Editing/Blog_Id_Transfer/blog_id_transfer.php", {
                 method: "POST",
