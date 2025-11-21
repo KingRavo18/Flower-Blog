@@ -5,16 +5,37 @@ import { Blog_Data_Submission, allow_tab_indentation } from "../Modules/Blog_Cre
 import type { Retrieve_Class_Types, Submit_Class_Types } from "../Modules/interface_for_init_classes.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+    check_blog_ownership();
+
     display_deletable_tags();
     submit_tag();
-
     display_blog_content();
+
     update_blog_content();
     allow_tab_indentation();
 }, {once: true})
 
 
 // SECTION 1 - OWNERSHIP CHECK
+
+function check_blog_ownership(): void{
+    new Blog_Ownership_Check().init();
+}
+
+class Blog_Ownership_Check{
+    init(): void{
+        this.#check_ownership();
+    }
+
+    async #check_ownership(): Promise<void>{
+        try{
+            await fetch_data("../backend/Blog_Managment/Blog_Editing/Blog_Check/ownership_check.php", {}, "Failed the ownership check.");
+        }
+        catch(error){
+            display_message("document-body", "error-message", (error as Error).message, "center-message"); 
+        }
+    }
+}
 
 // SECTION 2 - TAG EDIT
 

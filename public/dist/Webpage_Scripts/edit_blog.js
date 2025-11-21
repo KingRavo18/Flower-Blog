@@ -3,6 +3,7 @@ import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
 import { Blog_Data_Submission, allow_tab_indentation } from "../Modules/Blog_Creation.js";
 document.addEventListener("DOMContentLoaded", () => {
+    check_blog_ownership();
     display_deletable_tags();
     submit_tag();
     display_blog_content();
@@ -10,6 +11,22 @@ document.addEventListener("DOMContentLoaded", () => {
     allow_tab_indentation();
 }, { once: true });
 // SECTION 1 - OWNERSHIP CHECK
+function check_blog_ownership() {
+    new Blog_Ownership_Check().init();
+}
+class Blog_Ownership_Check {
+    init() {
+        this.#check_ownership();
+    }
+    async #check_ownership() {
+        try {
+            await fetch_data("../backend/Blog_Managment/Blog_Editing/Blog_Check/ownership_check.php", {}, "Failed the ownership check.");
+        }
+        catch (error) {
+            display_message("document-body", "error-message", error.message, "center-message");
+        }
+    }
+}
 // SECTION 2 - TAG EDIT
 class Deletable_Tag_Creation {
     create_deletable_tags(tag_id, tag) {

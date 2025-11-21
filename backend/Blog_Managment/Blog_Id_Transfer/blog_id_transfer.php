@@ -6,16 +6,8 @@ class Blog_Id_Transfer extends Db_Connection{
     public function __construct(private $blog_id){}
 
     public function transfer(){
-        try{
-            $_SESSION["blog_id"] = $this->blog_id;
-            echo json_encode(["query_success" => "The blog id has been successfully transfered."]);
-        }
-        catch(PDOException $e){
-            echo json_encode(["query_fail" => "A problem has occured, please try again later."]);
-        }
-        catch(Exception $e){
-            echo json_encode(["fatal_fail" => $e->getMessage()]);
-        }
+        $_SESSION["blog_id"] = $this->blog_id;
+        echo json_encode(["query_success" => "The blog id has been successfully transfered."]);
     }
 }
 
