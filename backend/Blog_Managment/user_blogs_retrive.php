@@ -6,7 +6,7 @@ class Personal_Blog_Retrieve extends Db_Connection{
     public function __construct(private $user_id){}
 
     private function execute_query(){
-        $stmt = parent::conn()->prepare("SELECT title, description, contents FROM blogs WHERE user_id = ?");
+        $stmt = parent::conn()->prepare("SELECT id, title, description, contents FROM blogs WHERE user_id = ?");
         $stmt->execute([$this->user_id]);
         $query_success = "Your blogs were retrieved successfully.";
         if($stmt->rowCount() === 0){
