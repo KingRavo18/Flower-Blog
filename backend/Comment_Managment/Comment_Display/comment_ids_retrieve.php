@@ -2,7 +2,7 @@
 require ("../../DB_Connection/db_connection.php");
 require ("../../Session_Maintanance/global_session_check.php");
 
-class Comment_Retrieval extends Db_Connection{
+class Comment_ID_Retrieval extends Db_Connection{
     public function __construct(private $blog_id){}
 
     private function execute_query(){
@@ -24,7 +24,7 @@ class Comment_Retrieval extends Db_Connection{
         ]);
     }
 
-    public function retrieve_comments(){
+    public function retrieve_comment_ids(){
         try{
             $this->execute_query();
         }
@@ -35,5 +35,5 @@ class Comment_Retrieval extends Db_Connection{
 }
 
 $blog_id = $_SESSION["blog_id"];
-$comment_retrieval = new Comment_Retrieval($blog_id);
-$comment_retrieval->retrieve_comments();
+$comment_retrieval = new Comment_ID_Retrieval($blog_id);
+$comment_retrieval->retrieve_comment_ids();

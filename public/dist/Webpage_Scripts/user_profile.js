@@ -222,7 +222,7 @@ class Blog_Data_Retrieval {
     }
     #create_blog_list_item(blog_id, title, description) {
         const blog_list_item = document.createElement("li");
-        blog_list_item.classList.add("blog-list-item");
+        blog_list_item.classList.add("blog-list-item", "w-[70vw]", "cursor-pointer");
         blog_list_item.innerHTML = `
             <div class="blog-list-item-top-row">
                 <h3 class="blog-title">${title}</h3>
@@ -239,7 +239,7 @@ class Blog_Data_Retrieval {
                     </button>
                 </div>
             </div>
-            <p class="description basic-text-size">${description}</p>
+            <p class="text-[rgb(228,140,155)] max-w-[60vw] basic-text-size">${description}</p>
         `;
         this.#set_blog_click_event(blog_id, blog_list_item);
         this.#set_blog_edit_btn(blog_id, blog_list_item);

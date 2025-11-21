@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     allow_tab_indentation();
 }, {once: true});
 
+
 function submit_blog_data(): void{
     const blog_creation = new Blog_Data_Submission("../backend/Blog_Managment/Blog_Creation/blog_submit.php", false);
     (document.getElementById("tag-btn") as HTMLElement).addEventListener("click", () => blog_creation.collect_tags());

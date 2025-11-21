@@ -137,8 +137,14 @@ body{
     animation-duration: 700ms;
 }
 @keyframes container-appear-animation-below{
-    from{ transform: translateY(100vh); }
-    to{ transform: translateY(0); }
+    from{ 
+        transform: translateY(5vh); 
+        opacity: 0;
+    }
+    to{ 
+        transform: translateY(0);
+        opacity: 1; 
+    }
 }
 
 .hide-popup-background-anim{ animation-name: hide-popup-background-anim; }
@@ -274,8 +280,6 @@ body{
 /* List */
 .blog-list-ul{
     & li{
-        width: 70vw;
-        cursor: pointer;
         padding: 4px 10px;
         margin-bottom: 0.5vw;
         border-radius: 5px;
@@ -298,11 +302,6 @@ body{
                 display: flex;
                 gap: 0.5vw;
             }
-        }
-
-        & .description{
-            color: rgb(228, 140, 155);
-            max-width: 60vw;
         }
     }
 }

@@ -100,18 +100,44 @@ class Tags_Retrieval implements Retrieve_Class_Types{
 
 // SECTION 3 - COMMENT MANAGMENT
 
-class Comment_Creation{
-    protected create_comment(comment_id: number | string): void{
-
-    }
-}
-
-
 function submit_comment(): void{
     (document.getElementById("blog-comment-addition-form") as HTMLFormElement).addEventListener("submit", (event) => {
         new Comment_Submission().init(event);
     });
 }
+
+function display_comments(): void{
+    new Comment_Retrieval().init();
+}
+
+
+class Comment_Creation{
+    protected async create_comment(comment_id: number | string): Promise<void>{
+        try{
+            const read_blog_comment_container = document.getElementById("read-blog-comments") as HTMLUListElement;
+            const data = await fetch_data(
+                    "../backend/Comment_Managment/Comment_Display/comment_content_retrieval.php", 
+                    {
+                        method: "POST", 
+                        headers: { "Content-Type": "application/x-www-form-urlencoded" }, 
+                        body: new URLSearchParams({ comment_id: comment_id.toString() })
+                    }, 
+                    "Failed to load comments for this blog. Please try again later."
+                );
+            const comment_list_item = document.createElement("li");
+            comment_list_item.classList.add("pointer-events-none", "w-[52vw]");
+            comment_list_item.innerHTML = `
+                <p>${data.comment_content}</p>
+                <p class="text-[rgb(228,140,155)] text-right">By ${data.comment_author.username}, ${data.comment_date}</p>
+            `;
+            read_blog_comment_container.insertBefore(comment_list_item, read_blog_comment_container.firstChild);
+        }
+        catch(error){
+            display_message("document-body", "error-message", (error as Error).message, "center-message"); 
+        }
+    }
+}
+
 
 class Comment_Submission extends Comment_Creation implements Submit_Class_Types{
     init(event: SubmitEvent): void{
@@ -132,9 +158,10 @@ class Comment_Submission extends Comment_Creation implements Submit_Class_Types{
                     headers: { "Content-Type": "application/x-www-form-urlencoded" }, 
                     body: new URLSearchParams({ comment: comment_area.value })
                 }, 
-                "Failed to add your comment to this blog."
+                "Failed to add your comment to this blog. Please try again later."
             );
             this.create_comment(data.comment_id);
+            comment_area.value = "";
             display_message("document-body", "success-message", data.query_success, "center-message"); 
         }
         catch(error){
@@ -143,10 +170,6 @@ class Comment_Submission extends Comment_Creation implements Submit_Class_Types{
     }
 }
 
-
-function display_comments(): void{
-    new Comment_Retrieval().init();
-}
 
 type Comment = {
     id: string | number;
@@ -163,7 +186,7 @@ class Comment_Retrieval extends Comment_Creation implements Retrieve_Class_Types
     async #retrieve_comments(): Promise<void>{
         try{
             const data = await fetch_data(
-                "../backend/Comment_Managment/Comment_Display/comment_ids_retrieve.php", {}, "Failed to load comments for this blog."
+                "../backend/Comment_Managment/Comment_Display/comment_ids_retrieve.php", {}, "Failed to load comments for this blog. Please try again later."
             );
             if(data.row_count === 0){
                 new No_Data_Paragraph_Display("There are no comments for this blog.", "read-blog-comments").init();

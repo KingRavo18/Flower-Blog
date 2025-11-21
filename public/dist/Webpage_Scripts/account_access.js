@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     switch_form();
     toggle_password_visibility();
 }, { once: true });
-// SECTION 1 - SIGN IN
+// SECTION 1 - SIGN IN & REGISTRATION
 class Input_Validation {
     validate_input(username, password) {
         if (username.trim() === "") {
@@ -64,7 +64,6 @@ class Account_Sign_In extends Input_Validation {
         }
     }
 }
-// SECTION 2 - REGISTRATION
 function register_account() {
     document.getElementById("registration-form").addEventListener("submit", (event) => new Account_Registration().init(event));
 }
@@ -91,7 +90,7 @@ class Account_Registration extends Input_Validation {
         }
     }
 }
-// SECTION 3 - UI CONTROL
+// SECTION 2 - UI CONTROL
 function switch_form() {
     const switch_to_sign_in = new Current_Form_Switch("registration_container", "signin_container", "change-form-trigger-signin", "left-form-appear-animation", "left-form-disappear-animation", "right-form-appear-animation");
     document.getElementById("change-form-trigger-register").addEventListener("click", () => switch_to_sign_in.init());

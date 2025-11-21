@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 }, {once: true});
 
 
-// SECTION 1 - SIGN IN
+// SECTION 1 - SIGN IN & REGISTRATION
 
 
 class Input_Validation{
@@ -45,6 +45,7 @@ class Input_Validation{
     }
 }
 
+
 function sign_into_account(): void{
     (document.getElementById("sign-in-form") as HTMLFormElement).addEventListener("submit", (event) => new Account_Sign_In().init(event));
 }
@@ -77,9 +78,6 @@ class Account_Sign_In extends Input_Validation implements Submit_Class_Types{
         }
     }
 }
-
-
-// SECTION 2 - REGISTRATION
 
 
 function register_account(): void{
@@ -116,7 +114,7 @@ class Account_Registration extends Input_Validation implements Submit_Class_Type
 }
 
 
-// SECTION 3 - UI CONTROL
+// SECTION 2 - UI CONTROL
 
 
 function switch_form(): void{

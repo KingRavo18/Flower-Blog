@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     display_blogs();
 }, {once: true});
 
+
 function display_blogs(): void{
 
 }

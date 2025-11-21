@@ -71,14 +71,35 @@ class Tags_Retrieval {
     }
 }
 // SECTION 3 - COMMENT MANAGMENT
-class Comment_Creation {
-    create_comment(comment_id) {
-    }
-}
 function submit_comment() {
     document.getElementById("blog-comment-addition-form").addEventListener("submit", (event) => {
         new Comment_Submission().init(event);
     });
+}
+function display_comments() {
+    new Comment_Retrieval().init();
+}
+class Comment_Creation {
+    async create_comment(comment_id) {
+        try {
+            const read_blog_comment_container = document.getElementById("read-blog-comments");
+            const data = await fetch_data("../backend/Comment_Managment/Comment_Display/comment_content_retrieval.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ comment_id: comment_id.toString() })
+            }, "Failed to load comments for this blog. Please try again later.");
+            const comment_list_item = document.createElement("li");
+            comment_list_item.classList.add("pointer-events-none", "w-[52vw]");
+            comment_list_item.innerHTML = `
+                <p>${data.comment_content}</p>
+                <p class="text-[rgb(228,140,155)] text-right">By ${data.comment_author.username}, ${data.comment_date}</p>
+            `;
+            read_blog_comment_container.insertBefore(comment_list_item, read_blog_comment_container.firstChild);
+        }
+        catch (error) {
+            display_message("document-body", "error-message", error.message, "center-message");
+        }
+    }
 }
 class Comment_Submission extends Comment_Creation {
     init(event) {
@@ -95,8 +116,9 @@ class Comment_Submission extends Comment_Creation {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ comment: comment_area.value })
-            }, "Failed to add your comment to this blog.");
+            }, "Failed to add your comment to this blog. Please try again later.");
             this.create_comment(data.comment_id);
+            comment_area.value = "";
             display_message("document-body", "success-message", data.query_success, "center-message");
         }
         catch (error) {
@@ -104,16 +126,13 @@ class Comment_Submission extends Comment_Creation {
         }
     }
 }
-function display_comments() {
-    new Comment_Retrieval().init();
-}
 class Comment_Retrieval extends Comment_Creation {
     init() {
         this.#retrieve_comments();
     }
     async #retrieve_comments() {
         try {
-            const data = await fetch_data("../backend/Comment_Managment/Comment_Display/comment_ids_retrieve.php", {}, "Failed to load comments for this blog.");
+            const data = await fetch_data("../backend/Comment_Managment/Comment_Display/comment_ids_retrieve.php", {}, "Failed to load comments for this blog. Please try again later.");
             if (data.row_count === 0) {
                 new No_Data_Paragraph_Display("There are no comments for this blog.", "read-blog-comments").init();
             }

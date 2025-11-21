@@ -25,14 +25,11 @@ class Deletable_Tag_Creation {
                 </button>
             </div>
         `;
-        this.#set_tag_delete_btn(tag_id, displayed_tag);
-        document.getElementById("deletable-tag-container").appendChild(displayed_tag);
-    }
-    #set_tag_delete_btn(tag_id, displayed_tag) {
         const delete_tag_btn = displayed_tag.querySelector(".delete-tag-btn");
         delete_tag_btn.addEventListener("click", () => {
             this.#delete_blog_tag(tag_id, displayed_tag);
         });
+        document.getElementById("deletable-tag-container").appendChild(displayed_tag);
     }
     async #delete_blog_tag(tag_id, displayed_tag) {
         try {

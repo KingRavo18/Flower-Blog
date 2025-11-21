@@ -32,17 +32,13 @@ class Deletable_Tag_Creation{
                 </button>
             </div>
         `;
-        this.#set_tag_delete_btn(tag_id, displayed_tag);
-        (document.getElementById("deletable-tag-container") as HTMLElement).appendChild(displayed_tag);
-    }
-
-    #set_tag_delete_btn(tag_id: string | number, displayed_tag: HTMLDivElement): void{
         const delete_tag_btn = displayed_tag.querySelector(".delete-tag-btn") as HTMLButtonElement;
         delete_tag_btn.addEventListener("click", () => {
             this.#delete_blog_tag(tag_id, displayed_tag);
         });
+        (document.getElementById("deletable-tag-container") as HTMLElement).appendChild(displayed_tag);
     }
-
+    
     async #delete_blog_tag(tag_id: string | number, displayed_tag: HTMLDivElement): Promise<void>{
         try{
             const data = await fetch_data(
@@ -186,6 +182,7 @@ class Editable_Blog_Content_Retrieval implements Blog_Content_Retrieval_Types{
         }
     }
 }
+
 
 function update_blog_content(): void{
     const blog_update = new Blog_Data_Submission("../backend/Blog_Managment/Blog_Editing/Blog_Contents/contents_update.php", true);
