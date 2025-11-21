@@ -5,11 +5,9 @@ import type { Retrieve_Class_Types, Ui_Change_Types, Submit_Class_Types, Managme
 
 document.addEventListener("DOMContentLoaded", () => {
     display_title();
-
     change_username();
     change_password();
     delete_account();
-
     find_blog_by_title();
     manage_blogs();
 }, {once: true});
