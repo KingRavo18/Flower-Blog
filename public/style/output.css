@@ -9,8 +9,6 @@
       "Courier New", monospace;
     --spacing: 0.25rem;
     --font-weight-bold: 700;
-    --default-transition-duration: 150ms;
-    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
   }
@@ -695,6 +693,18 @@ body {
 @keyframes container-appear-animation {
   from {
     transform: translateY(-100vh);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.container-appear-animation-below {
+  animation-name: container-appear-animation-below;
+  animation-duration: 700ms;
+}
+@keyframes container-appear-animation-below {
+  from {
+    transform: translateY(100vh);
   }
   to {
     transform: translateY(0);

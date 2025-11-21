@@ -6,7 +6,7 @@ class Comment_Retrieval extends Db_Connection{
     public function __construct(private $blog_id){}
 
     private function execute_query(){
-        $stmt = parent::conn()->prepare("SELECT * FROM comments WHERE blog_id = ?");
+        $stmt = parent::conn()->prepare("SELECT id FROM comments WHERE blog_id = ?");
         $stmt->execute([$this->blog_id]);
         $query_success = "The comments were retrieved successfully.";
         if($stmt->rowCount() === 0){

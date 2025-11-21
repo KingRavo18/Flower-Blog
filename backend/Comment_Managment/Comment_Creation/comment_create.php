@@ -1,0 +1,52 @@
+<?php 
+require ("../../DB_Connection/db_connection.php");
+require ("../../Session_Maintanance/global_session_check.php");
+
+class Comment_Creation extends Db_Connection{
+    public function __construct(
+        private $user_id,
+        private $blog_id,
+        private $comment
+    ){}
+
+    private function char_decode(){
+        $this->comment = html_entity_decode($this->comment, ENT_QUOTES);
+    }
+
+    private function validate_input(){
+        if(empty(trim($this->comment))){
+            throw new Exception("Please input your comment.");
+        }
+    }
+
+    private function execute_query(){
+        $conn = parent::conn();
+        $stmt = $conn->prepare("INSERT into comments (user_id, blog_id, comment) VALUES (?, ?, ?)");
+        $stmt->execute([$this->user_id, $this->blog_id, $this->comment]);
+        $comment_id = $conn->lastInsertId();
+        echo json_encode([
+            "comment_id" => $comment_id,
+            "query_success" => "Your comment was added successfully."
+        ]);
+    }
+
+    public function submit_comment(){
+        try{
+            $this->char_decode();
+            $this->validate_input();
+            $this->execute_query();
+        }
+        catch(PDOException $e){
+            echo json_encode(["query_fail" => "A problem has occured. Please try again later"]);
+        }
+        catch(Exception $e){
+            echo json_encode(["query_fail" => $e->getMessage()]);
+        }
+    }
+}
+
+$user_id = $_SESSION["id"];
+$blog_id = $_SESSION["blog_id"];
+$comment = filter_input(INPUT_POST, "comment", FILTER_SANITIZE_SPECIAL_CHARS);
+$comment_creation = new Comment_Creation($user_id, $blog_id, $comment);
+$comment_creation->submit_comment();

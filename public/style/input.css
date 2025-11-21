@@ -132,6 +132,15 @@ body{
     to{ transform: translateY(0); }
 }
 
+.container-appear-animation-below{
+    animation-name: container-appear-animation-below;
+    animation-duration: 700ms;
+}
+@keyframes container-appear-animation-below{
+    from{ transform: translateY(100vh); }
+    to{ transform: translateY(0); }
+}
+
 .hide-popup-background-anim{ animation-name: hide-popup-background-anim; }
 @keyframes hide-popup-background-anim{
     from{ opacity: 1; }

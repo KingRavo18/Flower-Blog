@@ -72,7 +72,7 @@ class Tags_Retrieval {
 }
 // SECTION 3 - COMMENT MANAGMENT
 class Comment_Creation {
-    create_comment(comment_id, user_id, blog_id, comment) {
+    create_comment(comment_id) {
     }
 }
 function submit_comment() {
@@ -82,12 +82,25 @@ function submit_comment() {
 }
 class Comment_Submission extends Comment_Creation {
     init(event) {
-        this.#submit_comment();
+        this.#submit_comment(event);
     }
-    async #submit_comment() {
+    async #submit_comment(event) {
+        event.preventDefault();
+        const comment_area = document.getElementById("user_comment_area");
         try {
+            if (comment_area.value.trim() === "") {
+                return;
+            }
+            const data = await fetch_data("../backend/Comment_Managment/Comment_Creation/comment_create.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ comment: comment_area.value })
+            }, "Failed to add your comment to this blog.");
+            this.create_comment(data.comment_id);
+            display_message("document-body", "success-message", data.query_success, "center-message");
         }
         catch (error) {
+            display_message("document-body", "error-message", error.message, "center-message");
         }
     }
 }
@@ -100,13 +113,13 @@ class Comment_Retrieval extends Comment_Creation {
     }
     async #retrieve_comments() {
         try {
-            const data = await fetch_data("../backend/Comment_Managment/Comment_Display/comments_retrieve.php", {}, "Failed to load comments for this blog.");
+            const data = await fetch_data("../backend/Comment_Managment/Comment_Display/comment_ids_retrieve.php", {}, "Failed to load comments for this blog.");
             if (data.row_count === 0) {
                 new No_Data_Paragraph_Display("There are no comments for this blog.", "read-blog-comments").init();
             }
             else {
                 data.comments.forEach((comment) => {
-                    this.create_comment(comment.id, comment.user_id, comment.blog_id, comment.comment);
+                    this.create_comment(comment.id);
                 });
             }
         }

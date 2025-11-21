@@ -101,7 +101,7 @@ class Tags_Retrieval implements Retrieve_Class_Types{
 // SECTION 3 - COMMENT MANAGMENT
 
 class Comment_Creation{
-    protected create_comment(comment_id: number | string, user_id: number | string, blog_id: number | string, comment: string): void{
+    protected create_comment(comment_id: number | string): void{
 
     }
 }
@@ -115,16 +115,30 @@ function submit_comment(): void{
 
 class Comment_Submission extends Comment_Creation implements Submit_Class_Types{
     init(event: SubmitEvent): void{
-        this.#submit_comment();
+        this.#submit_comment(event);
     }
 
-    async #submit_comment(): Promise<void>{
+    async #submit_comment(event: SubmitEvent): Promise<void>{
+        event.preventDefault();
+        const comment_area = document.getElementById("user_comment_area") as HTMLTextAreaElement;
         try{
-
-
+            if(comment_area.value.trim() === ""){
+                return;
+            }
+            const data = await fetch_data(
+                "../backend/Comment_Managment/Comment_Creation/comment_create.php", 
+                {
+                    method: "POST", 
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" }, 
+                    body: new URLSearchParams({ comment: comment_area.value })
+                }, 
+                "Failed to add your comment to this blog."
+            );
+            this.create_comment(data.comment_id);
+            display_message("document-body", "success-message", data.query_success, "center-message"); 
         }
         catch(error){
-
+            display_message("document-body", "error-message", (error as Error).message, "center-message"); 
         }
     }
 }
@@ -149,14 +163,14 @@ class Comment_Retrieval extends Comment_Creation implements Retrieve_Class_Types
     async #retrieve_comments(): Promise<void>{
         try{
             const data = await fetch_data(
-                "../backend/Comment_Managment/Comment_Display/comments_retrieve.php", {}, "Failed to load comments for this blog."
+                "../backend/Comment_Managment/Comment_Display/comment_ids_retrieve.php", {}, "Failed to load comments for this blog."
             );
             if(data.row_count === 0){
                 new No_Data_Paragraph_Display("There are no comments for this blog.", "read-blog-comments").init();
             }
             else{
                 (data.comments as Comment[]).forEach((comment: Comment) => {
-                    this.create_comment(comment.id, comment.user_id, comment.blog_id, comment.comment);
+                    this.create_comment(comment.id);
                 });
             }
         }
