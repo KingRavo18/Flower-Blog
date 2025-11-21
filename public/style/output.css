@@ -543,9 +543,17 @@
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
+  .duration-100 {
+    --tw-duration: 100ms;
+    transition-duration: 100ms;
+  }
   .duration-200 {
     --tw-duration: 200ms;
     transition-duration: 200ms;
+  }
+  .duration-500 {
+    --tw-duration: 500ms;
+    transition-duration: 500ms;
   }
   .select-none {
     -webkit-user-select: none;
@@ -594,6 +602,13 @@
       }
     }
   }
+  .hover\:text-\[rgb\(255\,160\,176\)\] {
+    &:hover {
+      @media (hover: hover) {
+        color: rgb(255,160,176);
+      }
+    }
+  }
   .active\:bg-\[rgb\(228\,140\,155\)\] {
     &:active {
       background-color: rgb(228,140,155);
@@ -602,6 +617,16 @@
   .active\:text-\[rgb\(128\,0\,255\)\] {
     &:active {
       color: rgb(128,0,255);
+    }
+  }
+  .active\:text-\[rgb\(228\,140\,155\)\] {
+    &:active {
+      color: rgb(228,140,155);
+    }
+  }
+  .active\:text-\[rgb\(255\,160\,176\)\] {
+    &:active {
+      color: rgb(255,160,176);
     }
   }
 }

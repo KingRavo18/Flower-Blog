@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=menu" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=menu,thumb_down,thumb_up" />
     <link rel="stylesheet" href="./style/output.css">
     <link rel="icon" href="assets/icons/flower-icon.jpg"/>
     <title>Flower-Blog - Read</title>
@@ -25,6 +25,26 @@
 
         <div id="read-blog-contents" 
             class="mt-[1vw] rounded-[5px] p-[1vw] border-2 whitespace-pre-wrap w-[70%] min-h-[5vw] h-auto border-[rgb(255,160,176)] container-appear-animation-below">
+        </div>
+
+        <div class="w-[70%] relative">
+            <div id="read-blog-author" 
+                class="rounded-[5px] mt-[1vw] flex justify-center items-center gap-[0.5vw] right-0 px-[1vw] py-[0.25vw] text-[1vw] border-2 border-[rgb(255,160,176)] absolute container-appear-animation-below"
+            >
+                <p id="like-counter">0</p>            
+                <button id="like-blog-btn" class="cursor-pointer flex justify-center items-center duration-100 hover:text-[rgb(255,160,176)] active:text-[rgb(228,140,155)]">
+                    <span class="material-symbols-outlined">
+                        thumb_up
+                    </span>
+                </button>
+
+                <p id="dislike-counter">0</p>  
+                <button id="dislike-blog-btn" class="cursor-pointer flex justify-center items-center duration-100 hover:text-[rgb(255,160,176)] active:text-[rgb(228,140,155)]">
+                    <span class="material-symbols-outlined">
+                        thumb_down
+                    </span>
+                </button>
+            </div>
         </div>
 
         <h2 class="page-title container-appear-animation-below text-[2vw]">Tags</h2>
