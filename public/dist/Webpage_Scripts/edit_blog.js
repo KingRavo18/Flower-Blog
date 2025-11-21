@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
     update_blog_content();
     allow_tab_indentation();
 }, { once: true });
-// SECTION 1 - TAG EDIT
+// SECTION 1 - OWNERSHIP CHECK
+// SECTION 2 - TAG EDIT
 class Deletable_Tag_Creation {
     create_deletable_tags(tag_id, tag) {
         const displayed_tag = document.createElement("div");
@@ -97,7 +98,7 @@ class Blog_Tag_Submission extends Deletable_Tag_Creation {
         }
     }
 }
-// SECTION 2 - MAIN CONTENT EDIT 
+// SECTION 3 - MAIN CONTENT EDIT 
 function display_blog_content() {
     new Editable_Blog_Content_Retrieval().init();
     document.getElementById("reset-inputs-btn").addEventListener("click", () => new Editable_Blog_Content_Retrieval().undo_changes());

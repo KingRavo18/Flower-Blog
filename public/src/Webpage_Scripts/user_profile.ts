@@ -324,13 +324,13 @@ class User_Blog_Managment implements Managment_Class_Types{
     async #transfer_user(blog_id: string | number, transfer_destination: string): Promise<void>{
         try{
             await fetch_data(
-                "../backend/Blog_Managment/Blog_Editing/Blog_Id_Transfer/blog_id_transfer.php",
+                "../backend/Blog_Managment/Blog_Id_Transfer/blog_id_transfer.php",
                 { 
                     method: "POST", 
                     headers: { "Content-Type": "application/x-www-form-urlencoded" }, 
                     body: new URLSearchParams({ blog_id: blog_id.toString() })
                 },
-                "Could not transport user to the editing page, please try again later."
+                "Could not transfer user, please try again later."
             );
             window.location.href = transfer_destination;
         }

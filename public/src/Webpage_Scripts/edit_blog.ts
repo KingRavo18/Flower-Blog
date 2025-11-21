@@ -14,7 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
 }, {once: true})
 
 
-// SECTION 1 - TAG EDIT
+// SECTION 1 - OWNERSHIP CHECK
+
+// SECTION 2 - TAG EDIT
 
 
 class Deletable_Tag_Creation{
@@ -130,7 +132,7 @@ class Blog_Tag_Submission extends Deletable_Tag_Creation implements Submit_Class
 }
 
 
-// SECTION 2 - MAIN CONTENT EDIT 
+// SECTION 3 - MAIN CONTENT EDIT 
 
 
 function display_blog_content(): void{

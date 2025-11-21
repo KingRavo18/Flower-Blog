@@ -8,19 +8,19 @@ class Blog_Tag_Retrieval extends Db_Connection{
     private function execute_query(){
         $stmt = parent::conn()->prepare("SELECT id, tag FROM blog_tags WHERE blog_id = ?");
         $stmt->execute([$this->blog_id]);
-        $query_success = "The tags were retrieved successfully.";
-        if($stmt->rowCount() === 0){
+        $tags = $stmt->fetchAll();
+        if(count($tags) === 0){
             echo json_encode([
-                "row_count" => $stmt->rowCount(),
-                "query_success" => $query_success
+                "row_count" => count($tags),
+                "tags" => [],
+                "query_success" => "The tags were retrieved successfully."
             ]);
             exit;
         }
-        $tags = $stmt->fetchAll();
         echo json_encode([
-            "row_count" => $stmt->rowCount(),
+            "row_count" => count($tags),
             "tags" => $tags,
-            "query_success" => $query_success
+            "query_success" => "The tags were retrieved successfully."
         ]);
     }
 

@@ -215,6 +215,9 @@
   .my-\[3vw\] {
     margin-block: 3vw;
   }
+  .mt-\[0\.1vw\] {
+    margin-top: 0.1vw;
+  }
   .mt-\[0\.5vw\] {
     margin-top: 0.5vw;
   }
@@ -283,12 +286,6 @@
   }
   .min-h-\[10vw\] {
     min-height: 10vw;
-  }
-  .w-52 {
-    width: calc(var(--spacing) * 52);
-  }
-  .w-54 {
-    width: calc(var(--spacing) * 54);
   }
   .w-\[4vw\] {
     width: 4vw;
@@ -551,10 +548,6 @@
     --tw-duration: 200ms;
     transition-duration: 200ms;
   }
-  .duration-500 {
-    --tw-duration: 500ms;
-    transition-duration: 500ms;
-  }
   .select-none {
     -webkit-user-select: none;
     user-select: none;
@@ -622,11 +615,6 @@
   .active\:text-\[rgb\(228\,140\,155\)\] {
     &:active {
       color: rgb(228,140,155);
-    }
-  }
-  .active\:text-\[rgb\(255\,160\,176\)\] {
-    &:active {
-      color: rgb(255,160,176);
     }
   }
 }

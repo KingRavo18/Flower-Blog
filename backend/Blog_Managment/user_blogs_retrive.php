@@ -8,19 +8,21 @@ class Personal_Blog_Retrieve extends Db_Connection{
     private function execute_query(){
         $stmt = parent::conn()->prepare("SELECT id, title, description, contents FROM blogs WHERE user_id = ?");
         $stmt->execute([$this->user_id]);
-        $query_success = "Your blogs were retrieved successfully.";
-        if($stmt->rowCount() === 0){
+        $blogs = $stmt->fetchAll();
+        
+        if(count($blogs) === 0){
             echo json_encode([
-                "row_count" => $stmt->rowCount(),
-                "query_success" => $query_success
+                "row_count" => count($blogs),
+                "blogs" => [],
+                "query_success" => "Your blogs were retrieved successfully."
             ]);
             exit;
         }
-        $blogs = $stmt->fetchAll();
+        
         echo json_encode([
-            "row_count" => $stmt->rowCount(),
+            "row_count" => count($blogs),
             "blogs" => $blogs,
-            "query_success" => $query_success
+            "query_success" => "Your blogs were retrieved successfully."
         ]);
     }
     
@@ -29,7 +31,7 @@ class Personal_Blog_Retrieve extends Db_Connection{
             $this->execute_query();
         }
         catch(PDOException $e){
-            echo json_encode(["query_fail" => "A problem has occured, could not retrieve your blogs."]);
+            echo json_encode(["query_fail" => "A problem has occured, failed to retrieve your blogs."]);
         }
     }
 }

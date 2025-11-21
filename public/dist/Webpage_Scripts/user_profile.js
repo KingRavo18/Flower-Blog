@@ -259,11 +259,11 @@ class User_Blog_Managment {
     }
     async #transfer_user(blog_id, transfer_destination) {
         try {
-            await fetch_data("../backend/Blog_Managment/Blog_Editing/Blog_Id_Transfer/blog_id_transfer.php", {
+            await fetch_data("../backend/Blog_Managment/Blog_Id_Transfer/blog_id_transfer.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ blog_id: blog_id.toString() })
-            }, "Could not transport user to the editing page, please try again later.");
+            }, "Could not transfer user, please try again later.");
             window.location.href = transfer_destination;
         }
         catch (error) {
