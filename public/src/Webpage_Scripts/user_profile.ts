@@ -1,8 +1,7 @@
 import { toggle_element_visibility } from "../Modules/element_toggle.js";
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
-import { No_Data_Paragraph_Display } from "../Modules/No_Data_Paragraph_Display.js";
-import type { Retrieve_Class_Types, Ui_Change_Types, Submit_Class_Types } from "../Modules/interface_for_init_classes.js";
+import type { Retrieve_Class_Types, Ui_Change_Types, Submit_Class_Types, Managment_Class_Types } from "../Modules/interface_for_init_classes.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     display_title();
@@ -12,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     delete_account();
 
     find_blog_by_title();
-    display_blogs();
+    manage_blogs();
 }, {once: true});
 
 
@@ -251,8 +250,8 @@ class Find_Blog_By_Title implements Ui_Change_Types{
 // SECTION 4 - DISPLAY AND MANAGE THE USER'S PERSONAL BLOGS 
 
 
-function display_blogs(): void{
-    new Blog_Data_Retrieval().init();
+function manage_blogs(): void{
+    new User_Blog_Managment().init();
 }
 
 type Blog = {
@@ -261,16 +260,16 @@ type Blog = {
     description: string;
 };
 
-class Blog_Data_Retrieval implements Retrieve_Class_Types{
+class User_Blog_Managment implements Managment_Class_Types{
     init(): void{
         this.#retrieve_personal_blogs();
     }
-    
+
     async #retrieve_personal_blogs(): Promise<void>{
         try{
             const data = await fetch_data("../backend/Blog_Managment/user_blogs_retrive.php", {}, "Could not fetch your blogs. Please try again later.");
             if(data.row_count === 0){
-                new No_Data_Paragraph_Display("You have created no blogs. Begin now!", "user-blog-container").init();
+                this.#display_no_blogs_message();
             }
             else{
                 (data.blogs as Blog[]).forEach((blog: Blog) => {
@@ -312,7 +311,7 @@ class Blog_Data_Retrieval implements Retrieve_Class_Types{
 
     #set_blog_click_event(blog_id: string | number, blog_list_item: HTMLLIElement){
         blog_list_item.addEventListener("click", () => {
-            new Blog_Id_Transfer("./read_blog.html").init(blog_id);
+            this.#transfer_user(blog_id, "./read_blog.html");
         });
     }
 
@@ -320,26 +319,38 @@ class Blog_Data_Retrieval implements Retrieve_Class_Types{
         const edit_btn = blog_list_item.querySelector(".edit-blog-btn") as HTMLButtonElement;
         edit_btn.addEventListener("click", (event) => { 
             event.stopPropagation();
-            new Blog_Id_Transfer("./edit_blog.html").init(blog_id);
+            this.#transfer_user(blog_id, "./edit_blog.html");
         });
     }
+
+    async #transfer_user(blog_id: string | number, transfer_destination: string): Promise<void>{
+        try{
+            await fetch_data(
+                "../backend/Blog_Managment/Blog_Editing/Blog_Id_Transfer/blog_id_transfer.php",
+                { 
+                    method: "POST", 
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" }, 
+                    body: new URLSearchParams({ blog_id: blog_id.toString() })
+                },
+                "Could not transport user to the editing page, please try again later."
+            );
+            window.location.href = transfer_destination;
+        }
+        catch(error){
+            display_message("document-body", "error-message", (error as Error).message, "center-message");
+        }
+    }
+
 
     #set_blog_deletion_btn(blog_id: string | number, blog_list_item: HTMLLIElement){
         const delete_btn = blog_list_item.querySelector(".delete-blog-btn") as HTMLButtonElement;
         delete_btn.addEventListener("click", (event) => {
             event.stopPropagation();
-            new Blog_Deletion().toggle_blog_deletion_confirmation_popup(blog_id, blog_list_item);
+            this.#toggle_blog_deletion_confirmation_popup(blog_id, blog_list_item);
         });
     }
-}
 
-
-interface Blog_Deletion_Types{
-    toggle_blog_deletion_confirmation_popup: (blog_id: string | number, blog_list_item: HTMLLIElement) => void;
-}
-
-class Blog_Deletion implements Blog_Deletion_Types{
-    toggle_blog_deletion_confirmation_popup(blog_id: string | number, blog_list_item: HTMLLIElement): void{
+    #toggle_blog_deletion_confirmation_popup(blog_id: string | number, blog_list_item: HTMLLIElement): void{
         const {show_element, hide_element} = toggle_element_visibility(
             "profile-popup-background", 
             "show-element-block", 
@@ -377,40 +388,16 @@ class Blog_Deletion implements Blog_Deletion_Types{
 
     #set_new_profile_page(blog_list_item: HTMLLIElement): void{
         blog_list_item.remove();
-        const blog_count = document.querySelectorAll("#user-blog-container li").length;
-        if(blog_count === 0){
-            new No_Data_Paragraph_Display("You have created no blogs. Begin now!", "user-blog-container").init();
+        if(document.querySelectorAll("#user-blog-container li").length === 0){
+            this.#display_no_blogs_message();
         }
     }
-}
 
 
-interface Blog_Id_Transfer_Types{
-    init: (blog_id: string | number) => void;
-}
-
-class Blog_Id_Transfer implements Blog_Id_Transfer_Types{
-    constructor(private transfer_destination: string){}
-
-    init(blog_id: string | number): void{
-        this.#transfer(blog_id);
-    }   
-
-    async #transfer(blog_id: string | number): Promise<void>{
-        try{
-            await fetch_data(
-                "../backend/Blog_Managment/Blog_Editing/Blog_Id_Transfer/blog_id_transfer.php",
-                { 
-                    method: "POST", 
-                    headers: { "Content-Type": "application/x-www-form-urlencoded" }, 
-                    body: new URLSearchParams({ blog_id: blog_id.toString() })
-                },
-                "Could not transport user to the editing page, please try again later."
-            );
-            window.location.href = this.transfer_destination;
-        }
-        catch(error){
-            display_message("document-body", "error-message", (error as Error).message, "center-message");
-        }
+    #display_no_blogs_message(){
+        const no_blogs_message = document.createElement("p");
+        no_blogs_message.classList.add("text-center", "basic-text-size");
+        no_blogs_message.textContent = "You have created no blogs. Begin now!";
+        (document.getElementById("user-blog-container") as HTMLElement).appendChild(no_blogs_message);
     }
 }

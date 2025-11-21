@@ -1,14 +1,13 @@
 import { toggle_element_visibility } from "../Modules/element_toggle.js";
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
-import { No_Data_Paragraph_Display } from "../Modules/No_Data_Paragraph_Display.js";
 document.addEventListener("DOMContentLoaded", () => {
     display_title();
     change_username();
     change_password();
     delete_account();
     find_blog_by_title();
-    display_blogs();
+    manage_blogs();
 }, { once: true });
 // SECTION 1 - DISPLAY THE PROFILE PAGE'S TITLE 
 function display_title() {
@@ -197,10 +196,10 @@ class Find_Blog_By_Title {
     }
 }
 // SECTION 4 - DISPLAY AND MANAGE THE USER'S PERSONAL BLOGS 
-function display_blogs() {
-    new Blog_Data_Retrieval().init();
+function manage_blogs() {
+    new User_Blog_Managment().init();
 }
-class Blog_Data_Retrieval {
+class User_Blog_Managment {
     init() {
         this.#retrieve_personal_blogs();
     }
@@ -208,7 +207,7 @@ class Blog_Data_Retrieval {
         try {
             const data = await fetch_data("../backend/Blog_Managment/user_blogs_retrive.php", {}, "Could not fetch your blogs. Please try again later.");
             if (data.row_count === 0) {
-                new No_Data_Paragraph_Display("You have created no blogs. Begin now!", "user-blog-container").init();
+                this.#display_no_blogs_message();
             }
             else {
                 data.blogs.forEach((blog) => {
@@ -248,26 +247,37 @@ class Blog_Data_Retrieval {
     }
     #set_blog_click_event(blog_id, blog_list_item) {
         blog_list_item.addEventListener("click", () => {
-            new Blog_Id_Transfer("./read_blog.html").init(blog_id);
+            this.#transfer_user(blog_id, "./read_blog.html");
         });
     }
     #set_blog_edit_btn(blog_id, blog_list_item) {
         const edit_btn = blog_list_item.querySelector(".edit-blog-btn");
         edit_btn.addEventListener("click", (event) => {
             event.stopPropagation();
-            new Blog_Id_Transfer("./edit_blog.html").init(blog_id);
+            this.#transfer_user(blog_id, "./edit_blog.html");
         });
+    }
+    async #transfer_user(blog_id, transfer_destination) {
+        try {
+            await fetch_data("../backend/Blog_Managment/Blog_Editing/Blog_Id_Transfer/blog_id_transfer.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ blog_id: blog_id.toString() })
+            }, "Could not transport user to the editing page, please try again later.");
+            window.location.href = transfer_destination;
+        }
+        catch (error) {
+            display_message("document-body", "error-message", error.message, "center-message");
+        }
     }
     #set_blog_deletion_btn(blog_id, blog_list_item) {
         const delete_btn = blog_list_item.querySelector(".delete-blog-btn");
         delete_btn.addEventListener("click", (event) => {
             event.stopPropagation();
-            new Blog_Deletion().toggle_blog_deletion_confirmation_popup(blog_id, blog_list_item);
+            this.#toggle_blog_deletion_confirmation_popup(blog_id, blog_list_item);
         });
     }
-}
-class Blog_Deletion {
-    toggle_blog_deletion_confirmation_popup(blog_id, blog_list_item) {
+    #toggle_blog_deletion_confirmation_popup(blog_id, blog_list_item) {
         const { show_element, hide_element } = toggle_element_visibility("profile-popup-background", "show-element-block", "hide-popup-background-anim", "delete-blog-confirmation-popup", "show-element-flex", "hide-popup-anim");
         show_element();
         document.getElementById("blog-deletion-confirmation").addEventListener("click", async () => {
@@ -292,32 +302,15 @@ class Blog_Deletion {
     }
     #set_new_profile_page(blog_list_item) {
         blog_list_item.remove();
-        const blog_count = document.querySelectorAll("#user-blog-container li").length;
-        if (blog_count === 0) {
-            new No_Data_Paragraph_Display("You have created no blogs. Begin now!", "user-blog-container").init();
+        if (document.querySelectorAll("#user-blog-container li").length === 0) {
+            this.#display_no_blogs_message();
         }
     }
-}
-class Blog_Id_Transfer {
-    transfer_destination;
-    constructor(transfer_destination) {
-        this.transfer_destination = transfer_destination;
-    }
-    init(blog_id) {
-        this.#transfer(blog_id);
-    }
-    async #transfer(blog_id) {
-        try {
-            await fetch_data("../backend/Blog_Managment/Blog_Editing/Blog_Id_Transfer/blog_id_transfer.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({ blog_id: blog_id.toString() })
-            }, "Could not transport user to the editing page, please try again later.");
-            window.location.href = this.transfer_destination;
-        }
-        catch (error) {
-            display_message("document-body", "error-message", error.message, "center-message");
-        }
+    #display_no_blogs_message() {
+        const no_blogs_message = document.createElement("p");
+        no_blogs_message.classList.add("text-center", "basic-text-size");
+        no_blogs_message.textContent = "You have created no blogs. Begin now!";
+        document.getElementById("user-blog-container").appendChild(no_blogs_message);
     }
 }
 //# sourceMappingURL=user_profile.js.map
