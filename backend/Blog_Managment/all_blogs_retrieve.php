@@ -3,9 +3,14 @@ require ("../DB_Connection/db_connection.php");
 require ("../Session_Maintanance/global_session_check.php");
 
 class All_Blog_Retrieval extends Db_Connection{
-    public function __construct(private $title_req){}
+    public function __construct(
+        private $title_req,
+        private $tag_req
+    ){}
 
     private function execute_query(){
+        
+
         $stmt = parent::conn()->prepare("SELECT * FROM blogs WHERE title LIKE ? ORDER BY like_count");
         $stmt->execute(["%{$this->title_req}%"]);
         $blogs = $stmt->fetchAll();
@@ -44,5 +49,6 @@ class All_Blog_Retrieval extends Db_Connection{
 }
 
 $title_req = filter_input(INPUT_POST, "title_req", FILTER_SANITIZE_SPECIAL_CHARS);
-$retrieve_blogs = new All_Blog_Retrieval($title_req);
+$tag_req = json_decode($_POST["tag_req"]);
+$retrieve_blogs = new All_Blog_Retrieval($title_req, $tag_req);
 $retrieve_blogs->retrieve_blogs();

@@ -10,16 +10,65 @@ document.addEventListener("DOMContentLoaded", () => {
 // SECTION 1 - SEARCH BARS
 
 function search_for_blogs(): void{
-    (document.getElementById("find-btn") as HTMLButtonElement).addEventListener("click", () => {
-        new Search_For_Blogs().init();
-    })
+    new Search_For_Blogs().init();
 }
 
 class Search_For_Blogs implements Ui_Change_Types{
+    private tags: String[];
+    private tag_index: number;
+
+    constructor(){
+        this.tags = [];
+        this.tag_index = 0;
+    }
+
     init(): void{
+        (document.getElementById("find-btn") as HTMLButtonElement).addEventListener("click", () => {
+            this.#submit_req();
+        });
+        (document.getElementById("add-tag-btn") as HTMLButtonElement).addEventListener("click", () => {
+            this.add_tag();
+        });
+    }
+
+    add_tag(): void{
+        const tag_input = document.getElementById("find-by-tag-input") as HTMLInputElement;
+        this.tags.push(tag_input.value);
+        const displayed_tag = document.createElement("div");
+        displayed_tag.innerHTML = `
+            <div class="flex items-center displayed-tag gap-[1vw]">
+                <p>${tag_input.value}</p>
+                <button type="button" title="Delete Tag?"
+                    class="delete-tag-btn material-symbols-outlined select-none cursor-pointer 
+                    p-[0.25vw] rounded-[50%] duration-200
+                    hover:bg-[rgb(255,51,85)] active:bg-[rgb(228,140,155)]"
+                >
+                    close
+                </button>
+            </div>
+        `;
+        const index = this.tag_index;
+        const delete_tag_btn = displayed_tag.querySelector(".delete-tag-btn") as HTMLButtonElement;
+        delete_tag_btn.addEventListener("click", () => {
+            this.#remove_tag(index, displayed_tag);
+        });
+        tag_input.value = "";
+        (document.getElementById("all-blog-tag-container") as HTMLElement).appendChild(displayed_tag);
+        this.tag_index++;
+    }
+
+    #remove_tag(index: number, displayed_tag: HTMLDivElement){
+        if(this.tags.length > 0){
+            displayed_tag.remove();
+            this.tags.splice(index, 1);
+            this.tag_index--;
+        }
+    }
+
+    #submit_req(): void{
         const title_input = document.getElementById("find-by-title-input") as HTMLInputElement;
         (document.getElementById("all-blog-container") as HTMLUListElement).innerHTML = "";
-        new Blog_Retrieval(title_input.value.trim()).init();
+        new Blog_Retrieval(title_input.value.trim(), this.tags).init();
     }
 }
 
@@ -27,7 +76,7 @@ class Search_For_Blogs implements Ui_Change_Types{
 
 
 function display_all_blogs(): void{
-    new Blog_Retrieval("").init();
+    new Blog_Retrieval("", []).init();
 }
 
 type Blog = {
@@ -40,7 +89,10 @@ type Blog = {
 };
 
 class Blog_Retrieval implements Retrieve_Class_Types{
-    constructor(private title_req: string){}
+    constructor(
+        private title_req: string,
+        private tag_req: String[]
+    ){}
 
     init(): void{
         this.#retireve_blog_data();
@@ -53,11 +105,9 @@ class Blog_Retrieval implements Retrieve_Class_Types{
                 {
                     method: "POST", 
                     headers: { "Content-Type": "application/x-www-form-urlencoded" }, 
-                    body: new URLSearchParams({ title_req: this.title_req })
+                    body: new URLSearchParams({ title_req: this.title_req, tag_req: JSON.stringify(this.tag_req)})
                 }, 
                 "Failed to load blogs. Please try again later");
-            
-            console.log(data);
             if(data.row_count === 0){
                 this.#display_no_blogs_message();
             }

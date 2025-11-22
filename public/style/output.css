@@ -212,6 +212,9 @@
   .float-right {
     float: right;
   }
+  .my-\[0\.5vw\] {
+    margin-block: 0.5vw;
+  }
   .my-\[3vw\] {
     margin-block: 3vw;
   }

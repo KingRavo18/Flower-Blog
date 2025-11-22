@@ -6,25 +6,71 @@ document.addEventListener("DOMContentLoaded", () => {
 }, { once: true });
 // SECTION 1 - SEARCH BARS
 function search_for_blogs() {
-    document.getElementById("find-btn").addEventListener("click", () => {
-        new Search_For_Blogs().init();
-    });
+    new Search_For_Blogs().init();
 }
 class Search_For_Blogs {
+    tags;
+    tag_index;
+    constructor() {
+        this.tags = [];
+        this.tag_index = 0;
+    }
     init() {
+        document.getElementById("find-btn").addEventListener("click", () => {
+            this.#submit_req();
+        });
+        document.getElementById("add-tag-btn").addEventListener("click", () => {
+            this.add_tag();
+        });
+    }
+    add_tag() {
+        const tag_input = document.getElementById("find-by-tag-input");
+        this.tags.push(tag_input.value);
+        const displayed_tag = document.createElement("div");
+        displayed_tag.innerHTML = `
+            <div class="flex items-center displayed-tag gap-[1vw]">
+                <p>${tag_input.value}</p>
+                <button type="button" title="Delete Tag?"
+                    class="delete-tag-btn material-symbols-outlined select-none cursor-pointer 
+                    p-[0.25vw] rounded-[50%] duration-200
+                    hover:bg-[rgb(255,51,85)] active:bg-[rgb(228,140,155)]"
+                >
+                    close
+                </button>
+            </div>
+        `;
+        const index = this.tag_index;
+        const delete_tag_btn = displayed_tag.querySelector(".delete-tag-btn");
+        delete_tag_btn.addEventListener("click", () => {
+            this.#remove_tag(index, displayed_tag);
+        });
+        tag_input.value = "";
+        document.getElementById("all-blog-tag-container").appendChild(displayed_tag);
+        this.tag_index++;
+    }
+    #remove_tag(index, displayed_tag) {
+        if (this.tags.length > 0) {
+            displayed_tag.remove();
+            this.tags.splice(index, 1);
+            this.tag_index--;
+        }
+    }
+    #submit_req() {
         const title_input = document.getElementById("find-by-title-input");
         document.getElementById("all-blog-container").innerHTML = "";
-        new Blog_Retrieval(title_input.value.trim()).init();
+        new Blog_Retrieval(title_input.value.trim(), this.tags).init();
     }
 }
 // SECTION 2 - ALL BLOG DISPLAY
 function display_all_blogs() {
-    new Blog_Retrieval("").init();
+    new Blog_Retrieval("", []).init();
 }
 class Blog_Retrieval {
     title_req;
-    constructor(title_req) {
+    tag_req;
+    constructor(title_req, tag_req) {
         this.title_req = title_req;
+        this.tag_req = tag_req;
     }
     init() {
         this.#retireve_blog_data();
@@ -34,9 +80,8 @@ class Blog_Retrieval {
             const data = await fetch_data("../backend/Blog_Managment/all_blogs_retrieve.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({ title_req: this.title_req })
+                body: new URLSearchParams({ title_req: this.title_req, tag_req: JSON.stringify(this.tag_req) })
             }, "Failed to load blogs. Please try again later");
-            console.log(data);
             if (data.row_count === 0) {
                 this.#display_no_blogs_message();
             }
