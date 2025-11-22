@@ -9,17 +9,18 @@
     <title>Flower-Blog - Main Page</title>
 </head>
 <body id="document-body">
-    <main class="pt-[5vw]">
+    <main class="pt-[5vw] flex flex-col items-center">
 
         <h1 class="page-title page-title-h1 text-[3vw] absolute">
             Might Interest you
         </h1>
         
-        <div class="flex gap-[0.5vw] container-appear-animation-below">
-            <input type="text" id="find-by-title-input" placeholder="Find by title:" autocomplete="off" class="text-input">
+        <div class="flex gap-[0.5vw] mt-[11vw] container-appear-animation-below">
+            <input type="text" id="find-by-title-input" placeholder="Find by title:" title="Input Title" autocomplete="off" class="text-input">
+            <button id="find-by-title-btn" class="common-btn" title="Find by title.">Find</button>
         </div>
 
-        <ul id="all-blog-container" class="blog-list-ul w-full flex flex-col items-center mt-[11vw] container-appear-animation-below"></ul>
+        <ul id="all-blog-container" class="blog-list-ul w-full flex flex-col items-center mt-[1vw] container-appear-animation-below"></ul>
         
     </main>
     <script type="module" src="./dist/Global/global.js"></script>

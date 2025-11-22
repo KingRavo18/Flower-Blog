@@ -5,8 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
 }, { once: true });
 // SECTION 1 - SEARCH BARS
 function search_with_title() {
+    new Search_By_Title().init();
 }
 class Search_By_Title {
+    init() {
+        const title_input = document.getElementById("all-blog-container").innerHTML = "";
+    }
 }
 function search_with_tags() {
 }
@@ -14,15 +18,23 @@ class Search_By_Tags {
 }
 // SECTION 2 - ALL BLOG DISPLAY
 function display_all_blogs() {
-    new Blog_Retrieval().init();
+    new Blog_Retrieval("").init();
 }
 class Blog_Retrieval {
+    title_req;
+    constructor(title_req) {
+        this.title_req = title_req;
+    }
     init() {
         this.#retireve_blog_data();
     }
     async #retireve_blog_data() {
         try {
-            const data = await fetch_data("../backend/Blog_Managment/all_blogs_retrieve.php", {}, "Failed to load blogs. Please try again later");
+            const data = await fetch_data("../backend/Blog_Managment/all_blogs_retrieve.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ title_req: this.title_req })
+            }, "Failed to load blogs. Please try again later");
             console.log(data);
             if (data.row_count === 0) {
                 this.#display_no_blogs_message();
