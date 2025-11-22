@@ -3,24 +3,19 @@ import { fetch_data } from "../Modules/fetch_data.js";
 import type { Retrieve_Class_Types, Managment_Class_Types } from "../Modules/interface_for_init_classes.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    display_blog_content("read-blog-title", "title");
-    display_blog_content("read-blog-author", "username");
-    display_blog_content("read-blog-description", "description");
-    display_blog_content("read-blog-contents", "contents");
-    display_blog_tags();
-
-    manage_comments()
+    new Retrieve_Blog_Content("read-blog-title", "title").init();
+    new Retrieve_Blog_Content("read-blog-author", "username").init();
+    new Retrieve_Blog_Content("read-blog-description", "description").init();
+    new Retrieve_Blog_Content("read-blog-contents", "contents").init();
+    new Tags_Retrieval().init();
+    new Manage_Comments().init();
 }, {once: true});
 
 // SECTION 1 - DISPLAY THE BLOG'S CONTENT
 
 type content_type = "title" | "username" | "description" | "contents";
 
-function display_blog_content(element_id: string, content_type: content_type): void{
-    new Blog_Content_Retrieval(element_id, content_type).init();
-}
-
-class Blog_Content_Retrieval implements Retrieve_Class_Types{
+class Retrieve_Blog_Content implements Retrieve_Class_Types{
     #fetch_url: string;
 
     constructor(
@@ -54,10 +49,6 @@ class Blog_Content_Retrieval implements Retrieve_Class_Types{
 
 // SECTION 2 - DISPLAY TAGS
 
-
-function display_blog_tags(): void{
-    new Tags_Retrieval().init();
-}
 
 type Tag = {
     tag: string;
@@ -101,9 +92,6 @@ class Tags_Retrieval implements Retrieve_Class_Types{
 
 // SECTION 3 - COMMENT MANAGMENT
 
-function manage_comments(): void{
-    new Comment_Managment().init();
-}
 
 type Comment = {
     id: string | number;
@@ -112,7 +100,7 @@ type Comment = {
     comment: string;
 };
 
-class Comment_Managment implements Managment_Class_Types{
+class Manage_Comments implements Managment_Class_Types{
     private comments_container: HTMLUListElement;
     private comment_amount: number;
     private no_blogs_message: HTMLParagraphElement;

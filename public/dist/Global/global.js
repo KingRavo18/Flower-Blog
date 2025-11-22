@@ -2,13 +2,10 @@ import { toggle_element_visibility } from "../Modules/element_toggle.js";
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
 document.addEventListener("DOMContentLoaded", () => {
-    check_session();
-    load_page_heading();
+    new Check_Session().init();
+    new Load_Page_Heading().init();
 }, { once: true });
-function check_session() {
-    new Session_Check().init();
-}
-class Session_Check {
+class Check_Session {
     init() {
         this.#check_session();
     }
@@ -21,10 +18,7 @@ class Session_Check {
         }
     }
 }
-function load_page_heading() {
-    new Page_Heading().init();
-}
-class Page_Heading {
+class Load_Page_Heading {
     init() {
         this.#load_navbar();
     }

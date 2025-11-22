@@ -4,28 +4,24 @@ import { fetch_data } from "../Modules/fetch_data.js";
 import type { Retrieve_Class_Types, Ui_Change_Types, Submit_Class_Types, Managment_Class_Types } from "../Modules/interface_for_init_classes.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    display_title();
-    change_username();
-    change_password();
-    delete_account();
-    find_blog_by_title();
-    manage_blogs();
+    new Display_Title().init();
+    new Update_Username().init();
+    new Update_Password().init();
+    new Delete_Account().init();
+    new Find_Blog_By_Title().init();
+    new Manage_User_Blogs().init();
 }, {once: true});
 
 
 // SECTION 1 - DISPLAY THE PROFILE PAGE'S TITLE 
 
 
-function display_title(){
-    new Title_Retrieval().display_profile_page_title();
-}
+class Display_Title implements Retrieve_Class_Types{
+    init(): void{
+        this.#display_profile_page_title();
+    }
 
-interface Title_Retrieval_Types{
-    display_profile_page_title: () => Promise<void>;
-}
-
-class Title_Retrieval implements Title_Retrieval_Types{
-    async display_profile_page_title(): Promise<void>{
+    async #display_profile_page_title(): Promise<void>{
         const profile_title = document.getElementById("profile-title") as HTMLElement;
         try{
             const data = await fetch_data("../backend/Data_Display/display_username.php", {}, "Failed to retrieve username.");
@@ -41,15 +37,11 @@ class Title_Retrieval implements Title_Retrieval_Types{
 // SECTION 2 - UPDATE THE USER'S PROFILE
 
 
-function change_username(){
-    const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
-    username_change_popup.init();
-    (document.getElementById("username-change-form") as HTMLFormElement).addEventListener("submit", (event) => new Username_Update().init(event));
-}
-
-class Username_Update extends Title_Retrieval implements Submit_Class_Types{
-    init(event: SubmitEvent): void{
-        this.#update_username(event);
+class Update_Username implements Submit_Class_Types{
+    init(): void{
+        const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
+        username_change_popup.init();
+        (document.getElementById("username-change-form") as HTMLFormElement).addEventListener("submit", (event) => this.#update_username(event));
     }
 
     async #update_username(event: SubmitEvent): Promise<void>{
@@ -69,7 +61,7 @@ class Username_Update extends Title_Retrieval implements Submit_Class_Types{
             );
             password_input.value = new_username_input.value = "";
             display_message("profile-popup-background", "success-message", data.query_success, "center-message");
-            this.display_profile_page_title();
+            new Display_Title().init();
         }
         catch(error){
             display_message("profile-popup-background", "error-message", (error as Error).message, "center-message");
@@ -86,16 +78,11 @@ class Username_Update extends Title_Retrieval implements Submit_Class_Types{
     }
 }
 
-
-function change_password(){
-    const password_change_popup = new Profile_Popup_Toggle("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
-    password_change_popup.init();
-    (document.getElementById("password-change-form") as HTMLFormElement).addEventListener("submit", (event) => new Password_Change().init(event));
-}
-
-class Password_Change implements Submit_Class_Types{
-    init(event: SubmitEvent): void{
-        this.#change_password(event);
+class Update_Password implements Submit_Class_Types{
+    init(): void{
+        const password_change_popup = new Profile_Popup_Toggle("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
+        password_change_popup.init();
+        (document.getElementById("password-change-form") as HTMLFormElement).addEventListener("submit", (event) => this.#change_password(event));
     }
 
     async #change_password(event: SubmitEvent): Promise<void>{
@@ -149,16 +136,11 @@ class Password_Change implements Submit_Class_Types{
     }
 }
 
-
-function delete_account(){
-    const account_deletion_popup = new Profile_Popup_Toggle("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
-    account_deletion_popup.init();
-    (document.getElementById("acccount-deletion-form") as HTMLFormElement).addEventListener("submit", (event) => new Account_Deletion().init(event));
-}
-
-class Account_Deletion implements Submit_Class_Types{
-    init(event: SubmitEvent): void{
-        this.#delete_account(event);
+class Delete_Account implements Submit_Class_Types{
+    init(): void{
+        const account_deletion_popup = new Profile_Popup_Toggle("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
+        account_deletion_popup.init();
+        (document.getElementById("acccount-deletion-form") as HTMLFormElement).addEventListener("submit", (event) => this.#delete_account(event));
     }
 
     async #delete_account(event: SubmitEvent): Promise<void>{
@@ -194,7 +176,6 @@ class Account_Deletion implements Submit_Class_Types{
     }
 }
 
-
 class Profile_Popup_Toggle implements Ui_Change_Types{
     constructor(private popup_id: string, private show_popup_btn_id: string, private hide_popup_btn_id: string){}
 
@@ -220,14 +201,12 @@ class Profile_Popup_Toggle implements Ui_Change_Types{
 // SECTION 3 - SORT/FIND THE DISPLAYED BLOGS
 
 
-function find_blog_by_title(): void{
-    (document.getElementById("find-by-title-input") as HTMLInputElement).addEventListener("input", () => {
-        new Find_Blog_By_Title().init();
-    });
-}
-
 class Find_Blog_By_Title implements Ui_Change_Types{
     init(): void{
+        (document.getElementById("find-by-title-input") as HTMLInputElement).addEventListener("input", () => this.#find_by_title());
+    }
+
+    #find_by_title(): void{
         const title_input = document.getElementById("find-by-title-input") as HTMLInputElement;
         const title = title_input.value.trim().toLowerCase();
         const blog_parent = document.getElementById("user-blog-container") as HTMLUListElement;
@@ -248,17 +227,13 @@ class Find_Blog_By_Title implements Ui_Change_Types{
 // SECTION 4 - DISPLAY AND MANAGE THE USER'S PERSONAL BLOGS 
 
 
-function manage_blogs(): void{
-    new User_Blog_Managment().init();
-}
-
 type Blog = {
     id: number | string;
     title: string;
     description: string;
 };
 
-class User_Blog_Managment implements Managment_Class_Types{
+class Manage_User_Blogs implements Managment_Class_Types{
     init(): void{
         this.#retrieve_personal_blogs();
     }

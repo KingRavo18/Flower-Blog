@@ -2,19 +2,19 @@ import { toggle_element_visibility } from "../Modules/element_toggle.js";
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
 document.addEventListener("DOMContentLoaded", () => {
-    display_title();
-    change_username();
-    change_password();
-    delete_account();
-    find_blog_by_title();
-    manage_blogs();
+    new Display_Title().init();
+    new Update_Username().init();
+    new Update_Password().init();
+    new Delete_Account().init();
+    new Find_Blog_By_Title().init();
+    new Manage_User_Blogs().init();
 }, { once: true });
 // SECTION 1 - DISPLAY THE PROFILE PAGE'S TITLE 
-function display_title() {
-    new Title_Retrieval().display_profile_page_title();
-}
-class Title_Retrieval {
-    async display_profile_page_title() {
+class Display_Title {
+    init() {
+        this.#display_profile_page_title();
+    }
+    async #display_profile_page_title() {
         const profile_title = document.getElementById("profile-title");
         try {
             const data = await fetch_data("../backend/Data_Display/display_username.php", {}, "Failed to retrieve username.");
@@ -26,14 +26,11 @@ class Title_Retrieval {
     }
 }
 // SECTION 2 - UPDATE THE USER'S PROFILE
-function change_username() {
-    const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
-    username_change_popup.init();
-    document.getElementById("username-change-form").addEventListener("submit", (event) => new Username_Update().init(event));
-}
-class Username_Update extends Title_Retrieval {
-    init(event) {
-        this.#update_username(event);
+class Update_Username {
+    init() {
+        const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
+        username_change_popup.init();
+        document.getElementById("username-change-form").addEventListener("submit", (event) => this.#update_username(event));
     }
     async #update_username(event) {
         event.preventDefault();
@@ -48,7 +45,7 @@ class Username_Update extends Title_Retrieval {
             }, "Could not change username. Plese try again later.");
             password_input.value = new_username_input.value = "";
             display_message("profile-popup-background", "success-message", data.query_success, "center-message");
-            this.display_profile_page_title();
+            new Display_Title().init();
         }
         catch (error) {
             display_message("profile-popup-background", "error-message", error.message, "center-message");
@@ -63,14 +60,11 @@ class Username_Update extends Title_Retrieval {
         }
     }
 }
-function change_password() {
-    const password_change_popup = new Profile_Popup_Toggle("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
-    password_change_popup.init();
-    document.getElementById("password-change-form").addEventListener("submit", (event) => new Password_Change().init(event));
-}
-class Password_Change {
-    init(event) {
-        this.#change_password(event);
+class Update_Password {
+    init() {
+        const password_change_popup = new Profile_Popup_Toggle("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
+        password_change_popup.init();
+        document.getElementById("password-change-form").addEventListener("submit", (event) => this.#change_password(event));
     }
     async #change_password(event) {
         event.preventDefault();
@@ -117,14 +111,11 @@ class Password_Change {
         }
     }
 }
-function delete_account() {
-    const account_deletion_popup = new Profile_Popup_Toggle("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
-    account_deletion_popup.init();
-    document.getElementById("acccount-deletion-form").addEventListener("submit", (event) => new Account_Deletion().init(event));
-}
-class Account_Deletion {
-    init(event) {
-        this.#delete_account(event);
+class Delete_Account {
+    init() {
+        const account_deletion_popup = new Profile_Popup_Toggle("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
+        account_deletion_popup.init();
+        document.getElementById("acccount-deletion-form").addEventListener("submit", (event) => this.#delete_account(event));
     }
     async #delete_account(event) {
         event.preventDefault();
@@ -172,13 +163,11 @@ class Profile_Popup_Toggle {
     }
 }
 // SECTION 3 - SORT/FIND THE DISPLAYED BLOGS
-function find_blog_by_title() {
-    document.getElementById("find-by-title-input").addEventListener("input", () => {
-        new Find_Blog_By_Title().init();
-    });
-}
 class Find_Blog_By_Title {
     init() {
+        document.getElementById("find-by-title-input").addEventListener("input", () => this.#find_by_title());
+    }
+    #find_by_title() {
         const title_input = document.getElementById("find-by-title-input");
         const title = title_input.value.trim().toLowerCase();
         const blog_parent = document.getElementById("user-blog-container");
@@ -195,11 +184,7 @@ class Find_Blog_By_Title {
         });
     }
 }
-// SECTION 4 - DISPLAY AND MANAGE THE USER'S PERSONAL BLOGS 
-function manage_blogs() {
-    new User_Blog_Managment().init();
-}
-class User_Blog_Managment {
+class Manage_User_Blogs {
     init() {
         this.#retrieve_personal_blogs();
     }

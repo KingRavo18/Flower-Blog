@@ -1,17 +1,14 @@
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
 document.addEventListener("DOMContentLoaded", () => {
-    display_blog_content("read-blog-title", "title");
-    display_blog_content("read-blog-author", "username");
-    display_blog_content("read-blog-description", "description");
-    display_blog_content("read-blog-contents", "contents");
-    display_blog_tags();
-    manage_comments();
+    new Retrieve_Blog_Content("read-blog-title", "title").init();
+    new Retrieve_Blog_Content("read-blog-author", "username").init();
+    new Retrieve_Blog_Content("read-blog-description", "description").init();
+    new Retrieve_Blog_Content("read-blog-contents", "contents").init();
+    new Tags_Retrieval().init();
+    new Manage_Comments().init();
 }, { once: true });
-function display_blog_content(element_id, content_type) {
-    new Blog_Content_Retrieval(element_id, content_type).init();
-}
-class Blog_Content_Retrieval {
+class Retrieve_Blog_Content {
     display_id;
     content_type;
     #fetch_url;
@@ -36,10 +33,6 @@ class Blog_Content_Retrieval {
             display_message("document-body", "error-message", error.message, "center-message");
         }
     }
-}
-// SECTION 2 - DISPLAY TAGS
-function display_blog_tags() {
-    new Tags_Retrieval().init();
 }
 class Tags_Retrieval {
     init() {
@@ -71,11 +64,7 @@ class Tags_Retrieval {
         document.getElementById("read-blog-tags").appendChild(displayed_tag);
     }
 }
-// SECTION 3 - COMMENT MANAGMENT
-function manage_comments() {
-    new Comment_Managment().init();
-}
-class Comment_Managment {
+class Manage_Comments {
     comments_container;
     comment_amount;
     no_blogs_message;

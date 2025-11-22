@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function submit_blog_data(): void{
     const blog_creation = new Blog_Data_Submission("../backend/Blog_Managment/Blog_Creation/blog_submit.php", false);
-    (document.getElementById("tag-btn") as HTMLElement).addEventListener("click", () => blog_creation.collect_tags());
+    (document.getElementById("tag-btn") as HTMLElement).addEventListener("click", () => blog_creation.collect_tag());
     (document.getElementById("blog-creation-form") as HTMLFormElement).addEventListener("submit", (event) => {
         blog_creation.init(event)
     });

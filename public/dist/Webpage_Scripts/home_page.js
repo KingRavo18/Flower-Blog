@@ -1,13 +1,10 @@
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
 document.addEventListener("DOMContentLoaded", () => {
-    search_for_blogs();
-    display_all_blogs();
+    new Search_For_Blogs().init();
+    new Retrieve_Blogs("", []).init();
 }, { once: true });
 // SECTION 1 - SEARCH BARS
-function search_for_blogs() {
-    new Search_For_Blogs().init();
-}
 class Search_For_Blogs {
     tags;
     tag_index;
@@ -20,10 +17,10 @@ class Search_For_Blogs {
             this.#submit_req();
         });
         document.getElementById("add-tag-btn").addEventListener("click", () => {
-            this.add_tag();
+            this.#add_tag();
         });
     }
-    add_tag() {
+    #add_tag() {
         const tag_input = document.getElementById("find-by-tag-input");
         this.tags.push(tag_input.value);
         const displayed_tag = document.createElement("div");
@@ -58,14 +55,10 @@ class Search_For_Blogs {
     #submit_req() {
         const title_input = document.getElementById("find-by-title-input");
         document.getElementById("all-blog-container").innerHTML = "";
-        new Blog_Retrieval(title_input.value.trim(), this.tags).init();
+        new Retrieve_Blogs(title_input.value.trim(), this.tags).init();
     }
 }
-// SECTION 2 - ALL BLOG DISPLAY
-function display_all_blogs() {
-    new Blog_Retrieval("", []).init();
-}
-class Blog_Retrieval {
+class Retrieve_Blogs {
     title_req;
     tag_req;
     constructor(title_req, tag_req) {

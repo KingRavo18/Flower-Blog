@@ -1,8 +1,8 @@
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
 document.addEventListener("DOMContentLoaded", () => {
-    sign_into_account();
-    register_account();
+    new Account_Sign_In().init();
+    new Account_Registration().init();
     switch_form();
     toggle_password_visibility();
 }, { once: true });
@@ -38,12 +38,9 @@ class Input_Validation {
         }
     }
 }
-function sign_into_account() {
-    document.getElementById("sign-in-form").addEventListener("submit", (event) => new Account_Sign_In().init(event));
-}
 class Account_Sign_In extends Input_Validation {
-    init(event) {
-        this.#sign_in_user(event);
+    init() {
+        document.getElementById("sign-in-form").addEventListener("submit", (event) => this.#sign_in_user(event));
     }
     async #sign_in_user(event) {
         event.preventDefault();
@@ -64,14 +61,11 @@ class Account_Sign_In extends Input_Validation {
         }
     }
 }
-function register_account() {
-    document.getElementById("registration-form").addEventListener("submit", (event) => new Account_Registration().init(event));
-}
 class Account_Registration extends Input_Validation {
-    init(event) {
-        this.register_user(event);
+    init() {
+        document.getElementById("registration-form").addEventListener("submit", (event) => this.#register_user(event));
     }
-    async register_user(event) {
+    async #register_user(event) {
         event.preventDefault();
         const username_input = document.getElementById("register-username");
         const password_input = document.getElementById("register-password");

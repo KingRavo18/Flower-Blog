@@ -3,18 +3,15 @@ import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
 import { Blog_Data_Submission, allow_tab_indentation } from "../Modules/Blog_Creation.js";
 document.addEventListener("DOMContentLoaded", () => {
-    check_blog_ownership();
-    display_deletable_tags();
-    submit_tag();
-    display_blog_content();
+    new Check_Blog_Ownership().init();
+    new Editable_Tag_Retrieval().init();
+    new Submit_Blog_Tags().init();
+    new Retrieve_Editable_Blog_Content().init();
     update_blog_content();
     allow_tab_indentation();
 }, { once: true });
 // SECTION 1 - OWNERSHIP CHECK
-function check_blog_ownership() {
-    new Blog_Ownership_Check().init();
-}
-class Blog_Ownership_Check {
+class Check_Blog_Ownership {
     init() {
         this.#check_ownership();
     }
@@ -28,7 +25,7 @@ class Blog_Ownership_Check {
     }
 }
 // SECTION 2 - TAG EDIT
-class Deletable_Tag_Creation {
+class Create_Deleteable_Tag {
     create_deletable_tags(tag_id, tag) {
         const displayed_tag = document.createElement("div");
         displayed_tag.innerHTML = `
@@ -64,10 +61,7 @@ class Deletable_Tag_Creation {
         }
     }
 }
-function display_deletable_tags() {
-    new Editable_Tag_Retrieval().init();
-}
-class Editable_Tag_Retrieval extends Deletable_Tag_Creation {
+class Editable_Tag_Retrieval extends Create_Deleteable_Tag {
     init() {
         this.#display_editable_tags();
     }
@@ -85,17 +79,14 @@ class Editable_Tag_Retrieval extends Deletable_Tag_Creation {
         }
     }
 }
-function submit_tag() {
-    document.getElementById("add-tag-form").addEventListener("submit", (event) => {
-        new Blog_Tag_Submission().init(event);
-    });
-}
-class Blog_Tag_Submission extends Deletable_Tag_Creation {
-    init(event) {
-        event.preventDefault();
-        this.#submit_tag();
+class Submit_Blog_Tags extends Create_Deleteable_Tag {
+    init() {
+        document.getElementById("add-tag-form").addEventListener("submit", (event) => {
+            this.#submit_tag(event);
+        });
     }
-    async #submit_tag() {
+    async #submit_tag(event) {
+        event.preventDefault();
         const add_tag_input = document.getElementById("blog-edit-tag-input");
         if (add_tag_input.value.trim() === "") {
             return;
@@ -116,15 +107,12 @@ class Blog_Tag_Submission extends Deletable_Tag_Creation {
     }
 }
 // SECTION 3 - MAIN CONTENT EDIT 
-function display_blog_content() {
-    new Editable_Blog_Content_Retrieval().init();
-    document.getElementById("reset-inputs-btn").addEventListener("click", () => new Editable_Blog_Content_Retrieval().undo_changes());
-}
-class Editable_Blog_Content_Retrieval {
+class Retrieve_Editable_Blog_Content {
     init() {
         this.#retrieve_blog_data();
+        document.getElementById("reset-inputs-btn").addEventListener("click", () => this.#undo_changes());
     }
-    undo_changes() {
+    #undo_changes() {
         const { show_element, hide_element } = toggle_element_visibility("profile-popup-background", "show-element-block", "hide-popup-background-anim", "undo-changes-confirmation-popup", "show-element-flex", "hide-popup-anim");
         show_element();
         document.getElementById("change-undo-confirmation").addEventListener("click", async () => {

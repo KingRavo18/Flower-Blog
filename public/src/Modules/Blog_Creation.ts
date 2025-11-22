@@ -3,37 +3,57 @@ import { fetch_data } from "./fetch_data.js";
 
 interface Blog_Data_Submission_Types{
     init: (event: SubmitEvent) => void;
-    collect_tags: () => void;
+    collect_tag: () => void;
 }
 
 export class Blog_Data_Submission implements Blog_Data_Submission_Types{
-    tags: string[];
-    tag_input: HTMLInputElement;
-    tag_display: HTMLElement;
+    private tags: string[];
+    private tag_input: HTMLInputElement;
+    private tag_display: HTMLElement;
+    private tag_index: number;
 
     constructor(private submit_url: string, private is_blog_update: boolean){
         this.tags = [];
         this.tag_input = document.getElementById("blog-tag-input") as HTMLInputElement;
         this.tag_display = document.getElementById("tag-container") as HTMLElement;
+        this.tag_index = 0;
     }
 
     init(event: SubmitEvent): void{
         this.#submit_blog(event);
     }
 
-    collect_tags(): void{
-        if(this.tag_input.value.trim() !== ""){
-            this.tags.push(this.tag_input.value);
-            this.#display_tag();
-            this.tag_input.value = "";
-        }
+    collect_tag(): void{
+        this.tags.push(this.tag_input.value);
+        const displayed_tag = document.createElement("div");
+        displayed_tag.innerHTML = `
+            <div class="flex items-center displayed-tag gap-[1vw]">
+                <p>${this.tag_input.value}</p>
+                <button type="button" title="Delete Tag?"
+                    class="delete-tag-btn material-symbols-outlined select-none cursor-pointer 
+                    p-[0.25vw] rounded-[50%] duration-200
+                    hover:bg-[rgb(255,51,85)] active:bg-[rgb(228,140,155)]"
+                >
+                    close
+                </button>
+            </div>
+        `;
+        const index = this.tag_index;
+        const delete_tag_btn = displayed_tag.querySelector(".delete-tag-btn") as HTMLButtonElement;
+        delete_tag_btn.addEventListener("click", () => {
+            this.#remove_tag(index, displayed_tag);
+        });
+        this.tag_input.value = "";
+        (document.getElementById("tag-container") as HTMLElement).appendChild(displayed_tag);
+        this.tag_index++;
     }
 
-    #display_tag(): void{
-        const displayed_tag = document.createElement("p");
-        displayed_tag.classList.add("displayed-tag");
-        displayed_tag.textContent = this.tag_input.value;
-        this.tag_display.appendChild(displayed_tag);
+    #remove_tag(index: number, displayed_tag: HTMLDivElement){
+        if(this.tags.length > 0){
+            displayed_tag.remove();
+            this.tags.splice(index, 1);
+            this.tag_index--;
+        }
     }
 
     async #submit_blog(event: SubmitEvent): Promise<void>{

@@ -3,15 +3,12 @@ import { fetch_data } from "../Modules/fetch_data.js";
 import type { Retrieve_Class_Types, Ui_Change_Types } from "../Modules/interface_for_init_classes.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    search_for_blogs();
-    display_all_blogs();
+    new Search_For_Blogs().init();
+    new Retrieve_Blogs("", []).init();
 }, {once: true});
 
 // SECTION 1 - SEARCH BARS
 
-function search_for_blogs(): void{
-    new Search_For_Blogs().init();
-}
 
 class Search_For_Blogs implements Ui_Change_Types{
     private tags: String[];
@@ -27,11 +24,11 @@ class Search_For_Blogs implements Ui_Change_Types{
             this.#submit_req();
         });
         (document.getElementById("add-tag-btn") as HTMLButtonElement).addEventListener("click", () => {
-            this.add_tag();
+            this.#add_tag();
         });
     }
 
-    add_tag(): void{
+    #add_tag(): void{
         const tag_input = document.getElementById("find-by-tag-input") as HTMLInputElement;
         this.tags.push(tag_input.value);
         const displayed_tag = document.createElement("div");
@@ -68,16 +65,13 @@ class Search_For_Blogs implements Ui_Change_Types{
     #submit_req(): void{
         const title_input = document.getElementById("find-by-title-input") as HTMLInputElement;
         (document.getElementById("all-blog-container") as HTMLUListElement).innerHTML = "";
-        new Blog_Retrieval(title_input.value.trim(), this.tags).init();
+        new Retrieve_Blogs(title_input.value.trim(), this.tags).init();
     }
 }
 
+
 // SECTION 2 - ALL BLOG DISPLAY
 
-
-function display_all_blogs(): void{
-    new Blog_Retrieval("", []).init();
-}
 
 type Blog = {
     id: number | string;
@@ -88,7 +82,7 @@ type Blog = {
     dislike_count: number;
 };
 
-class Blog_Retrieval implements Retrieve_Class_Types{
+class Retrieve_Blogs implements Retrieve_Class_Types{
     constructor(
         private title_req: string,
         private tag_req: String[]

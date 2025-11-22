@@ -5,12 +5,10 @@ import { Blog_Data_Submission, allow_tab_indentation } from "../Modules/Blog_Cre
 import type { Retrieve_Class_Types, Submit_Class_Types } from "../Modules/interface_for_init_classes.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    check_blog_ownership();
-
-    display_deletable_tags();
-    submit_tag();
-    display_blog_content();
-
+    new Check_Blog_Ownership().init();
+    new Editable_Tag_Retrieval().init();
+    new Submit_Blog_Tags().init();
+    new Retrieve_Editable_Blog_Content().init();
     update_blog_content();
     allow_tab_indentation();
 }, {once: true})
@@ -18,11 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // SECTION 1 - OWNERSHIP CHECK
 
-function check_blog_ownership(): void{
-    new Blog_Ownership_Check().init();
-}
 
-class Blog_Ownership_Check{
+class Check_Blog_Ownership implements Retrieve_Class_Types{
     init(): void{
         this.#check_ownership();
     }
@@ -37,10 +32,11 @@ class Blog_Ownership_Check{
     }
 }
 
+
 // SECTION 2 - TAG EDIT
 
 
-class Deletable_Tag_Creation{
+class Create_Deleteable_Tag{
     protected create_deletable_tags(tag_id: string | number, tag: string): void{
         const displayed_tag = document.createElement("div");
         displayed_tag.innerHTML = `
@@ -82,17 +78,12 @@ class Deletable_Tag_Creation{
     }
 }
 
-
-function display_deletable_tags(): void{
-    new Editable_Tag_Retrieval().init();
-}
-
 type Deletable_Tag = {
     id: string | number;
     tag: string;
 };
 
-class Editable_Tag_Retrieval extends Deletable_Tag_Creation implements Retrieve_Class_Types{
+class Editable_Tag_Retrieval extends Create_Deleteable_Tag implements Retrieve_Class_Types{
     init(): void{
         this.#display_editable_tags();
     }
@@ -114,20 +105,15 @@ class Editable_Tag_Retrieval extends Deletable_Tag_Creation implements Retrieve_
     }
 }
 
-
-function submit_tag(): void{
-    (document.getElementById("add-tag-form") as HTMLFormElement).addEventListener("submit", (event) => {
-        new Blog_Tag_Submission().init(event);
-    });
-}
-
-class Blog_Tag_Submission extends Deletable_Tag_Creation implements Submit_Class_Types{
-    init(event: SubmitEvent): void{
-        event.preventDefault();
-        this.#submit_tag();
+class Submit_Blog_Tags extends Create_Deleteable_Tag implements Submit_Class_Types{
+    init(): void{
+        (document.getElementById("add-tag-form") as HTMLFormElement).addEventListener("submit", (event) => {
+            this.#submit_tag(event);
+        });
     }
 
-    async #submit_tag(): Promise<void>{
+    async #submit_tag(event: SubmitEvent): Promise<void>{
+        event.preventDefault();
         const add_tag_input = document.getElementById("blog-edit-tag-input") as HTMLInputElement;
         if(add_tag_input.value.trim() === ""){
             return;
@@ -156,22 +142,13 @@ class Blog_Tag_Submission extends Deletable_Tag_Creation implements Submit_Class
 // SECTION 3 - MAIN CONTENT EDIT 
 
 
-function display_blog_content(): void{
-    new Editable_Blog_Content_Retrieval().init();
-    (document.getElementById("reset-inputs-btn") as HTMLButtonElement).addEventListener("click", () => new Editable_Blog_Content_Retrieval().undo_changes());
-}
-
-interface Blog_Content_Retrieval_Types{
-    init: () => void;
-    undo_changes: () => void;
-}
-
-class Editable_Blog_Content_Retrieval implements Blog_Content_Retrieval_Types{
+class Retrieve_Editable_Blog_Content implements Retrieve_Class_Types{
     init(): void{
         this.#retrieve_blog_data();
+        (document.getElementById("reset-inputs-btn") as HTMLButtonElement).addEventListener("click", () => this.#undo_changes());
     }
 
-    undo_changes(): void{
+    #undo_changes(): void{
         const {show_element, hide_element} = toggle_element_visibility(
             "profile-popup-background", 
             "show-element-block", 
@@ -205,7 +182,6 @@ class Editable_Blog_Content_Retrieval implements Blog_Content_Retrieval_Types{
         }
     }
 }
-
 
 function update_blog_content(): void{
     const blog_update = new Blog_Data_Submission("../backend/Blog_Managment/Blog_Editing/Blog_Contents/contents_update.php", true);

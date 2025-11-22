@@ -6,28 +6,48 @@ export class Blog_Data_Submission {
     tags;
     tag_input;
     tag_display;
+    tag_index;
     constructor(submit_url, is_blog_update) {
         this.submit_url = submit_url;
         this.is_blog_update = is_blog_update;
         this.tags = [];
         this.tag_input = document.getElementById("blog-tag-input");
         this.tag_display = document.getElementById("tag-container");
+        this.tag_index = 0;
     }
     init(event) {
         this.#submit_blog(event);
     }
-    collect_tags() {
-        if (this.tag_input.value.trim() !== "") {
-            this.tags.push(this.tag_input.value);
-            this.#display_tag();
-            this.tag_input.value = "";
-        }
+    collect_tag() {
+        this.tags.push(this.tag_input.value);
+        const displayed_tag = document.createElement("div");
+        displayed_tag.innerHTML = `
+            <div class="flex items-center displayed-tag gap-[1vw]">
+                <p>${this.tag_input.value}</p>
+                <button type="button" title="Delete Tag?"
+                    class="delete-tag-btn material-symbols-outlined select-none cursor-pointer 
+                    p-[0.25vw] rounded-[50%] duration-200
+                    hover:bg-[rgb(255,51,85)] active:bg-[rgb(228,140,155)]"
+                >
+                    close
+                </button>
+            </div>
+        `;
+        const index = this.tag_index;
+        const delete_tag_btn = displayed_tag.querySelector(".delete-tag-btn");
+        delete_tag_btn.addEventListener("click", () => {
+            this.#remove_tag(index, displayed_tag);
+        });
+        this.tag_input.value = "";
+        document.getElementById("tag-container").appendChild(displayed_tag);
+        this.tag_index++;
     }
-    #display_tag() {
-        const displayed_tag = document.createElement("p");
-        displayed_tag.classList.add("displayed-tag");
-        displayed_tag.textContent = this.tag_input.value;
-        this.tag_display.appendChild(displayed_tag);
+    #remove_tag(index, displayed_tag) {
+        if (this.tags.length > 0) {
+            displayed_tag.remove();
+            this.tags.splice(index, 1);
+            this.tag_index--;
+        }
     }
     async #submit_blog(event) {
         event.preventDefault();
