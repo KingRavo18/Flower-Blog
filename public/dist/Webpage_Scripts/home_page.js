@@ -1,20 +1,21 @@
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
 document.addEventListener("DOMContentLoaded", () => {
+    search_for_blogs();
     display_all_blogs();
 }, { once: true });
 // SECTION 1 - SEARCH BARS
-function search_with_title() {
-    new Search_By_Title().init();
+function search_for_blogs() {
+    document.getElementById("find-btn").addEventListener("click", () => {
+        new Search_For_Blogs().init();
+    });
 }
-class Search_By_Title {
+class Search_For_Blogs {
     init() {
-        const title_input = document.getElementById("all-blog-container").innerHTML = "";
+        const title_input = document.getElementById("find-by-title-input");
+        document.getElementById("all-blog-container").innerHTML = "";
+        new Blog_Retrieval(title_input.value.trim()).init();
     }
-}
-function search_with_tags() {
-}
-class Search_By_Tags {
 }
 // SECTION 2 - ALL BLOG DISPLAY
 function display_all_blogs() {
@@ -51,7 +52,7 @@ class Blog_Retrieval {
     }
     #create_blog_list_item(blog_id, title, description, author, like_count, dislike_count) {
         const blog_list_item = document.createElement("li");
-        blog_list_item.classList.add("blog-list-item", "w-[70vw]", "cursor-pointer");
+        blog_list_item.classList.add("blog-list-item", "w-[70vw]", "cursor-pointer", "container-appear-animation-below");
         blog_list_item.innerHTML = `
             <p>${title}</p>
             <p class="text-[rgb(228,140,155)] max-w-[60vw] basic-text-size mt-[0.1vw]">${description}</p>

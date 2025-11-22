@@ -10,18 +10,20 @@
 </head>
 <body id="document-body">
     <main class="pt-[5vw] flex flex-col items-center">
-
         <h1 class="page-title page-title-h1 text-[3vw] absolute">
-            Might Interest you
+            Might Interest You
         </h1>
         
         <div class="flex gap-[0.5vw] mt-[11vw] container-appear-animation-below">
-            <input type="text" id="find-by-title-input" placeholder="Find by title:" title="Input Title" autocomplete="off" class="text-input">
-            <button id="find-by-title-btn" class="common-btn" title="Find by title.">Find</button>
+            <div class="flex">
+                <input type="text" id="find-by-tag-input" placeholder="Input tag:" title="Input Tag" autocomplete="off" class="text-input text-input-less-rounded">
+                <button id="add-tag-btn" class="common-btn common-btn-less-rounded ml-[-0.2vw]" title="Add tag">Add</button>
+            </div>
+            <input type="text" id="find-by-title-input" placeholder="Input title:" title="Input Title" autocomplete="off" class="text-input">
+            <button id="find-btn" class="common-btn" title="Look for blogs">Find</button>
         </div>
 
-        <ul id="all-blog-container" class="blog-list-ul w-full flex flex-col items-center mt-[1vw] container-appear-animation-below"></ul>
-        
+        <ul id="all-blog-container" class="blog-list-ul w-full flex flex-col items-center mt-[1vw]"></ul>
     </main>
     <script type="module" src="./dist/Global/global.js"></script>
     <script type="module" src="./dist/Webpage_Scripts/home_page.js"></script>

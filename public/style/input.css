@@ -54,6 +54,10 @@ body{
     &:hover{ background-color: rgb(255, 214, 220); }
     &:active{ background-color: rgb(228,140,155); }
 }
+.common-btn-less-rounded{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
 
 .text-input{
     background-color: white;
@@ -68,6 +72,10 @@ body{
         outline: none;
         border: 2px solid rgb(228, 140, 155);
     }
+}
+.text-input-less-rounded{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .popup-window-background{
