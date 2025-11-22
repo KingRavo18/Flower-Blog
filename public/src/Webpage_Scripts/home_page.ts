@@ -6,6 +6,26 @@ document.addEventListener("DOMContentLoaded", () => {
     display_all_blogs();
 }, {once: true});
 
+// SECTION 1 - SEARCH BARS
+
+function search_with_title(): void{
+    
+}
+
+class Search_By_Title{
+
+}
+
+function search_with_tags(): void{
+
+}
+
+class Search_By_Tags{
+
+}
+
+// SECTION 2 - ALL BLOG DISPLAY
+
 
 function display_all_blogs(): void{
     new Blog_Retrieval().init();

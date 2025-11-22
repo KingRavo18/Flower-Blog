@@ -3,6 +3,16 @@ import { fetch_data } from "../Modules/fetch_data.js";
 document.addEventListener("DOMContentLoaded", () => {
     display_all_blogs();
 }, { once: true });
+// SECTION 1 - SEARCH BARS
+function search_with_title() {
+}
+class Search_By_Title {
+}
+function search_with_tags() {
+}
+class Search_By_Tags {
+}
+// SECTION 2 - ALL BLOG DISPLAY
 function display_all_blogs() {
     new Blog_Retrieval().init();
 }
