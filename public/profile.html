@@ -10,7 +10,6 @@
 </head>
 <body id="document-body">
     <main class="pt-[5vw] flex flex-col items-center pb-[3vw]">
-        
         <h1 id="profile-title" class="page-title page-title-h1 text-[3vw] absolute"></h1>
 
         <!-- PROFILE DATA UPDATING CONTAINER -->
@@ -32,7 +31,8 @@
         <div id="username-change-popup" class="popup-window hide-element">
             <div class="relative flex w-full">
                 <span id="hide-username-change-popup-btn" title="Close popup" class="material-symbols-outlined absolute 
-                    p-[0.25vw] rounded-[50%] -top-[0.75vw] -right-[1vw] cursor-pointer select-none duration-200 hover:bg-[rgb(255,160,176)] active:bg-[rgb(228,140,155)]">
+                    p-[0.25vw] rounded-[50%] -top-[0.75vw] -right-[1vw] cursor-pointer select-none duration-200 hover:bg-[rgb(255,160,176)] active:bg-[rgb(228,140,155)]"
+                >
                     close
                 </span>
             </div>
@@ -58,7 +58,8 @@
         <div id="password-change-popup" class="popup-window hide-element">
             <div class="relative flex w-full">
                 <span id="hide-password-change-popup-btn" title="Close popup" class="material-symbols-outlined absolute 
-                    p-[0.25vw] rounded-[50%] -top-[0.75vw] -right-[1vw] cursor-pointer select-none duration-200 hover:bg-[rgb(255,160,176)] active:bg-[rgb(228,140,155)]">
+                    p-[0.25vw] rounded-[50%] -top-[0.75vw] -right-[1vw] cursor-pointer select-none duration-200 hover:bg-[rgb(255,160,176)] active:bg-[rgb(228,140,155)]"
+                >
                     close
                 </span>
             </div>
@@ -104,9 +105,7 @@
         <!-- PERSONAL BLOG DISPLAY CONTAINER -->
 
         <h2 class="page-title text-[2vw] mb-[2vw] container-appear-animation-below">PERSONAL BLOGS</h2>
-        <div class="flex gap-[0.5vw] container-appear-animation-below">
-            <input type="text" id="find-by-title-input" placeholder="Find by title:" autocomplete="off" class="text-input">
-        </div>
+        <input type="text" id="find-by-title-input" placeholder="Find by title:" autocomplete="off" class="text-input container-appear-animation-below">
 
         <ul id="user-blog-container" class="blog-list-ul w-full flex flex-col items-center mt-[1vw] container-appear-animation-below"></ul>
 
@@ -119,7 +118,6 @@
                 <button title="Don't delete this blog" id="blog-deletion-denial" class="common-btn">No</button>
             </div>
         </div>
-
     </main>
     <script type="module" src="./dist/Global/global.js"></script>
     <script type="module" src="./dist/Webpage_Scripts/user_profile.js"></script>
