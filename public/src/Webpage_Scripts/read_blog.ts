@@ -46,8 +46,15 @@ class Retrieve_Blog_Content implements Retrieve_Class_Types{
     }
 }
 
+// SECTION 2 - LIKES AND DISLIKES
 
-// SECTION 2 - DISPLAY TAGS
+class Like_Or_Dislike_Blog{
+    init(): void{
+        
+    }
+}
+
+// SECTION 3 - DISPLAY TAGS
 
 
 type Tag = {
@@ -90,7 +97,7 @@ class Tags_Retrieval implements Retrieve_Class_Types{
 }
 
 
-// SECTION 3 - COMMENT MANAGMENT
+// SECTION 4 - COMMENT MANAGMENT
 
 
 type Comment = {

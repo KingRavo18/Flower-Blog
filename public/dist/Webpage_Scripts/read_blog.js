@@ -34,6 +34,11 @@ class Retrieve_Blog_Content {
         }
     }
 }
+// SECTION 2 - LIKES AND DISLIKES
+class Like_Or_Dislike_Blog {
+    init() {
+    }
+}
 class Tags_Retrieval {
     init() {
         this.#retrieve_tags();
