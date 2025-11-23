@@ -56,8 +56,8 @@ class Retrieve_Blog_Content implements Retrieve_Class_Types{
 class Manage_Blog_Likes_or_Dislikes implements Retrieve_Class_Types{
     init(): void{
         this.#retrieve_blog_likes();
-        (document.getElementById("like-blog-btn") as HTMLFormElement).addEventListener("click", () => this.#submit_like_entry(true));
-        (document.getElementById("dislike-blog-btn") as HTMLFormElement).addEventListener("click", () => this.#submit_like_entry(false));
+        (document.getElementById("like-blog-btn") as HTMLButtonElement).addEventListener("click", () => this.#submit_like_entry(true));
+        (document.getElementById("dislike-blog-btn") as HTMLButtonElement).addEventListener("click", () => this.#submit_like_entry(false));
     }
 
     async #retrieve_blog_likes(){
@@ -68,12 +68,13 @@ class Manage_Blog_Likes_or_Dislikes implements Retrieve_Class_Types{
                     "Failed to like/dislike this blog. Please try again later."
             );
             (document.getElementById("like-counter") as HTMLParagraphElement).textContent = data.likes;
-            (document.getElementById("dislike-counter") as HTMLParagraphElement).textContent = data.dislikes;
+            (document.getElementById("dislike-counter") as HTMLParagraphElement).textContent = data.dislikes; 
         } 
         catch(error){
             display_message("document-body", "error-message", (error as Error).message, "center-message"); 
         }
     }
+
 
     async #submit_like_entry(is_liked: boolean): Promise<void>{
         try{
@@ -86,17 +87,12 @@ class Manage_Blog_Likes_or_Dislikes implements Retrieve_Class_Types{
                     }, 
                     "Failed to like/dislike this blog. Please try again later."
             );
-            this.#change_design(is_liked);
-
+            this.#retrieve_blog_likes();
         } 
         catch(error){
             display_message("document-body", "error-message", (error as Error).message, "center-message"); 
         }
-    }
-
-    #change_design(is_liked: boolean): void{
-
-    }
+    }   
 }
 
 

@@ -59,13 +59,11 @@ class Manage_Blog_Likes_or_Dislikes {
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ is_liked: is_liked.toString() })
             }, "Failed to like/dislike this blog. Please try again later.");
-            this.#change_design(is_liked);
+            this.#retrieve_blog_likes();
         }
         catch (error) {
             display_message("document-body", "error-message", error.message, "center-message");
         }
-    }
-    #change_design(is_liked) {
     }
 }
 class Tags_Retrieval {

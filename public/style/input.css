@@ -13,6 +13,7 @@ body{
 .hide-element{ display: none; }
 .show-element-flex{ display: flex; }
 .show-element-block{ display: block; }
+.clicked_like{ color: red; }
 
 .page-title{
     left: 50%;

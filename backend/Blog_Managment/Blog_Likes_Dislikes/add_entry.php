@@ -10,31 +10,41 @@ class Add_Like_Entry extends Db_Connection{
     ){}
 
     private function change_count($type){
-        $specific_param = $this->is_liked ? "like_count" : "dislike_count";
-        $stmt = parent::conn()->prepare("SELECT {$specific_param} FROM blogs WHERE id = ?");
+        $stmt = parent::conn()->prepare("SELECT like_count, dislike_count FROM blogs WHERE id = ?");
         $stmt->execute([$this->blog_id]);
         $result = $stmt->fetch();
-        $like_dislike = $this->is_liked ? $result->like_count : $result->dislike_count;
-        if($type === "add"){
-            $like_dislike++;
+        $like_count = $result->like_count;
+        $dislike_count = $result->dislike_count;
+        switch($type){
+            case "add":
+                $this->is_liked ? $like_count++ : $dislike_count++;
+                break;
+            case "subtract":
+                $this->is_liked ? $like_count-- : $dislike_count--;
+                break;
+            case "both":
+                $this->is_liked ? $like_count++ : $dislike_count++; 
+                !$this->is_liked ? $like_count-- : $dislike_count--;
+                break;
         }
-        else if($like_dislike > 0){
-            $like_dislike--;
-        }
-        $stmt = parent::conn()->prepare("UPDATE blogs SET {$specific_param} = ? WHERE id = ?");
-        $stmt->execute([$like_dislike, $this->blog_id]);
+        $stmt = parent::conn()->prepare("UPDATE blogs SET like_count = ?, dislike_count = ? WHERE id = ?");
+        $stmt->execute([$like_count, $dislike_count, $this->blog_id]);
     }
 
-    private function new_entry_query(){
+    private function new_entry_query($has_special_conditon){
         $stmt = parent::conn()->prepare("INSERT INTO blog_likes (user_id, blog_id, is_liked) VALUES (?, ?, ?)");
         $stmt->execute([$this->user_id, $this->blog_id, $this->is_liked]);
-        $this->change_count("add");
+        if(!$has_special_conditon){
+           $this->change_count("add");
+        }
     }
 
-    private function remove_entry_query(){
+    private function remove_entry_query($has_special_conditon){
         $stmt = parent::conn()->prepare("DELETE FROM blog_likes WHERE user_id = ? AND blog_id = ?");
         $stmt->execute([$this->user_id, $this->blog_id]);
-        $this->change_count("subtract");
+        if(!$has_special_conditon){
+            $this->change_count("subtract");
+        }
     }
 
     private function verify_like_history(){
@@ -42,14 +52,15 @@ class Add_Like_Entry extends Db_Connection{
         $stmt->execute([$this->user_id, $this->blog_id]);
         $result = $stmt->fetch();
         if(empty($result)){
-            $this->new_entry_query();
+            $this->new_entry_query(false);
         }
-        else if(!empty($result) && $result->is_liked === (int)$this->is_liked){
-            $this->remove_entry_query();
+        else if($result->is_liked === (int)$this->is_liked){
+            $this->remove_entry_query(false);
         }
         else{
-            $this->remove_entry_query();
-            $this->new_entry_query();
+            $this->remove_entry_query(true);
+            $this->new_entry_query(true);
+            $this->change_count("both");
         }
     }
 

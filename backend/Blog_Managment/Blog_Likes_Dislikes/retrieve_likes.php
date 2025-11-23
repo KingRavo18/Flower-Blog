@@ -9,6 +9,7 @@ class Like_Dislike_Retrieval extends Db_Connection{
         $stmt = parent::conn()->prepare("SELECT like_count, dislike_count FROM blogs WHERE id = ?");
         $stmt->execute([$this->blog_id]);
         $count = $stmt->fetch();
+
         echo json_encode([
             "likes" => $count->like_count,
             "dislikes" => $count->dislike_count,
