@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     new Retrieve_Blog_Content("read-blog-author", "username").init();
     new Retrieve_Blog_Content("read-blog-description", "description").init();
     new Retrieve_Blog_Content("read-blog-contents", "contents").init();
+    new Manage_Blog_Likes_or_Dislikes().init();
     new Tags_Retrieval().init();
     new Manage_Comments().init();
 }, { once: true });
@@ -35,8 +36,36 @@ class Retrieve_Blog_Content {
     }
 }
 // SECTION 2 - LIKES AND DISLIKES
-class Like_Or_Dislike_Blog {
+class Manage_Blog_Likes_or_Dislikes {
     init() {
+        this.#retrieve_blog_likes();
+        document.getElementById("like-blog-btn").addEventListener("click", () => this.#submit_like_entry(true));
+        document.getElementById("dislike-blog-btn").addEventListener("click", () => this.#submit_like_entry(false));
+    }
+    async #retrieve_blog_likes() {
+        try {
+            const data = await fetch_data("../backend/Blog_Managment/Blog_Likes_Dislikes/retrieve_likes.php", {}, "Failed to like/dislike this blog. Please try again later.");
+            document.getElementById("like-counter").textContent = data.likes;
+            document.getElementById("dislike-counter").textContent = data.dislikes;
+        }
+        catch (error) {
+            display_message("document-body", "error-message", error.message, "center-message");
+        }
+    }
+    async #submit_like_entry(is_liked) {
+        try {
+            const data = await fetch_data("../backend/Blog_Managment/Blog_Likes_Dislikes/add_entry.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ is_liked: is_liked.toString() })
+            }, "Failed to like/dislike this blog. Please try again later.");
+            this.#change_design(is_liked);
+        }
+        catch (error) {
+            display_message("document-body", "error-message", error.message, "center-message");
+        }
+    }
+    #change_design(is_liked) {
     }
 }
 class Tags_Retrieval {

@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     new Retrieve_Blog_Content("read-blog-author", "username").init();
     new Retrieve_Blog_Content("read-blog-description", "description").init();
     new Retrieve_Blog_Content("read-blog-contents", "contents").init();
+    new Manage_Blog_Likes_or_Dislikes().init();
     new Tags_Retrieval().init();
     new Manage_Comments().init();
 }, {once: true});
@@ -52,8 +53,48 @@ class Retrieve_Blog_Content implements Retrieve_Class_Types{
 // SECTION 2 - LIKES AND DISLIKES
 
 
-class Like_Or_Dislike_Blog{
+class Manage_Blog_Likes_or_Dislikes implements Retrieve_Class_Types{
     init(): void{
+        this.#retrieve_blog_likes();
+        (document.getElementById("like-blog-btn") as HTMLFormElement).addEventListener("click", () => this.#submit_like_entry(true));
+        (document.getElementById("dislike-blog-btn") as HTMLFormElement).addEventListener("click", () => this.#submit_like_entry(false));
+    }
+
+    async #retrieve_blog_likes(){
+        try{
+            const data = await fetch_data(
+                    "../backend/Blog_Managment/Blog_Likes_Dislikes/retrieve_likes.php", 
+                    {}, 
+                    "Failed to like/dislike this blog. Please try again later."
+            );
+            (document.getElementById("like-counter") as HTMLParagraphElement).textContent = data.likes;
+            (document.getElementById("dislike-counter") as HTMLParagraphElement).textContent = data.dislikes;
+        } 
+        catch(error){
+            display_message("document-body", "error-message", (error as Error).message, "center-message"); 
+        }
+    }
+
+    async #submit_like_entry(is_liked: boolean): Promise<void>{
+        try{
+            const data = await fetch_data(
+                    "../backend/Blog_Managment/Blog_Likes_Dislikes/add_entry.php", 
+                    {
+                        method: "POST", 
+                        headers: { "Content-Type": "application/x-www-form-urlencoded" }, 
+                        body: new URLSearchParams({ is_liked: is_liked.toString() })
+                    }, 
+                    "Failed to like/dislike this blog. Please try again later."
+            );
+            this.#change_design(is_liked);
+
+        } 
+        catch(error){
+            display_message("document-body", "error-message", (error as Error).message, "center-message"); 
+        }
+    }
+
+    #change_design(is_liked: boolean): void{
 
     }
 }
@@ -192,7 +233,7 @@ class Manage_Comments implements Managment_Class_Types{
                         body: new URLSearchParams({ comment_id: comment_id.toString() })
                     }, 
                     "Failed to load comments for this blog. Please try again later."
-                );
+            );
             const comment_list_item = document.createElement("li");
             comment_list_item.classList.add("pointer-events-none", "w-[52vw]");
             comment_list_item.innerHTML = `
