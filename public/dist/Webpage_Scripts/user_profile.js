@@ -28,8 +28,7 @@ class Display_Title {
 // SECTION 2 - UPDATE THE USER'S PROFILE
 class Update_Username {
     init() {
-        const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
-        username_change_popup.init();
+        new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn").init();
         document.getElementById("username-change-form").addEventListener("submit", (event) => this.#update_username(event));
     }
     async #update_username(event) {
@@ -62,8 +61,7 @@ class Update_Username {
 }
 class Update_Password {
     init() {
-        const password_change_popup = new Profile_Popup_Toggle("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
-        password_change_popup.init();
+        new Profile_Popup_Toggle("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn").init();
         document.getElementById("password-change-form").addEventListener("submit", (event) => this.#change_password(event));
     }
     async #change_password(event) {
@@ -113,8 +111,7 @@ class Update_Password {
 }
 class Delete_Account {
     init() {
-        const account_deletion_popup = new Profile_Popup_Toggle("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
-        account_deletion_popup.init();
+        new Profile_Popup_Toggle("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn").init();
         document.getElementById("acccount-deletion-form").addEventListener("submit", (event) => this.#delete_account(event));
     }
     async #delete_account(event) {
@@ -206,7 +203,7 @@ class Manage_User_Blogs {
     }
     #create_blog_list_item(blog_id, title, description) {
         const blog_list_item = document.createElement("li");
-        blog_list_item.classList.add("blog-list-item", "w-[70vw]", "cursor-pointer");
+        blog_list_item.classList.add("blog-list-item", "w-[70vw]", "cursor-pointer", "container-appear-animation-below");
         blog_list_item.innerHTML = `
             <div class="blog-list-item-top-row">
                 <h3 class="blog-title">${title}</h3>

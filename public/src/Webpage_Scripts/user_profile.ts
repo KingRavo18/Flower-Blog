@@ -39,8 +39,7 @@ class Display_Title implements Retrieve_Class_Types{
 
 class Update_Username implements Submit_Class_Types{
     init(): void{
-        const username_change_popup = new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn");
-        username_change_popup.init();
+        new Profile_Popup_Toggle("username-change-popup", "show-username-change-popup-btn", "hide-username-change-popup-btn").init();
         (document.getElementById("username-change-form") as HTMLFormElement).addEventListener("submit", (event) => this.#update_username(event));
     }
 
@@ -80,8 +79,7 @@ class Update_Username implements Submit_Class_Types{
 
 class Update_Password implements Submit_Class_Types{
     init(): void{
-        const password_change_popup = new Profile_Popup_Toggle("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn");
-        password_change_popup.init();
+        new Profile_Popup_Toggle("password-change-popup", "show-password-change-popup-btn", "hide-password-change-popup-btn").init();
         (document.getElementById("password-change-form") as HTMLFormElement).addEventListener("submit", (event) => this.#change_password(event));
     }
 
@@ -138,8 +136,7 @@ class Update_Password implements Submit_Class_Types{
 
 class Delete_Account implements Submit_Class_Types{
     init(): void{
-        const account_deletion_popup = new Profile_Popup_Toggle("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn");
-        account_deletion_popup.init();
+        new Profile_Popup_Toggle("account-deletion-popup", "show-account-deletion-popup-btn", "hide-account-deletion-popup-btn").init();
         (document.getElementById("acccount-deletion-form") as HTMLFormElement).addEventListener("submit", (event) => this.#delete_account(event));
     }
 
@@ -257,7 +254,7 @@ class Manage_User_Blogs implements Managment_Class_Types{
 
     #create_blog_list_item(blog_id: string | number, title: string, description: string): void{
         const blog_list_item = document.createElement("li");
-        blog_list_item.classList.add("blog-list-item", "w-[70vw]", "cursor-pointer");
+        blog_list_item.classList.add("blog-list-item", "w-[70vw]", "cursor-pointer", "container-appear-animation-below");
         blog_list_item.innerHTML = `
             <div class="blog-list-item-top-row">
                 <h3 class="blog-title">${title}</h3>
