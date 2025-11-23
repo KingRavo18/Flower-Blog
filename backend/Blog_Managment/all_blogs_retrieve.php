@@ -37,7 +37,7 @@ class All_Blog_Retrieval extends Db_Connection{
 
     private function execute_query(){
         list($extra_req, $params) = $this->add_extra_params();
-        $stmt = parent::conn()->prepare("SELECT * FROM blogs WHERE title LIKE ? {$extra_req} ORDER BY like_count");
+        $stmt = parent::conn()->prepare("SELECT * FROM blogs WHERE title LIKE ? {$extra_req} ORDER BY like_count DESC");
         $stmt->execute($params);
         $blogs = $stmt->fetchAll();
 
