@@ -19,6 +19,9 @@ export class Blog_Data_Submission {
         this.#submit_blog(event);
     }
     collect_tag() {
+        if (this.tag_input.value.trim() === "") {
+            return;
+        }
         this.tags.push(this.tag_input.value);
         const displayed_tag = document.createElement("div");
         displayed_tag.innerHTML = `

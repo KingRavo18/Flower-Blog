@@ -24,6 +24,9 @@ export class Blog_Data_Submission implements Blog_Data_Submission_Types{
     }
 
     collect_tag(): void{
+        if(this.tag_input.value.trim() === ""){
+            return;
+        }
         this.tags.push(this.tag_input.value);
         const displayed_tag = document.createElement("div");
         displayed_tag.innerHTML = `

@@ -8,14 +8,40 @@ class All_Blog_Retrieval extends Db_Connection{
         private $tag_req
     ){}
 
-    private function execute_query(){
-        
+    private function add_extra_params(){
+        $extra_req = "";
+        $tag_blog_ids = [];
 
-        $stmt = parent::conn()->prepare("SELECT * FROM blogs WHERE title LIKE ? ORDER BY like_count");
-        $stmt->execute(["%{$this->title_req}%"]);
+        if(!empty($this->tag_req)){
+            $stmt = parent::conn()->prepare("SELECT blog_id FROM blog_tags WHERE tag = ?");
+            foreach($this->tag_req as $tag){
+                $stmt->execute([$tag]);
+                foreach($stmt->fetchAll() as $row){
+                   $tag_blog_ids[] = (int)$row->blog_id;
+                }
+            }
+            if(!empty($tag_blog_ids)){
+                $tag_blog_ids = array_values(array_unique($tag_blog_ids));
+                $placeholders = implode(',', array_fill(0, count($tag_blog_ids), '?'));
+                $extra_req = " AND id IN ($placeholders)";
+            }
+            else{
+                $extra_req = " AND 0=1";
+            }
+        }
+        
+        $params = ["%{$this->title_req}%"];
+        $params = array_merge($params, $tag_blog_ids);
+        return array($extra_req, $params);
+    }
+
+    private function execute_query(){
+        list($extra_req, $params) = $this->add_extra_params();
+        $stmt = parent::conn()->prepare("SELECT * FROM blogs WHERE title LIKE ? {$extra_req} ORDER BY like_count");
+        $stmt->execute($params);
         $blogs = $stmt->fetchAll();
 
-        if(count($blogs) === 0){
+        if(empty($blogs)){
             echo json_encode([
                 "row_count" => count($blogs),
                 "blogs" => [],
@@ -43,7 +69,7 @@ class All_Blog_Retrieval extends Db_Connection{
             $this->execute_query();
         }
         catch(PDOException $e){
-            echo json_encode(["query_fail" => "A problem has occured, faield to retrieve all blogs."]);
+            echo json_encode(["query_fail" => $e->getMessage()]);
         }
     }
 }

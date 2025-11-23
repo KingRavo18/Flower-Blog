@@ -30,6 +30,9 @@ class Search_For_Blogs implements Ui_Change_Types{
 
     #add_tag(): void{
         const tag_input = document.getElementById("find-by-tag-input") as HTMLInputElement;
+        if(tag_input.value.trim() === ""){
+            return;
+        }
         this.tags.push(tag_input.value);
         const displayed_tag = document.createElement("div");
         displayed_tag.innerHTML = `

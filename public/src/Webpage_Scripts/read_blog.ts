@@ -11,7 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
     new Manage_Comments().init();
 }, {once: true});
 
+
 // SECTION 1 - DISPLAY THE BLOG'S CONTENT
+
 
 type content_type = "title" | "username" | "description" | "contents";
 
@@ -46,13 +48,16 @@ class Retrieve_Blog_Content implements Retrieve_Class_Types{
     }
 }
 
+
 // SECTION 2 - LIKES AND DISLIKES
+
 
 class Like_Or_Dislike_Blog{
     init(): void{
-        
+
     }
 }
+
 
 // SECTION 3 - DISPLAY TAGS
 
