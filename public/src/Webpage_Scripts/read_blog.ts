@@ -54,10 +54,18 @@ class Retrieve_Blog_Content implements Retrieve_Class_Types{
 
 
 class Manage_Blog_Likes_or_Dislikes implements Retrieve_Class_Types{
+    private like_btn: HTMLButtonElement;
+    private dislike_btn: HTMLButtonElement;
+
+    constructor(){
+        this.like_btn = document.getElementById("like-blog-btn") as HTMLButtonElement;
+        this.dislike_btn = document.getElementById("dislike-blog-btn") as HTMLButtonElement;
+    }
+
     init(): void{
         this.#retrieve_blog_likes();
-        (document.getElementById("like-blog-btn") as HTMLButtonElement).addEventListener("click", () => this.#submit_like_entry(true));
-        (document.getElementById("dislike-blog-btn") as HTMLButtonElement).addEventListener("click", () => this.#submit_like_entry(false));
+        this.like_btn.addEventListener("click", () => this.#submit_like_entry(true));
+        this.dislike_btn.addEventListener("click", () => this.#submit_like_entry(false));
     }
 
     async #retrieve_blog_likes(){
@@ -69,12 +77,25 @@ class Manage_Blog_Likes_or_Dislikes implements Retrieve_Class_Types{
             );
             (document.getElementById("like-counter") as HTMLParagraphElement).textContent = data.likes;
             (document.getElementById("dislike-counter") as HTMLParagraphElement).textContent = data.dislikes; 
+
+            switch(data.is_liked){
+                case "dislike":
+                    this.like_btn.classList.remove("clicked_like");
+                    this.dislike_btn.classList.add("clicked_dislike");
+                    break;
+                case "like":
+                    this.like_btn.classList.add("clicked_like");
+                    this.dislike_btn.classList.remove("clicked_dislike");
+                    break;
+                default:
+                    this.like_btn.classList.remove("clicked_like");
+                    this.dislike_btn.classList.remove("clicked_dislike");
+            }
         } 
         catch(error){
             display_message("document-body", "error-message", (error as Error).message, "center-message"); 
         }
     }
-
 
     async #submit_like_entry(is_liked: boolean): Promise<void>{
         try{

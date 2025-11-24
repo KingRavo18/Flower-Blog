@@ -604,6 +604,9 @@ body {
   display: block;
 }
 .clicked_like {
+  color: green;
+}
+.clicked_dislike {
   color: red;
 }
 .page-title {

@@ -37,16 +37,35 @@ class Retrieve_Blog_Content {
 }
 // SECTION 2 - LIKES AND DISLIKES
 class Manage_Blog_Likes_or_Dislikes {
+    like_btn;
+    dislike_btn;
+    constructor() {
+        this.like_btn = document.getElementById("like-blog-btn");
+        this.dislike_btn = document.getElementById("dislike-blog-btn");
+    }
     init() {
         this.#retrieve_blog_likes();
-        document.getElementById("like-blog-btn").addEventListener("click", () => this.#submit_like_entry(true));
-        document.getElementById("dislike-blog-btn").addEventListener("click", () => this.#submit_like_entry(false));
+        this.like_btn.addEventListener("click", () => this.#submit_like_entry(true));
+        this.dislike_btn.addEventListener("click", () => this.#submit_like_entry(false));
     }
     async #retrieve_blog_likes() {
         try {
             const data = await fetch_data("../backend/Blog_Managment/Blog_Likes_Dislikes/retrieve_likes.php", {}, "Failed to like/dislike this blog. Please try again later.");
             document.getElementById("like-counter").textContent = data.likes;
             document.getElementById("dislike-counter").textContent = data.dislikes;
+            switch (data.is_liked) {
+                case "dislike":
+                    this.like_btn.classList.remove("clicked_like");
+                    this.dislike_btn.classList.add("clicked_dislike");
+                    break;
+                case "like":
+                    this.like_btn.classList.add("clicked_like");
+                    this.dislike_btn.classList.remove("clicked_dislike");
+                    break;
+                default:
+                    this.like_btn.classList.remove("clicked_like");
+                    this.dislike_btn.classList.remove("clicked_dislike");
+            }
         }
         catch (error) {
             display_message("document-body", "error-message", error.message, "center-message");

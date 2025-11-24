@@ -13,7 +13,8 @@ body{
 .hide-element{ display: none; }
 .show-element-flex{ display: flex; }
 .show-element-block{ display: block; }
-.clicked_like{ color: red; }
+.clicked_like{ color: green; }
+.clicked_dislike{ color: red; }
 
 .page-title{
     left: 50%;
