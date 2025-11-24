@@ -8,6 +8,16 @@ class Blog_Deletion extends Db_Connection{
         private $user_id
     ){}
 
+    private function execute_like_deletion(){
+        $stmt = parent::conn()->prepare("DELETE FROM blog_likes WHERE blog_id = ?");
+        $stmt->execute([$this->blog_id]);
+    }
+
+    private function execute_comment_deletion(){
+        $stmt = parent::conn()->prepare("DELETE FROM comments WHERE blog_id = ?");
+        $stmt->execute([$this->blog_id]);
+    }
+
     private function execute_tag_deletion(){
         $stmt = parent::conn()->prepare("DELETE FROM blog_tags WHERE blog_id = ?");
         $stmt->execute([$this->blog_id]);
@@ -24,6 +34,8 @@ class Blog_Deletion extends Db_Connection{
 
     public function delete_blog(){
         try{
+            $this->execute_like_deletion();
+            $this->execute_comment_deletion();
             $this->execute_tag_deletion();
             $this->execute_blog_deletion();
             echo json_encode(["query_success" => "The blog was succesfully deleted."]);

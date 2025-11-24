@@ -7,12 +7,12 @@ class User_Registration extends Db_Connection{
         private $password
     ){}
 
-    private function char_decode(){
+    private function char_decode(): void{
         $this->username = html_entity_decode($this->username, ENT_QUOTES);
         $this->password = html_entity_decode($this->password, ENT_QUOTES);
     }
 
-    private function validate_input(){
+    private function validate_input(): void{
         if(empty(trim($this->username))){
             throw new Exception("Please input a username.");
         }
@@ -42,7 +42,7 @@ class User_Registration extends Db_Connection{
         }
     }
 
-    private function check_username_existance(){
+    private function check_username_existance(): void{
         $stmt = parent::conn()->prepare("SELECT username FROM users WHERE username = ?");
         $stmt->execute([$this->username]);
         $user_count = $stmt->rowCount();
@@ -51,13 +51,13 @@ class User_Registration extends Db_Connection{
         }
     }
 
-    private function execute_query(){
+    private function execute_query(): void{
         $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
         $stmt = parent::conn()->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
         $stmt->execute(["username" => $this->username, "password" => $password_hash]);
     }
 
-    public function register_user(){
+    public function register_user(): void{
         try{
             $this->char_decode();
             $this->validate_input();

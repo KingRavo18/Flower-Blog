@@ -10,13 +10,13 @@ class Blog_Creation extends Db_Connection{
         private $contents
     ){}
 
-    private function char_decode(){
+    private function char_decode(): void{
         $this->title = html_entity_decode($this->title, ENT_QUOTES);
         $this->description = html_entity_decode($this->description, ENT_QUOTES);
         $this->contents = html_entity_decode($this->contents, ENT_QUOTES);
     }
 
-    private function validate_inputs(){
+    private function validate_inputs(): void{
         if(empty(trim($this->title))){
             throw new Exception("A blog must have a title.");
         }
@@ -28,22 +28,23 @@ class Blog_Creation extends Db_Connection{
         }
     }
 
-    private function execute_query(){
+    private function execute_query(): array{
         $conn = parent::conn();
         $stmt = $conn->prepare("INSERT INTO blogs (user_id, title, description, contents) VALUES (?, ?, ?, ?)");
         $stmt->execute([$this->user_id, $this->title, $this->description, $this->contents]);
         $blog_id = $conn->lastInsertId();
-        echo json_encode([
+        return [
             "blog_id" => $blog_id,
             "query_success" => "Blog creation was successful."
-        ]);
+        ];
     }
 
     public function create_blog(){
         try{
             $this->char_decode();
             $this->validate_inputs();
-            $this->execute_query();
+            $json_return = $this->execute_query();
+            echo json_encode($json_return);
         }
         catch(PDOException $e){
             echo json_encode(["query_fail" => "A problem has occured, please try again later."]);

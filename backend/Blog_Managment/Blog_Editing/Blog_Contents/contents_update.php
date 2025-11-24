@@ -11,13 +11,13 @@ class Blog_Contents_Update extends Db_Connection{
         private $user_id
     ){}
 
-    private function char_replace(){
+    private function char_replace(): void{
         $this->title = html_entity_decode($this->title, ENT_QUOTES);
         $this->description = html_entity_decode($this->description, ENT_QUOTES);
         $this->contents = html_entity_decode($this->contents, ENT_QUOTES);
     }
 
-    private function validate_inputs(){
+    private function validate_inputs(): void{
         if(empty(trim($this->title))){
             throw new Exception("A blog must have a title.");
         }
@@ -29,12 +29,12 @@ class Blog_Contents_Update extends Db_Connection{
         }
     }
 
-    private function execute_query(){
+    private function execute_query(): void{
         $stmt = parent::conn()->prepare("UPDATE blogs SET title = ?, description = ?, contents = ? WHERE id = ? AND user_id = ?");
         $stmt->execute([$this->title, $this->description, $this->contents, $this->blog_id, $this->user_id]);
     }
 
-    public function update_blog_contents(){
+    public function update_blog_contents(): void{
         try{
             $this->char_replace();
             $this->validate_inputs();

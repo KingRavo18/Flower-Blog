@@ -5,7 +5,7 @@ require ("../../../Session_Maintanance/global_session_check.php");
 class Blog_Tag_Deletion extends Db_Connection{
     public function __construct( private $tag_id ){}
 
-    private function execute_query(){
+    private function execute_query(): void{
         $stmt = parent::conn()->prepare("DELETE FROM blog_tags WHERE id = ?");
         $stmt->execute([$this->tag_id]);
         $tag_count = $stmt->rowCount();
@@ -14,7 +14,7 @@ class Blog_Tag_Deletion extends Db_Connection{
         }
     }
 
-    public function delete_blog_tag(){
+    public function delete_blog_tag(): void{
         try{
             $this->execute_query();
             echo json_encode(["query_success" => "The tag was succesfully deleted."]);

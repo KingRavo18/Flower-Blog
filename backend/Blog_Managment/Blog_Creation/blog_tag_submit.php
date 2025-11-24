@@ -8,11 +8,11 @@ class Blog_Tag_Submit extends Db_Connection{
         private $tag
     ){}
 
-    private function char_decode(){
+    private function char_decode(): void{
         $this->tag = html_entity_decode($this->tag, ENT_QUOTES);
     }
 
-    private function validate_data(){
+    private function validate_data(): void{
         if($this->blog_id === 0){
             throw new Exception();
         }
@@ -21,22 +21,23 @@ class Blog_Tag_Submit extends Db_Connection{
         }
     }
 
-    private function execute_query(){
+    private function execute_query(): array{
         $conn = parent::conn();
         $stmt = $conn->prepare("INSERT INTO blog_tags (blog_id, tag) VALUES (?, ?)");
         $stmt->execute([$this->blog_id, $this->tag]);
         $tag_id = $conn->lastInsertId();
-        echo json_encode([
+        return [
             "tag_id" => $tag_id,
             "query_success" => "The tag was succesfully added."
-        ]);
+        ];
     }
 
-    public function submit_blog_tag(){
+    public function submit_blog_tag(): void{
         try{
             $this->char_decode();
             $this->validate_data();
-            $this->execute_query();
+            $json_return = $this->execute_query();
+            echo json_encode($json_return);
         }
         catch(PDOException $e){
             echo json_encode(["query_fail" => "Could not assign tags. Please assign them in blog edit later."]);

@@ -8,7 +8,7 @@ class Ownership_Check extends Db_Connection{
         private $blog_id
     ){}
 
-    private function execute_query(){
+    private function execute_query(): void{
         $stmt = parent::conn()->prepare("SELECT user_id FROM blogs WHERE id = ?");
         $stmt->execute([$this->blog_id]);
         $result = $stmt->fetch();
@@ -17,7 +17,7 @@ class Ownership_Check extends Db_Connection{
         }
     }   
 
-    public function check_ownership(){
+    public function check_ownership(): void{
         try{
             $this->execute_query();
             echo json_encode(["query_success" => "Your blog has been updated."]);

@@ -5,7 +5,7 @@ require ("../../Session_Maintanance/global_session_check.php");
 class Blog_Id_Transfer extends Db_Connection{
     public function __construct(private $blog_id){}
 
-    public function transfer(){
+    public function transfer(): void{
         $_SESSION["blog_id"] = $this->blog_id;
         echo json_encode(["query_success" => "The blog id has been successfully transfered."]);
     }

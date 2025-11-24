@@ -7,12 +7,12 @@ class Signin_User extends Db_Connection{
         private $password
     ){}
 
-    private function char_decode(){
+    private function char_decode(): void{
         $this->username = html_entity_decode($this->username, ENT_QUOTES);
         $this->password = html_entity_decode($this->password, ENT_QUOTES);
     }
 
-    private function validate_input(){
+    private function validate_input(): void{
         if(empty(trim($this->username))){
             throw new Exception("Please input a username.");
         }
@@ -21,7 +21,7 @@ class Signin_User extends Db_Connection{
         }
     }
 
-    private function execute_query(){
+    private function execute_query(): void{
         $stmt = parent::conn()->prepare("SELECT id, password FROM users WHERE username = :username");
         $stmt->execute(["username" => $this->username]);
         $user = $stmt->fetch();
@@ -32,7 +32,7 @@ class Signin_User extends Db_Connection{
         $_SESSION["username"] = $this->username;
     }
 
-    public function sign_in_user(){
+    public function sign_in_user(): void{
         try{
             $this->char_decode();
             $this->validate_input();

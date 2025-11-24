@@ -8,22 +8,23 @@ class Blog_Contents_Retrieval extends Db_Connection{
         private $user_id
     ){}
 
-    private function execute_query(){
+    private function execute_query(): array{
         $stmt = parent::conn()->prepare("SELECT * FROM blogs WHERE id = ? AND user_id = ?");
         $stmt->execute([$this->blog_id, $this->user_id]);
         $blog_data = $stmt->fetch();
-        if(!$blog_data){
+        if(empty($blog_data)){
             throw new Exception("Blog has not been found");
         }
-        echo json_encode([
+        return [
             "query_success" => "The blog data has been succesfully retrieved.",
             "blog" => $blog_data
-        ]);
+        ];
     }
 
-    public function retrieve_blog_contents(){
+    public function retrieve_blog_contents(): void{
         try{
-            $this->execute_query();
+            $json_response = $this->execute_query();
+            echo json_encode($json_response);
         }
         catch(PDOException $e){
             echo json_encode(["query_fail" => "A problem has occured, please try again later."]);
