@@ -132,7 +132,7 @@ class Manage_Comments {
     }
     async #retrieve_comments() {
         try {
-            const data = await fetch_data("../backend/Comment_Managment/Comment_Display/comment_ids_retrieve.php", {}, "Failed to load comments for this blog. Please try again later.");
+            const data = await fetch_data("../backend/Comment_Managment/Comment_Display/comment_data_retrieve.php", {}, "Failed to load comments for this blog. Please try again later.");
             this.comment_amount = data.row_count;
             if (this.comment_amount === 0) {
                 this.no_blogs_message.classList.add("text-center", "basic-text-size");
@@ -141,7 +141,7 @@ class Manage_Comments {
             }
             else {
                 data.comments.forEach((comment) => {
-                    this.#create_comment_element(comment.id);
+                    this.#create_comment_element(comment.id, comment.comment, comment.creation_date, comment.username);
                 });
             }
         }
@@ -161,7 +161,7 @@ class Manage_Comments {
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ comment: comment_area.value })
             }, "Failed to add your comment to this blog. Please try again later.");
-            this.#create_comment_element(data.comment_id);
+            this.#create_comment_element(data.comment_id, comment_area.value, data.comment.creation_date, data.comment.username);
             comment_area.value = "";
             display_message("document-body", "success-message", data.query_success, "center-message");
             this.comment_amount++;
@@ -173,24 +173,14 @@ class Manage_Comments {
             display_message("document-body", "error-message", error.message, "center-message");
         }
     }
-    async #create_comment_element(comment_id) {
-        try {
-            const data = await fetch_data("../backend/Comment_Managment/Comment_Display/comment_content_retrieval.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({ comment_id: comment_id.toString() })
-            }, "Failed to load comments for this blog. Please try again later.");
-            const comment_list_item = document.createElement("li");
-            comment_list_item.classList.add("pointer-events-none", "w-[52vw]");
-            comment_list_item.innerHTML = `
-                <p>${data.comment_content}</p>
-                <p class="text-[rgb(228,140,155)] text-right">By ${data.comment_author.username}, ${data.comment_date}</p>
-            `;
-            this.comments_container.insertBefore(comment_list_item, this.comments_container.firstChild);
-        }
-        catch (error) {
-            display_message("document-body", "error-message", error.message, "center-message");
-        }
+    async #create_comment_element(comment_id, comment_content, comment_date, comment_author) {
+        const comment_list_item = document.createElement("li");
+        comment_list_item.classList.add("pointer-events-none", "w-[52vw]");
+        comment_list_item.innerHTML = `
+            <p>${comment_content}</p>
+            <p class="text-[rgb(228,140,155)] text-right">By ${comment_author}, ${comment_date}</p>
+        `;
+        this.comments_container.insertBefore(comment_list_item, this.comments_container.firstChild);
     }
 }
 //# sourceMappingURL=read_blog.js.map

@@ -2,29 +2,29 @@
 require ("../../DB_Connection/db_connection.php");
 require ("../../Session_Maintanance/global_session_check.php");
 
-class Comment_ID_Retrieval extends Db_Connection{
+class Comment_Retrieval extends Db_Connection{
     public function __construct(private $blog_id){}
 
     private function execute_query(): array{
-        $stmt = parent::conn()->prepare("SELECT id FROM comments WHERE blog_id = ?");
+        $stmt = parent::conn()->prepare("SELECT id, user_id, comment, creation_date FROM comments WHERE blog_id = ?");
         $stmt->execute([$this->blog_id]);
-        $query_success = "The comments were retrieved successfully.";
-        if($stmt->rowCount() === 0){
-            echo json_encode([
-                "row_count" => $stmt->rowCount(),
-                "query_success" => $query_success
-            ]);
-            exit;
-        }
         $comments = $stmt->fetchAll();
+
+        foreach($comments as $comment){
+            $stmt = parent::conn()->prepare("SELECT username FROM users WHERE id = ?");
+            $stmt->execute([$comment->user_id]);
+            $username = $stmt->fetch();
+            $comment->username = $username->username;
+        }
+        
         return [
             "row_count" => $stmt->rowCount(),
             "comments" => $comments,
-            "query_success" => $query_success
+            "query_success" => "The comments were retrieved successfully."
         ];
     }
 
-    public function retrieve_comment_ids(){
+    public function retrieve_comment_ids(): void{
         try{
             $json_return = $this->execute_query();
             echo json_encode($json_return);
@@ -36,5 +36,5 @@ class Comment_ID_Retrieval extends Db_Connection{
 }
 
 $blog_id = $_SESSION["blog_id"];
-$comment_retrieval = new Comment_ID_Retrieval($blog_id);
+$comment_retrieval = new Comment_Retrieval($blog_id);
 $comment_retrieval->retrieve_comment_ids();

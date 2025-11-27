@@ -24,8 +24,19 @@ class Comment_Creation extends Db_Connection{
         $stmt = $conn->prepare("INSERT into comments (user_id, blog_id, comment) VALUES (?, ?, ?)");
         $stmt->execute([$this->user_id, $this->blog_id, $this->comment]);
         $comment_id = $conn->lastInsertId();
+
+        $stmt = $conn->prepare("SELECT user_id, creation_date FROM comments WHERE id = ?");
+        $stmt->execute([$comment_id]);
+        $comment = $stmt->fetch();
+
+        $stmt = $conn->prepare("SELECT username FROM users WHERE id = ?");
+        $stmt->execute([$comment->user_id]);
+        $username = $stmt->fetch();
+        $comment->username = $username->username;
+
         return [
             "comment_id" => $comment_id,
+            "comment" => $comment,
             "query_success" => "Your comment was added successfully."
         ];
     }
