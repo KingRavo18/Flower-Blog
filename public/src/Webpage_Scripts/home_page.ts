@@ -67,7 +67,6 @@ class Search_For_Blogs implements Ui_Change_Types{
 
     #submit_req(): void{
         const title_input = document.getElementById("find-by-title-input") as HTMLInputElement;
-        (document.getElementById("all-blog-container") as HTMLUListElement).innerHTML = "";
         new Retrieve_Blogs(title_input.value.trim(), this.tags).init();
     }
 }
@@ -93,22 +92,25 @@ class Retrieve_Blogs implements Retrieve_Class_Types{
 
     init(): void{
         this.#retireve_blog_data();
+        (document.getElementById("blog-sort-options") as HTMLSelectElement).addEventListener("change", () => this.#retireve_blog_data());
     }
 
     async #retireve_blog_data(): Promise<void>{
+        const sort_option = (document.getElementById("blog-sort-options") as HTMLSelectElement).value;
         try{
             const data = await fetch_data(
                 "../backend/Blog_Managment/all_blogs_retrieve.php", 
                 {
                     method: "POST", 
                     headers: { "Content-Type": "application/x-www-form-urlencoded" }, 
-                    body: new URLSearchParams({ title_req: this.title_req, tag_req: JSON.stringify(this.tag_req)})
+                    body: new URLSearchParams({ title_req: this.title_req, tag_req: JSON.stringify(this.tag_req), sort_option: sort_option})
                 }, 
                 "Failed to load blogs. Please try again later");
             if(data.row_count === 0){
                 this.#display_no_blogs_message();
             }
             else{
+                (document.getElementById("all-blog-container") as HTMLUListElement).innerHTML = "";
                 (data.blogs as Blog[]).forEach((blog: Blog) => {
                     this.#create_blog_list_item(blog.id, blog.title, blog.description, blog.username, blog.like_count, blog.dislike_count);
                 });

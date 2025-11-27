@@ -5,7 +5,8 @@ require ("../Session_Maintanance/global_session_check.php");
 class All_Blog_Retrieval extends Db_Connection{
     public function __construct(
         private $title_req,
-        private $tag_req
+        private $tag_req,
+        private $sort_option
     ){}
 
     private function add_extra_params(): array{
@@ -35,9 +36,28 @@ class All_Blog_Retrieval extends Db_Connection{
         return array($extra_req, $params);
     }
 
+    private function sort_blogs(): string{
+        $sort_req = "";
+        switch($this->sort_option){
+            case "most-liked":
+                $sort_req = "ORDER BY like_count DESC";
+                break;
+            case "abc":
+                $sort_req = "ORDER BY title";
+                break;
+            case "cba":
+                $sort_req = "ORDER BY title DESC";
+                break;
+            default:
+                throw new Exception("Could not retrieve blogs, please try again later.");
+        }
+        return $sort_req;
+    }
+
     private function execute_query(): array{
         list($extra_req, $params) = $this->add_extra_params();
-        $stmt = parent::conn()->prepare("SELECT * FROM blogs WHERE title LIKE ? {$extra_req} ORDER BY like_count DESC");
+        $sort_req = $this->sort_blogs();
+        $stmt = parent::conn()->prepare("SELECT * FROM blogs WHERE title LIKE ? {$extra_req} {$sort_req}");
         $stmt->execute($params);
         $blogs = $stmt->fetchAll();
         if(!empty($blogs)){
@@ -61,6 +81,9 @@ class All_Blog_Retrieval extends Db_Connection{
             echo json_encode($json_response);
         }
         catch(PDOException $e){
+            echo json_encode(["query_fail" => "A problem has occured, please try again later."]);
+        }
+        catch(Exception $e){
             echo json_encode(["query_fail" => $e->getMessage()]);
         }
     }
@@ -68,5 +91,6 @@ class All_Blog_Retrieval extends Db_Connection{
 
 $title_req = filter_input(INPUT_POST, "title_req", FILTER_SANITIZE_SPECIAL_CHARS);
 $tag_req = json_decode($_POST["tag_req"]);
-$retrieve_blogs = new All_Blog_Retrieval($title_req, $tag_req);
+$sort_option = filter_input(INPUT_POST, "sort_option", FILTER_SANITIZE_SPECIAL_CHARS);
+$retrieve_blogs = new All_Blog_Retrieval($title_req, $tag_req, $sort_option);
 $retrieve_blogs->retrieve_blogs();

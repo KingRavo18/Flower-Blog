@@ -365,6 +365,9 @@
   .gap-\[1vw\] {
     gap: 1vw;
   }
+  .gap-\[2vw\] {
+    gap: 2vw;
+  }
   .overflow-hidden {
     overflow: hidden;
   }
