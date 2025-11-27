@@ -5,7 +5,7 @@ require ("../../Session_Maintanance/global_session_check.php");
 class Comment_Content_Retrieval extends Db_Connection{
     public function __construct(private $comment_id, private $blog_id){}
 
-    private function execute_query(){
+    private function execute_query(): array{
         $stmt = parent::conn()->prepare("SELECT user_id, comment, creation_date FROM comments WHERE id = ? AND blog_id = ?");
         $stmt->execute([$this->comment_id, $this->blog_id]);
         $result = $stmt->fetch();
@@ -17,17 +17,18 @@ class Comment_Content_Retrieval extends Db_Connection{
         $stmt->execute([$user_id]);
         $username = $stmt->fetch();
 
-        echo json_encode([
+        return [
             "comment_content" => $comment,
             "comment_date" => $creation_date,
             "comment_author" => $username,
             "query_success" => "The content of the comment was retrieved successfully"
-        ]);
+        ];
     }
 
-    public function retrieve_comment_content(){
+    public function retrieve_comment_content(): void{
         try{
-            $this->execute_query();
+            $json_return = $this->execute_query();
+            echo json_encode($json_return);
         }
         catch(PDOException $e){
             echo json_encode(["query_fail" => "Failed to retrieve the content of the comments. Please try again later."]);

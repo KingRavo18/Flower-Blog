@@ -9,12 +9,12 @@ class Username_Change extends Db_Connection{
         private $new_username
     ){}
 
-    private function char_decode(){
+    private function char_decode(): void{
         $this->password = html_entity_decode($this->password, ENT_QUOTES);
         $this->new_username = html_entity_decode($this->new_username, ENT_QUOTES);
     }
 
-    private function validate_inputs(){
+    private function validate_inputs(): void{
         if(empty(trim($this->password))){
             throw new Exception("Please input your current password.");
         }
@@ -26,7 +26,7 @@ class Username_Change extends Db_Connection{
         }
     }
 
-    private function verify_password(){
+    private function verify_password(): void{
         $stmt = parent::conn()->prepare("SELECT password FROM users WHERE id = ?");
         $stmt->execute([$this->user_id]);
         $user = $stmt->fetch();
@@ -35,7 +35,7 @@ class Username_Change extends Db_Connection{
         }
     }
 
-    private function check_username_existance(){
+    private function check_username_existance(): void{
         $stmt = parent::conn()->prepare("SELECT username FROM users WHERE username = ?");
         $stmt->execute([$this->new_username]);
         $user_count = $stmt->rowCount();
@@ -44,13 +44,13 @@ class Username_Change extends Db_Connection{
         }
     }
 
-    private function execute_query(){
+    private function execute_query(): void{
         $stmt = parent::conn()->prepare("UPDATE users SET username = ? WHERE id = ?");
         $stmt->execute([$this->new_username, $this->user_id]);
         $_SESSION["username"] = $this->new_username;
     }
 
-    public function change_username(){
+    public function change_username(): void{
         try{
             $this->char_decode();
             $this->validate_inputs();

@@ -5,7 +5,7 @@ require ("../Session_Maintanance/global_session_check.php");
 class Blog_Author_Display extends Db_Connection{
     public function __construct(private $blog_id){}
 
-    private function execute_query(){
+    private function execute_query(): array{
         $stmt = parent::conn()->prepare("SELECT user_id FROM blogs WHERE id = ?");
         $stmt->execute([$this->blog_id]);
         $result = $stmt->fetch();
@@ -14,15 +14,16 @@ class Blog_Author_Display extends Db_Connection{
         $stmt = parent::conn()->prepare("SELECT username FROM users WHERE id = ?");
         $stmt->execute([$user_id]);
         $username = $stmt->fetch();
-        echo json_encode([
+        return [
             "query_success" => "Blog title was found.",
             "content" => $username
-        ]);
+        ];
     }
 
     public function display_blog_author(){
         try{
-            $this->execute_query();
+            $json_return = $this->execute_query();
+            echo json_encode($json_return);
         }
         catch(PDOException $e){
             echo json_encode(["query_fail" => "A problem has occured."]);

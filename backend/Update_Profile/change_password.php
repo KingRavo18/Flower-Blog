@@ -9,12 +9,12 @@ class Password_Change extends Db_Connection{
         private $new_password
     ){}
 
-    private function char_decode(){
+    private function char_decode(): void{
         $this->current_password = html_entity_decode($this->current_password, ENT_QUOTES);
         $this->new_password = html_entity_decode($this->new_password, ENT_QUOTES);
     }
 
-    private function validate_inputs(){
+    private function validate_inputs(): void{
         if(empty(trim($this->current_password))){
             throw new Exception("Please input your current password.");
         }
@@ -41,7 +41,7 @@ class Password_Change extends Db_Connection{
         }
     }
 
-    private function verify_password(){
+    private function verify_password(): void{
         $stmt = parent::conn()->prepare("SELECT password FROM users WHERE id = ?");
         $stmt->execute([$this->id]);
         $user = $stmt->fetch();
@@ -50,13 +50,13 @@ class Password_Change extends Db_Connection{
         }
     }
 
-    private function execute_query(){
+    private function execute_query(): void{
         $new_password_hash = password_hash($this->new_password, PASSWORD_DEFAULT);
         $stmt = parent::conn()->prepare("UPDATE users SET password = ? WHERE username = ?");
         $stmt->execute([$new_password_hash, $_SESSION["username"]]);
     }
 
-    public function change_password(){
+    public function change_password(): void{
         try{
             $this->char_decode();
             $this->validate_inputs();

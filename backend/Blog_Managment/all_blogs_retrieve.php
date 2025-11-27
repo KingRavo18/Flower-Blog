@@ -8,7 +8,7 @@ class All_Blog_Retrieval extends Db_Connection{
         private $tag_req
     ){}
 
-    private function add_extra_params(){
+    private function add_extra_params(): array{
         $extra_req = "";
         $tag_blog_ids = [];
 
@@ -35,38 +35,30 @@ class All_Blog_Retrieval extends Db_Connection{
         return array($extra_req, $params);
     }
 
-    private function execute_query(){
+    private function execute_query(): array{
         list($extra_req, $params) = $this->add_extra_params();
         $stmt = parent::conn()->prepare("SELECT * FROM blogs WHERE title LIKE ? {$extra_req} ORDER BY like_count DESC");
         $stmt->execute($params);
         $blogs = $stmt->fetchAll();
-
-        if(empty($blogs)){
-            echo json_encode([
-                "row_count" => count($blogs),
-                "blogs" => [],
-                "query_success" => "The blogs were retrieved successfully."
-            ]);
-            exit;
+        if(!empty($blogs)){
+            foreach($blogs as $blog){
+                $stmt = parent::conn()->prepare("SELECT username FROM users WHERE id = ?");
+                $stmt->execute([$blog->user_id]);
+                $username = $stmt->fetch();
+                $blog->username = $username->username;
+            }
         }
-
-        foreach($blogs as $blog){
-            $stmt = parent::conn()->prepare("SELECT username FROM users WHERE id = ?");
-            $stmt->execute([$blog->user_id]);
-            $username = $stmt->fetch();
-            $blog->username = $username->username;
-        }
-
-        echo json_encode([
+        return [
             "row_count" => count($blogs),
             "blogs" => $blogs,
             "query_success" => "The blogs were retrieved successfully."
-        ]);
+        ];
     }
 
-    public function retrieve_blogs(){
+    public function retrieve_blogs(): void{
         try{
-            $this->execute_query();
+            $json_response = $this->execute_query();
+            echo json_encode($json_response);
         }
         catch(PDOException $e){
             echo json_encode(["query_fail" => $e->getMessage()]);

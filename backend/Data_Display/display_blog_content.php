@@ -5,19 +5,20 @@ require ("../Session_Maintanance/global_session_check.php");
 class Blog_Content_Display extends Db_Connection{
     public function __construct(private $blog_id){}
 
-    private function execute_query(){
+    private function execute_query(): array{
         $stmt = parent::conn()->prepare("SELECT title, description, contents FROM blogs WHERE id = ?");
         $stmt->execute([$this->blog_id]);
         $result = $stmt->fetch();
-        echo json_encode([
+        return [
             "query_success" => "Blog title was found.",
             "content" => $result
-        ]);
+        ];
     }
 
     public function display_blog_content(){
         try{
-            $this->execute_query();
+            $json_return = $this->execute_query();
+            echo json_encode($json_return);
         }
         catch(PDOException $e){
             echo json_encode(["query_fail" => "A problem has occured."]);

@@ -9,32 +9,33 @@ class Comment_Creation extends Db_Connection{
         private $comment
     ){}
 
-    private function char_decode(){
+    private function char_decode(): void{
         $this->comment = html_entity_decode($this->comment, ENT_QUOTES);
     }
 
-    private function validate_input(){
+    private function validate_input(): void{
         if(empty(trim($this->comment))){
             throw new Exception("Please input your comment.");
         }
     }
 
-    private function execute_query(){
+    private function execute_query(): array{
         $conn = parent::conn();
         $stmt = $conn->prepare("INSERT into comments (user_id, blog_id, comment) VALUES (?, ?, ?)");
         $stmt->execute([$this->user_id, $this->blog_id, $this->comment]);
         $comment_id = $conn->lastInsertId();
-        echo json_encode([
+        return [
             "comment_id" => $comment_id,
             "query_success" => "Your comment was added successfully."
-        ]);
+        ];
     }
 
-    public function submit_comment(){
+    public function submit_comment(): void{
         try{
             $this->char_decode();
             $this->validate_input();
-            $this->execute_query();
+            $json_return = $this->execute_query();
+            echo json_encode($json_return);
         }
         catch(PDOException $e){
             echo json_encode(["query_fail" => "A problem has occured. Please try again later"]);

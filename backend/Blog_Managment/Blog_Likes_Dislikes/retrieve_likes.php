@@ -8,7 +8,7 @@ class Like_Dislike_Retrieval extends Db_Connection{
         private $blog_id
     ){}
 
-    private function execute_query(){
+    private function execute_query(): array{
         $stmt = parent::conn()->prepare("SELECT like_count, dislike_count FROM blogs WHERE id = ?");
         $stmt->execute([$this->blog_id]);
         $count = $stmt->fetch();
@@ -27,12 +27,13 @@ class Like_Dislike_Retrieval extends Db_Connection{
             $returnable_json["is_liked"] = $like_response->is_liked ? "like" : "dislike";
         }
 
-        echo json_encode($returnable_json);
+        return $returnable_json;
     }
 
-    public function retrieve_likes(){
+    public function retrieve_likes(): void{
         try{
-            $this->execute_query();
+            $returnable_json = $this->execute_query();
+            echo json_encode($returnable_json);
         }
         catch(PDOException $e){
             echo json_encode(["query_fail" => $e->getMessage()]);

@@ -9,7 +9,7 @@ class Db_Connection{
     private $db_password = "";
     private $db_name = "flower_blog";
 
-    protected function conn(){
+    protected function conn(): PDO{
         $attribute_options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_EMULATE_PREPARES => false,

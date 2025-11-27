@@ -9,7 +9,7 @@ class Add_Like_Entry extends Db_Connection{
         private $is_liked
     ){}
 
-    private function change_count($type){
+    private function change_count($type): void{
         $stmt = parent::conn()->prepare("SELECT like_count, dislike_count FROM blogs WHERE id = ?");
         $stmt->execute([$this->blog_id]);
         $result = $stmt->fetch();
@@ -31,7 +31,7 @@ class Add_Like_Entry extends Db_Connection{
         $stmt->execute([$like_count, $dislike_count, $this->blog_id]);
     }
 
-    private function new_entry_query($has_special_conditon){
+    private function new_entry_query($has_special_conditon): void{
         $stmt = parent::conn()->prepare("INSERT INTO blog_likes (user_id, blog_id, is_liked) VALUES (?, ?, ?)");
         $stmt->execute([$this->user_id, $this->blog_id, $this->is_liked]);
         if(!$has_special_conditon){
@@ -39,7 +39,7 @@ class Add_Like_Entry extends Db_Connection{
         }
     }
 
-    private function remove_entry_query($has_special_conditon){
+    private function remove_entry_query($has_special_conditon): void{
         $stmt = parent::conn()->prepare("DELETE FROM blog_likes WHERE user_id = ? AND blog_id = ?");
         $stmt->execute([$this->user_id, $this->blog_id]);
         if(!$has_special_conditon){
@@ -47,7 +47,7 @@ class Add_Like_Entry extends Db_Connection{
         }
     }
 
-    private function verify_like_history(){
+    private function verify_like_history(): void{
         $stmt = parent::conn()->prepare("SELECT * FROM blog_likes WHERE user_id = ? AND blog_id = ?");
         $stmt->execute([$this->user_id, $this->blog_id]);
         $result = $stmt->fetch();
@@ -64,7 +64,7 @@ class Add_Like_Entry extends Db_Connection{
         }
     }
 
-    public function add_like_entry(){
+    public function add_like_entry(): void{
         try{
             $this->verify_like_history();
             echo json_encode(["query_success" => "The like entry was successfully added."]);

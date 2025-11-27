@@ -5,7 +5,7 @@ require ("../../Session_Maintanance/global_session_check.php");
 class Comment_ID_Retrieval extends Db_Connection{
     public function __construct(private $blog_id){}
 
-    private function execute_query(){
+    private function execute_query(): array{
         $stmt = parent::conn()->prepare("SELECT id FROM comments WHERE blog_id = ?");
         $stmt->execute([$this->blog_id]);
         $query_success = "The comments were retrieved successfully.";
@@ -17,16 +17,17 @@ class Comment_ID_Retrieval extends Db_Connection{
             exit;
         }
         $comments = $stmt->fetchAll();
-        echo json_encode([
+        return [
             "row_count" => $stmt->rowCount(),
             "comments" => $comments,
             "query_success" => $query_success
-        ]);
+        ];
     }
 
     public function retrieve_comment_ids(){
         try{
-            $this->execute_query();
+            $json_return = $this->execute_query();
+            echo json_encode($json_return);
         }
         catch(PDOException $e){
             echo json_encode(["query_fail" => "Failed to load comments for this blog."]);
