@@ -1,3 +1,4 @@
+import { toggle_element_visibility } from "../Modules/element_toggle.js";
 import { display_message } from "../Modules/message_display.js";
 import { fetch_data } from "../Modules/fetch_data.js";
 document.addEventListener("DOMContentLoaded", () => {
@@ -141,7 +142,7 @@ class Manage_Comments {
             }
             else {
                 data.comments.forEach((comment) => {
-                    this.#create_comment_element(comment.id, comment.comment, comment.creation_date, comment.username);
+                    this.#create_comment_element(comment.id, comment.comment, comment.creation_date, comment.username, comment.is_users);
                 });
             }
         }
@@ -161,7 +162,7 @@ class Manage_Comments {
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({ comment: comment_area.value })
             }, "Failed to add your comment to this blog. Please try again later.");
-            this.#create_comment_element(data.comment_id, comment_area.value, data.comment.creation_date, data.comment.username);
+            this.#create_comment_element(data.comment_id, comment_area.value, data.comment.creation_date, data.comment.username, data.comment.is_users);
             comment_area.value = "";
             display_message("document-body", "success-message", data.query_success, "center-message");
             this.comment_amount++;
@@ -173,14 +174,69 @@ class Manage_Comments {
             display_message("document-body", "error-message", error.message, "center-message");
         }
     }
-    async #create_comment_element(comment_id, comment_content, comment_date, comment_author) {
+    async #create_comment_element(comment_id, comment_content, comment_date, comment_author, is_users) {
         const comment_list_item = document.createElement("li");
         comment_list_item.classList.add("pointer-events-none", "w-[52vw]");
         comment_list_item.innerHTML = `
-            <p>${comment_content}</p>
+            <div class="flex justify-between py-[0.25vw]">
+                <p>${comment_content}</p>
+                <div class="flex comment_extra_btns gap-[0.5vw]"></div>
+            </div>
             <p class="text-[rgb(228,140,155)] text-right">By ${comment_author}, ${comment_date}</p>
         `;
+        if (is_users) {
+            new Manage_Users_Personal_Comments(comment_list_item, comment_id).init();
+        }
         this.comments_container.insertBefore(comment_list_item, this.comments_container.firstChild);
+    }
+}
+class Manage_Users_Personal_Comments {
+    list_item;
+    comment_id;
+    constructor(list_item, comment_id) {
+        this.list_item = list_item;
+        this.comment_id = comment_id;
+    }
+    init() {
+        this.#assign_buttons();
+    }
+    #assign_buttons() {
+        const edit_btn = document.createElement("button");
+        edit_btn.classList.add("pointer-events-auto", "common-btn", "material-symbols-outlined");
+        edit_btn.textContent = "edit";
+        edit_btn.addEventListener("click", () => {
+        });
+        this.list_item.querySelector(".comment_extra_btns").appendChild(edit_btn);
+        const delete_btn = document.createElement("button");
+        delete_btn.classList.add("pointer-events-auto", "common-btn", "material-symbols-outlined");
+        delete_btn.textContent = "delete";
+        delete_btn.addEventListener("click", () => this.#toggle_comment_deletion_confirmation_popup());
+        this.list_item.querySelector(".comment_extra_btns").appendChild(delete_btn);
+    }
+    async #edit_comment() {
+    }
+    #toggle_comment_deletion_confirmation_popup() {
+        const { show_element, hide_element } = toggle_element_visibility("read-popup-background", "show-element-block", "hide-popup-background-anim", "delete-comment-confirmation-popup", "show-element-flex", "hide-popup-anim");
+        show_element();
+        document.getElementById("comment-deletion-confirmation").addEventListener("click", async () => {
+            await this.#delete_comment();
+            this.list_item.remove();
+            hide_element();
+        }, { once: true });
+        document.getElementById("comment-deletion-denial").addEventListener("click", () => hide_element(), { once: true });
+    }
+    async #delete_comment() {
+        try {
+            const data = await fetch_data("../backend/Comment_Managment/Comment_Deletion/comment_delete.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ comment_id: this.comment_id.toString() })
+            }, "Could not delete this comment. Please try again later.");
+            display_message("document-body", "success-message", data.query_success, "center-message");
+        }
+        catch (error) {
+            display_message("document-body", "error-message", error.message, "center-message");
+        }
     }
 }
 //# sourceMappingURL=read_blog.js.map

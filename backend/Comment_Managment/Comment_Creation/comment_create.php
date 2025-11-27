@@ -25,7 +25,7 @@ class Comment_Creation extends Db_Connection{
         $stmt->execute([$this->user_id, $this->blog_id, $this->comment]);
         $comment_id = $conn->lastInsertId();
 
-        $stmt = $conn->prepare("SELECT user_id, creation_date FROM comments WHERE id = ?");
+        $stmt = $conn->prepare("SELECT id, user_id, creation_date FROM comments WHERE id = ?");
         $stmt->execute([$comment_id]);
         $comment = $stmt->fetch();
 
@@ -33,6 +33,15 @@ class Comment_Creation extends Db_Connection{
         $stmt->execute([$comment->user_id]);
         $username = $stmt->fetch();
         $comment->username = $username->username;
+
+        $stmt = parent::conn()->prepare("SELECT comment FROM comments WHERE id = ? AND user_id = ? AND blog_id = ?");
+        $stmt->execute([$comment->id, $comment->user_id, $this->blog_id]);
+        $username = $stmt->fetch();
+        $is_users = false;
+        if(!empty($username->comment)){
+            $is_users = true;
+        }
+        $comment->is_users = $is_users;
 
         return [
             "comment_id" => $comment_id,
