@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     new Retrieve_Blog_Content("read-blog-contents", "contents").init();
     new Manage_Blog_Likes_or_Dislikes().init();
     new Tags_Retrieval().init();
-    new Manage_Comments().init();
+    new Display_Create_Comments().init();
 }, {once: true});
 
 
@@ -172,7 +172,7 @@ type Comment = {
     is_users: boolean;
 };
 
-class Manage_Comments implements Managment_Class_Types{
+class Display_Create_Comments implements Managment_Class_Types{
     private comments_container: HTMLUListElement;
     private comment_amount: number;
     private no_blogs_message: HTMLParagraphElement;
@@ -253,37 +253,28 @@ class Manage_Comments implements Managment_Class_Types{
             <p class="text-[rgb(228,140,155)] text-right">By ${comment_author}, ${comment_date}</p>
         `;
         if(is_users){
-            new Manage_Users_Personal_Comments(comment_list_item, comment_id).init();
+            const edit_btn = document.createElement("button");
+            edit_btn.classList.add("pointer-events-auto", "common-btn", "material-symbols-outlined");
+            edit_btn.textContent = "edit";
+            edit_btn.addEventListener("click", () => new Edit_Personal_Comment(comment_id).init());
+            (comment_list_item.querySelector(".comment_extra_btns") as HTMLDivElement).appendChild(edit_btn);
+
+            const delete_btn = document.createElement("button");
+            delete_btn.classList.add("pointer-events-auto", "common-btn", "material-symbols-outlined");
+            delete_btn.textContent = "delete";
+            delete_btn.addEventListener("click", () => new Delete_Personal_Comment(comment_id, comment_list_item).init());
+            (comment_list_item.querySelector(".comment_extra_btns") as HTMLDivElement).appendChild(delete_btn);
         }
         this.comments_container.insertBefore(comment_list_item, this.comments_container.firstChild);
     }
 }
 
-class Manage_Users_Personal_Comments implements Managment_Class_Types{
-    constructor(
-        private list_item: HTMLLIElement,
-        private comment_id: string | number,
-    ){}
+
+class Edit_Personal_Comment implements Managment_Class_Types{
+    constructor(private comment_id: string | number){}
+
 
     init(): void{
-        this.#assign_buttons();
-    }
-
-    #assign_buttons(): void{
-        const edit_btn = document.createElement("button");
-        edit_btn.classList.add("pointer-events-auto", "common-btn", "material-symbols-outlined");
-        edit_btn.textContent = "edit";
-        edit_btn.addEventListener("click", () => this.#toggle_comment_edit_popup());
-        (this.list_item.querySelector(".comment_extra_btns") as HTMLDivElement).appendChild(edit_btn);
-
-        const delete_btn = document.createElement("button");
-        delete_btn.classList.add("pointer-events-auto", "common-btn", "material-symbols-outlined");
-        delete_btn.textContent = "delete";
-        delete_btn.addEventListener("click", () => this.#toggle_comment_deletion_confirmation_popup());
-        (this.list_item.querySelector(".comment_extra_btns") as HTMLDivElement).appendChild(delete_btn);
-    }
-
-    #toggle_comment_edit_popup(): void{
         const {show_element, hide_element} = toggle_element_visibility(
             "read-popup-background", 
             "show-element-block", 
@@ -322,8 +313,17 @@ class Manage_Users_Personal_Comments implements Managment_Class_Types{
     async #edit_comment(event: SubmitEvent): Promise<void>{
         event.preventDefault();
     }
+}
 
-    #toggle_comment_deletion_confirmation_popup(): void{
+
+class Delete_Personal_Comment implements Managment_Class_Types{
+    constructor(
+        private comment_id: string | number,
+        private list_item: HTMLLIElement
+        
+    ){}
+
+    init(): void{
         const {show_element, hide_element} = toggle_element_visibility(
             "read-popup-background", 
             "show-element-block", 
