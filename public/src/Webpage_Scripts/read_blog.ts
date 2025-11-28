@@ -320,7 +320,6 @@ class Delete_Personal_Comment implements Managment_Class_Types{
     constructor(
         private comment_id: string | number,
         private list_item: HTMLLIElement
-        
     ){}
 
     init(): void{
