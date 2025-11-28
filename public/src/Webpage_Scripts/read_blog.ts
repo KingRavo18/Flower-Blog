@@ -273,9 +273,7 @@ class Manage_Users_Personal_Comments implements Managment_Class_Types{
         const edit_btn = document.createElement("button");
         edit_btn.classList.add("pointer-events-auto", "common-btn", "material-symbols-outlined");
         edit_btn.textContent = "edit";
-        edit_btn.addEventListener("click", () => {
-
-        });
+        edit_btn.addEventListener("click", () => this.#toggle_comment_edit_popup());
         (this.list_item.querySelector(".comment_extra_btns") as HTMLDivElement).appendChild(edit_btn);
 
         const delete_btn = document.createElement("button");
@@ -285,8 +283,44 @@ class Manage_Users_Personal_Comments implements Managment_Class_Types{
         (this.list_item.querySelector(".comment_extra_btns") as HTMLDivElement).appendChild(delete_btn);
     }
 
-    async #edit_comment(): Promise<void>{
+    #toggle_comment_edit_popup(): void{
+        const {show_element, hide_element} = toggle_element_visibility(
+            "read-popup-background", 
+            "show-element-block", 
+            "hide-popup-background-anim",
+            "edit-comment-confirmation-popup",
+            "show-element-flex", 
+            "hide-popup-anim"
+        );
+        show_element();
+        this.#display_editable_comment();
+        (document.getElementById("update-comment-form") as HTMLFormElement).addEventListener("submit", async (event) => {
+            await this.#edit_comment(event);
+            hide_element();
+        }, { once: true });
+        (document.getElementById("hide-comment-edit-popup-btn") as HTMLElement).addEventListener("click", () => hide_element(), { once: true });
+    }
 
+    async #display_editable_comment(): Promise<void>{
+        try{
+            const data = await fetch_data(
+                "../backend/Comment_Managment/Comment_Display/comment_edit_retrieve.php",
+                { 
+                    method: "POST", 
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" }, 
+                    body: new URLSearchParams({ comment_id: this.comment_id.toString() })
+                },
+                "Could show the comment. Please try again later."
+            );
+            (document.getElementById("new-comment-area") as HTMLTextAreaElement).value = data.comment;
+        }
+        catch(error){
+            display_message("document-body", "error-message", (error as Error).message, "center-message");
+        }
+    }
+
+    async #edit_comment(event: SubmitEvent): Promise<void>{
+        event.preventDefault();
     }
 
     #toggle_comment_deletion_confirmation_popup(): void{

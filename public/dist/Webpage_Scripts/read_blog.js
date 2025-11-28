@@ -204,8 +204,7 @@ class Manage_Users_Personal_Comments {
         const edit_btn = document.createElement("button");
         edit_btn.classList.add("pointer-events-auto", "common-btn", "material-symbols-outlined");
         edit_btn.textContent = "edit";
-        edit_btn.addEventListener("click", () => {
-        });
+        edit_btn.addEventListener("click", () => this.#toggle_comment_edit_popup());
         this.list_item.querySelector(".comment_extra_btns").appendChild(edit_btn);
         const delete_btn = document.createElement("button");
         delete_btn.classList.add("pointer-events-auto", "common-btn", "material-symbols-outlined");
@@ -213,7 +212,31 @@ class Manage_Users_Personal_Comments {
         delete_btn.addEventListener("click", () => this.#toggle_comment_deletion_confirmation_popup());
         this.list_item.querySelector(".comment_extra_btns").appendChild(delete_btn);
     }
-    async #edit_comment() {
+    #toggle_comment_edit_popup() {
+        const { show_element, hide_element } = toggle_element_visibility("read-popup-background", "show-element-block", "hide-popup-background-anim", "edit-comment-confirmation-popup", "show-element-flex", "hide-popup-anim");
+        show_element();
+        this.#display_editable_comment();
+        document.getElementById("update-comment-form").addEventListener("submit", async (event) => {
+            await this.#edit_comment(event);
+            hide_element();
+        }, { once: true });
+        document.getElementById("hide-comment-edit-popup-btn").addEventListener("click", () => hide_element(), { once: true });
+    }
+    async #display_editable_comment() {
+        try {
+            const data = await fetch_data("../backend/Comment_Managment/Comment_Display/comment_edit_retrieve.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ comment_id: this.comment_id.toString() })
+            }, "Could show the comment. Please try again later.");
+            document.getElementById("new-comment-area").value = data.comment;
+        }
+        catch (error) {
+            display_message("document-body", "error-message", error.message, "center-message");
+        }
+    }
+    async #edit_comment(event) {
+        event.preventDefault();
     }
     #toggle_comment_deletion_confirmation_popup() {
         const { show_element, hide_element } = toggle_element_visibility("read-popup-background", "show-element-block", "hide-popup-background-anim", "delete-comment-confirmation-popup", "show-element-flex", "hide-popup-anim");
