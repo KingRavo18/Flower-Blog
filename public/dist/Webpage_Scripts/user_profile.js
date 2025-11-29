@@ -183,17 +183,32 @@ class Find_Blog_By_Title {
 }
 class Manage_User_Blogs {
     init() {
-        this.#retrieve_personal_blogs();
+        this.#retrieve_blogs();
+        document.getElementById("blog-selection").addEventListener("change", () => this.#retrieve_blogs());
     }
-    async #retrieve_personal_blogs() {
+    async #retrieve_blogs() {
+        document.getElementById("user-blog-container").innerHTML = "";
+        let url = "";
+        const blog_selection = document.getElementById("blog-selection").value;
+        if (blog_selection === "user-blogs") {
+            url = "../backend/Blog_Managment/user_blogs_retrieve.php";
+        }
+        else if (blog_selection === "liked-blogs") {
+            url = "../backend/Blog_Managment/liked_blogs_retrieve.php";
+        }
         try {
-            const data = await fetch_data("../backend/Blog_Managment/user_blogs_retrive.php", {}, "Could not fetch your blogs. Please try again later.");
+            const data = await fetch_data(url, {}, "Could not fetch your blogs. Please try again later.");
             if (data.row_count === 0) {
                 this.#display_no_blogs_message();
             }
+            else if (blog_selection === "user-blogs") {
+                data.blogs.forEach((blog) => {
+                    this.#create_blog_list_item(blog.id, blog.title, blog.description, true);
+                });
+            }
             else {
                 data.blogs.forEach((blog) => {
-                    this.#create_blog_list_item(blog.id, blog.title, blog.description);
+                    this.#create_blog_list_item(blog.id, blog.title, blog.description, false);
                 });
             }
         }
@@ -201,30 +216,21 @@ class Manage_User_Blogs {
             display_message("document-body", "error-message", error.message, "center-message");
         }
     }
-    #create_blog_list_item(blog_id, title, description) {
+    #create_blog_list_item(blog_id, title, description, is_users) {
         const blog_list_item = document.createElement("li");
         blog_list_item.classList.add("blog-list-item", "w-[70vw]", "cursor-pointer", "container-appear-animation-below");
         blog_list_item.innerHTML = `
             <div class="blog-list-item-top-row">
                 <h3 class="blog-title">${title}</h3>
-                <div>
-                    <button title="Edit this blog?" class="common-btn edit-blog-btn basic-text-size flex justify-center items-center">
-                        <span class="material-symbols-outlined">
-                            edit
-                        </span>
-                    </button>
-                    <button title="Delete this blog?" class="common-btn delete-blog-btn basic-text-size flex justify-center items-center">
-                        <span class="material-symbols-outlined">
-                            delete
-                        </span>
-                    </button>
-                </div>
+                <div class="user-edit-btns basic-text-size"></div>
             </div>
             <p class="text-[rgb(228,140,155)] max-w-[60vw] basic-text-size">${description}</p>
         `;
         this.#set_blog_click_event(blog_id, blog_list_item);
-        this.#set_blog_edit_btn(blog_id, blog_list_item);
-        this.#set_blog_deletion_btn(blog_id, blog_list_item);
+        if (is_users) {
+            this.#set_blog_edit_btn(blog_id, blog_list_item);
+            this.#set_blog_deletion_btn(blog_id, blog_list_item);
+        }
         document.getElementById("user-blog-container").appendChild(blog_list_item);
     }
     #set_blog_click_event(blog_id, blog_list_item) {
@@ -232,12 +238,19 @@ class Manage_User_Blogs {
             this.#transfer_user(blog_id, "./read_blog.html");
         });
     }
+    // EDIT BLOGS
     #set_blog_edit_btn(blog_id, blog_list_item) {
-        const edit_btn = blog_list_item.querySelector(".edit-blog-btn");
+        const edit_btn = document.createElement("button");
+        edit_btn.innerHTML = `
+            <button title="Edit this blog?" class="common-btn material-symbols-outlined basic-text-size flex justify-center items-center">
+                edit
+            </button>
+        `;
         edit_btn.addEventListener("click", (event) => {
             event.stopPropagation();
             this.#transfer_user(blog_id, "./edit_blog.html");
         });
+        blog_list_item.querySelector(".user-edit-btns").appendChild(edit_btn);
     }
     async #transfer_user(blog_id, transfer_destination) {
         try {
@@ -252,12 +265,19 @@ class Manage_User_Blogs {
             display_message("document-body", "error-message", error.message, "center-message");
         }
     }
+    // DELETE BLOGS
     #set_blog_deletion_btn(blog_id, blog_list_item) {
-        const delete_btn = blog_list_item.querySelector(".delete-blog-btn");
+        const delete_btn = document.createElement("button");
+        delete_btn.innerHTML = `
+            <button title="Edit this blog?" class="common-btn material-symbols-outlined basic-text-size flex justify-center items-center">
+                delete
+            </button>
+        `;
         delete_btn.addEventListener("click", (event) => {
             event.stopPropagation();
             this.#toggle_blog_deletion_confirmation_popup(blog_id, blog_list_item);
         });
+        blog_list_item.querySelector(".user-edit-btns").appendChild(delete_btn);
     }
     #toggle_blog_deletion_confirmation_popup(blog_id, blog_list_item) {
         const { show_element, hide_element } = toggle_element_visibility("profile-popup-background", "show-element-block", "hide-popup-background-anim", "delete-blog-confirmation-popup", "show-element-flex", "hide-popup-anim");
@@ -288,10 +308,11 @@ class Manage_User_Blogs {
             this.#display_no_blogs_message();
         }
     }
+    // NO BLOGS MESSAGE
     #display_no_blogs_message() {
         const no_blogs_message = document.createElement("p");
         no_blogs_message.classList.add("text-center", "basic-text-size");
-        no_blogs_message.textContent = "You have created no blogs. Begin now!";
+        no_blogs_message.textContent = "There are no blogs!";
         document.getElementById("user-blog-container").appendChild(no_blogs_message);
     }
 }
