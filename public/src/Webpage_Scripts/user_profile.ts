@@ -272,8 +272,8 @@ class Manage_User_Blogs implements Managment_Class_Types{
         blog_list_item.classList.add("blog-list-item", "w-[70vw]", "cursor-pointer", "container-appear-animation-below");
         blog_list_item.innerHTML = `
             <div class="blog-list-item-top-row">
-                <h3 class="blog-title">${title}</h3>
-                <div class="user-edit-btns basic-text-size"></div>
+                <h3 class="blog-title text-[1.25vw]">${title}</h3>
+                <div class="user-edit-btns text-[1.15vw]"></div>
             </div>
             <p class="text-[rgb(228,140,155)] max-w-[60vw] basic-text-size">${description}</p>
         `;

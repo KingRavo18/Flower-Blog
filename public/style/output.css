@@ -9,8 +9,6 @@
       "Courier New", monospace;
     --spacing: 0.25rem;
     --font-weight-bold: 700;
-    --default-transition-duration: 150ms;
-    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
   }
@@ -185,6 +183,9 @@
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
+  .top-\[20\%\] {
+    top: 20%;
+  }
   .top-\[50\%\] {
     top: 50%;
   }
@@ -239,6 +240,9 @@
   .mt-\[11vw\] {
     margin-top: 11vw;
   }
+  .mr-\[5\%\] {
+    margin-right: 5%;
+  }
   .mb-\[0\.5vw\] {
     margin-bottom: 0.5vw;
   }
@@ -272,8 +276,8 @@
   .h-\[3vw\] {
     height: 3vw;
   }
-  .h-\[5vw\] {
-    height: 5vw;
+  .h-\[20vw\] {
+    height: 20vw;
   }
   .h-auto {
     height: auto;
@@ -326,6 +330,9 @@
   .w-\[70vw\] {
     width: 70vw;
   }
+  .w-\[90vw\] {
+    width: 90vw;
+  }
   .w-auto {
     width: auto;
   }
@@ -337,9 +344,6 @@
   }
   .max-w-\[10vw\] {
     max-width: 10vw;
-  }
-  .max-w-\[30vw\] {
-    max-width: 30vw;
   }
   .max-w-\[60vw\] {
     max-width: 60vw;
@@ -479,6 +483,12 @@
   .text-\[1\.5vw\] {
     font-size: 1.5vw;
   }
+  .text-\[1\.15vw\] {
+    font-size: 1.15vw;
+  }
+  .text-\[1\.25vw\] {
+    font-size: 1.25vw;
+  }
   .text-\[1vw\] {
     font-size: 1vw;
   }
@@ -488,8 +498,11 @@
   .text-\[3vw\] {
     font-size: 3vw;
   }
-  .text-\[4vw\] {
-    font-size: 4vw;
+  .text-\[5vw\] {
+    font-size: 5vw;
+  }
+  .text-\[7vw\] {
+    font-size: 7vw;
   }
   .text-\[900\%\] {
     font-size: 900%;
@@ -593,6 +606,76 @@
       color: rgb(228,140,155);
     }
   }
+  .md\:top-\[50\%\] {
+    @media (width >= 48rem) {
+      top: 50%;
+    }
+  }
+  .md\:h-\[5vw\] {
+    @media (width >= 48rem) {
+      height: 5vw;
+    }
+  }
+  .md\:w-\[30vw\] {
+    @media (width >= 48rem) {
+      width: 30vw;
+    }
+  }
+  .md\:text-\[2vw\] {
+    @media (width >= 48rem) {
+      font-size: 2vw;
+    }
+  }
+  .md\:text-\[3vw\] {
+    @media (width >= 48rem) {
+      font-size: 3vw;
+    }
+  }
+  .md\:text-\[5vw\] {
+    @media (width >= 48rem) {
+      font-size: 5vw;
+    }
+  }
+  .lg\:top-\[50\%\] {
+    @media (width >= 64rem) {
+      top: 50%;
+    }
+  }
+  .lg\:mr-0 {
+    @media (width >= 64rem) {
+      margin-right: calc(var(--spacing) * 0);
+    }
+  }
+  .lg\:ml-\[1vw\] {
+    @media (width >= 64rem) {
+      margin-left: 1vw;
+    }
+  }
+  .lg\:h-\[5vw\] {
+    @media (width >= 64rem) {
+      height: 5vw;
+    }
+  }
+  .lg\:w-\[30vw\] {
+    @media (width >= 64rem) {
+      width: 30vw;
+    }
+  }
+  .lg\:text-\[2vw\] {
+    @media (width >= 64rem) {
+      font-size: 2vw;
+    }
+  }
+  .lg\:text-\[3vw\] {
+    @media (width >= 64rem) {
+      font-size: 3vw;
+    }
+  }
+  .lg\:text-\[5vw\] {
+    @media (width >= 64rem) {
+      font-size: 5vw;
+    }
+  }
 }
 body {
   margin: 0;
@@ -615,10 +698,13 @@ body {
   display: block;
 }
 .clicked_like {
-  color: green;
+  color: rgb(7, 216, 7);
 }
 .clicked_dislike {
-  color: red;
+  color: rgb(255, 7, 7);
+}
+.material-symbols-outlined {
+  font-size: 1.5vw;
 }
 .page-title {
   left: 50%;
@@ -798,7 +884,7 @@ body {
 }
 @keyframes appear-navbar {
   from {
-    top: -20vw;
+    top: -50%;
   }
   to {
     top: 0;
@@ -979,6 +1065,93 @@ body {
         display: flex;
         gap: 0.5vw;
       }
+    }
+  }
+}
+@media (max-width: 600px) {
+  .basic-text-size {
+    font-size: 5vw;
+  }
+  .material-symbols-outlined {
+    font-size: 7vw;
+  }
+  .login_signup_container {
+    position: relative;
+    height: 90vh;
+    width: 100vw;
+    margin-top: 70vw;
+    border-top: 1px solid rgb(255,160,176);
+  }
+  @keyframes signin-page-description-rise {
+    0% {
+      top: 200%;
+    }
+    80% {
+      top: 18%;
+    }
+    100% {
+      top: 20%;
+    }
+  }
+  @keyframes right-form-appear {
+    from {
+      margin-right: -200vw;
+    }
+    to {
+      margin-right: 0;
+    }
+  }
+  @keyframes right-form-disappear {
+    from {
+      margin-right: 0;
+    }
+    to {
+      margin-right: -200vw;
+    }
+  }
+  @keyframes left-form-appear {
+    from {
+      margin-left: -200vw;
+    }
+    to {
+      margin-left: 0;
+    }
+  }
+  @keyframes left-form-disappear {
+    from {
+      margin-left: 0;
+    }
+    to {
+      margin-left: -200vw;
+    }
+  }
+  .error-message, .success-message {
+    max-width: 70vw;
+    bottom: 3vw;
+  }
+  .left-message, .right-message {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  @keyframes message-appear {
+    from {
+      bottom: -20vw;
+    }
+    to {
+      bottom: 3vw;
+    }
+  }
+  @keyframes message-disappear {
+    from {
+      bottom: 3vw;
+    }
+    to {
+      bottom: -20vw;
+    }
+  }
+  .toggleable-sidebar {
+    & li {
+      padding: 1vw 0;
     }
   }
 }

@@ -125,8 +125,8 @@ class Retrieve_Blogs implements Retrieve_Class_Types{
         const blog_list_item = document.createElement("li");
         blog_list_item.classList.add("blog-list-item", "w-[70vw]", "cursor-pointer", "container-appear-animation-below");
         blog_list_item.innerHTML = `
-            <p>${title}</p>
-            <p class="text-[rgb(228,140,155)] max-w-[60vw] basic-text-size mt-[0.1vw]">${description}</p>
+            <p class="text-[1.25vw]">${title}</p>
+            <p class="text-[rgb(228,140,155)] max-w-[60vw] text-[1.15vw] mt-[0.1vw]">${description}</p>
             <div class="flex justify-between text-[rgb(228,140,155)] basic-text-size mt-[0.5vw]">
                 <div class="flex justify-center items-center gap-[0.5vw]">
                     <p>${like_count}</p>

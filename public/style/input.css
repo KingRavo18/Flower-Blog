@@ -13,8 +13,9 @@ body{
 .hide-element{ display: none; }
 .show-element-flex{ display: flex; }
 .show-element-block{ display: block; }
-.clicked_like{ color: green; }
-.clicked_dislike{ color: red; }
+.clicked_like{ color: rgb(7, 216, 7); }
+.clicked_dislike{ color: rgb(255, 7, 7); }
+.material-symbols-outlined{ font-size: 1.5vw; }
 
 .page-title{
     left: 50%;
@@ -172,7 +173,7 @@ body{
 /* HEADER AND SIDEBAR */
 
 @keyframes appear-navbar{
-    from{ top: -20vw; }
+    from{ top: -50%; }
     to{ top: 0 }
 }
 .toggleable-sidebar{
@@ -317,3 +318,66 @@ body{
 }
 
 
+@media (max-width: 600px) {
+    .basic-text-size{ font-size: 5vw; }
+    .material-symbols-outlined{ font-size: 7vw; }
+
+    .login_signup_container{
+        position: relative;
+        height: 90vh;
+        width: 100vw;
+        margin-top: 70vw;
+        border-top: 1px solid rgb(255,160,176);
+    }
+
+    @keyframes signin-page-description-rise{
+        0% { top: 200%; }
+        80% { top: 18%; }
+        100%{ top: 20%; }
+    }
+
+    @keyframes right-form-appear{
+        from{ margin-right: -200vw; }
+        to{ margin-right: 0; }
+    }
+    @keyframes right-form-disappear{
+        from{ margin-right: 0; }
+        to{ margin-right: -200vw; }
+    }
+    @keyframes left-form-appear{
+        from{ margin-left: -200vw; }
+        to{ margin-left: 0; }
+    }
+    @keyframes left-form-disappear{
+        from{ margin-left: 0; }
+        to{ margin-left: -200vw; }
+    }
+
+    .error-message,
+    .success-message{
+        max-width: 70vw;
+        bottom: 3vw;
+    }
+
+    .left-message,
+    .right-message{
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    @keyframes message-appear{
+        from{ bottom: -20vw; }
+        to{ bottom: 3vw; }
+    }
+
+    @keyframes message-disappear{
+        from{ bottom: 3vw; }
+        to{ bottom: -20vw; }
+    }
+
+    .toggleable-sidebar{
+        & li{
+            padding: 1vw 0;
+        }
+    }
+}
