@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     new Retrieve_Blog_Content("read-blog-contents", "contents").init();
     new Manage_Blog_Likes_or_Dislikes().init();
     new Tags_Retrieval().init();
-    new Display_Create_Comments().init();
+    new Manage_Comments().init();
 }, {once: true});
 
 
@@ -172,7 +172,7 @@ type Comment = {
     is_users: boolean;
 };
 
-class Display_Create_Comments implements Managment_Class_Types{
+class Manage_Comments implements Managment_Class_Types{
     private comments_container: HTMLUListElement;
     private comment_amount: number;
     private no_blogs_message: HTMLParagraphElement;
@@ -256,25 +256,21 @@ class Display_Create_Comments implements Managment_Class_Types{
             const edit_btn = document.createElement("button");
             edit_btn.classList.add("pointer-events-auto", "common-btn", "material-symbols-outlined");
             edit_btn.textContent = "edit";
-            edit_btn.addEventListener("click", () => new Edit_Personal_Comment(comment_id).init());
+            edit_btn.addEventListener("click", () => this.#toggle_edit_pupup(comment_id));
             (comment_list_item.querySelector(".comment_extra_btns") as HTMLDivElement).appendChild(edit_btn);
 
             const delete_btn = document.createElement("button");
             delete_btn.classList.add("pointer-events-auto", "common-btn", "material-symbols-outlined");
             delete_btn.textContent = "delete";
-            delete_btn.addEventListener("click", () => new Delete_Personal_Comment(comment_id, comment_list_item).init());
+            delete_btn.addEventListener("click", () => this.#toggle_delete_popup(comment_id, comment_list_item));
             (comment_list_item.querySelector(".comment_extra_btns") as HTMLDivElement).appendChild(delete_btn);
         }
         this.comments_container.insertBefore(comment_list_item, this.comments_container.firstChild);
     }
-}
 
+    // EDIT COMMENT
 
-class Edit_Personal_Comment implements Managment_Class_Types{
-    constructor(private comment_id: string | number){}
-
-
-    init(): void{
+    #toggle_edit_pupup(comment_id: string | number): void{
         const {show_element, hide_element} = toggle_element_visibility(
             "read-popup-background", 
             "show-element-block", 
@@ -284,45 +280,58 @@ class Edit_Personal_Comment implements Managment_Class_Types{
             "hide-popup-anim"
         );
         show_element();
-        this.#display_editable_comment();
+        this.#display_editable_comment(comment_id);
         (document.getElementById("update-comment-form") as HTMLFormElement).addEventListener("submit", async (event) => {
-            await this.#edit_comment(event);
+            await this.#edit_comment(event, comment_id);
             hide_element();
         }, { once: true });
         (document.getElementById("hide-comment-edit-popup-btn") as HTMLElement).addEventListener("click", () => hide_element(), { once: true });
     }
 
-    async #display_editable_comment(): Promise<void>{
+    async #display_editable_comment(comment_id: string | number): Promise<void>{
         try{
             const data = await fetch_data(
                 "../backend/Comment_Managment/Comment_Display/comment_edit_retrieve.php",
                 { 
                     method: "POST", 
                     headers: { "Content-Type": "application/x-www-form-urlencoded" }, 
-                    body: new URLSearchParams({ comment_id: this.comment_id.toString() })
+                    body: new URLSearchParams({ comment_id: comment_id.toString() })
                 },
                 "Could show the comment. Please try again later."
             );
             (document.getElementById("new-comment-area") as HTMLTextAreaElement).value = data.comment;
         }
         catch(error){
+            display_message("read-popup-background", "error-message", (error as Error).message, "center-message");
+        }
+    }
+
+    async #edit_comment(event: SubmitEvent, comment_id: string | number): Promise<void>{
+        event.preventDefault();
+        const new_comment_area = document.getElementById("new-comment-area") as HTMLTextAreaElement;
+        try{
+            if(new_comment_area.value.trim() === ""){
+                throw new Error("A comment cannot be empty.");
+            }
+            const data = await fetch_data(
+                "../backend/Comment_Managment/Comment_Edit/comment_update.php",
+                { 
+                    method: "POST", 
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" }, 
+                    body: new URLSearchParams({ comment_id: comment_id.toString(), comment: new_comment_area.value })
+                },
+                "Could show the comment. Please try again later."
+            );
+            display_message("document-body", "success-message", data.query_success, "center-message");
+        }
+        catch(error){
             display_message("document-body", "error-message", (error as Error).message, "center-message");
         }
     }
 
-    async #edit_comment(event: SubmitEvent): Promise<void>{
-        event.preventDefault();
-    }
-}
+    // DELETE COMMENT
 
-
-class Delete_Personal_Comment implements Managment_Class_Types{
-    constructor(
-        private comment_id: string | number,
-        private list_item: HTMLLIElement
-    ){}
-
-    init(): void{
+    #toggle_delete_popup(comment_id: string | number, list_item: HTMLLIElement): void{
         const {show_element, hide_element} = toggle_element_visibility(
             "read-popup-background", 
             "show-element-block", 
@@ -333,25 +342,33 @@ class Delete_Personal_Comment implements Managment_Class_Types{
         );
         show_element();
         (document.getElementById("comment-deletion-confirmation") as HTMLElement).addEventListener("click", async () => {
-            await this.#delete_comment();
-            this.list_item.remove();
+            await this.#delete_comment(comment_id);
+            list_item.remove();
             hide_element();
         }, { once: true });
         (document.getElementById("comment-deletion-denial") as HTMLElement).addEventListener("click", () => hide_element(), { once: true });
     }
 
-    async #delete_comment(): Promise<void>{
+    async #delete_comment(comment_id: string | number): Promise<void>{
         try{
             const data = await fetch_data(
                 "../backend/Comment_Managment/Comment_Deletion/comment_delete.php",
                 { 
                     method: "POST", 
                     headers: { "Content-Type": "application/x-www-form-urlencoded" }, 
-                    body: new URLSearchParams({ comment_id: this.comment_id.toString() })
+                    body: new URLSearchParams({ comment_id: comment_id.toString() })
                 },
                 "Could not delete this comment. Please try again later."
             );
+
             display_message("document-body", "success-message", data.query_success, "center-message");
+
+            this.comment_amount--;
+            if(this.comment_amount === 0){
+                this.no_blogs_message.classList.add("text-center", "basic-text-size");
+                this.no_blogs_message.textContent = "There are no comments for this blog.";
+                this.comments_container.appendChild(this.no_blogs_message);
+            }
         }
         catch(error){
             display_message("document-body", "error-message", (error as Error).message, "center-message");

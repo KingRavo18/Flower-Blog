@@ -29,9 +29,9 @@ class Comment_Update extends Db_Connection{
         try{
             $this->char_decode();
             $this->validate_inputs();
-            $updated = $this->execute_query();
-            if(!$updated){  
-                echo json_encode(["fatal_fail" => "The comment could not be found."]);
+            $count = $this->execute_query();
+            if(!$count){  
+                echo json_encode(["query_fail" => "The comment could not be found."]);
             }
             else{
                 echo json_encode(["query_success" => "The comment was succesfully updated."]);
@@ -41,7 +41,7 @@ class Comment_Update extends Db_Connection{
             echo json_encode(["query_fail" => "Failed to update this comment."]);
         }
         catch(Exception $e){
-            echo json_encode(["query_fail" => $e->getMessage()]);
+            echo json_encode(["fatal_fail" => $e->getMessage()]);
         }
     }
 }
