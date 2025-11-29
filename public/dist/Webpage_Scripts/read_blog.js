@@ -135,6 +135,7 @@ class Manage_Comments {
         try {
             const data = await fetch_data("../backend/Comment_Managment/Comment_Display/comment_data_retrieve.php", {}, "Failed to load comments for this blog. Please try again later.");
             this.comment_amount = data.row_count;
+            console.log(data);
             if (this.comment_amount === 0) {
                 this.no_blogs_message.classList.add("text-center", "basic-text-size");
                 this.no_blogs_message.textContent = "There are no comments for this blog.";

@@ -30,7 +30,7 @@ class Comment_Retrieval extends Db_Connection{
         }
 
         return [
-            "row_count" => $stmt->rowCount(),
+            "row_count" => count($comments),
             "comments" => $comments,
             "query_success" => "The comments were retrieved successfully."
         ];
